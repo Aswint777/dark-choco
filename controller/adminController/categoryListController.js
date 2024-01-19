@@ -59,6 +59,7 @@ const editCategory = async (req,res) =>{
 const editCategoryPost = async(req,res)=>{
     const{ id} = req.params
     console.log(id)
+    console.log('hai')
     console.log('edit post is here')
     const {categoryName,categoryDescription} = req.body
     console.log(categoryName,categoryDescription)

@@ -1,0 +1,102 @@
+
+<%-include('../partial/header.ejs')%>
+<!-- <img src="" alt=""> -->
+
+<section class="container-fluid bg-body-tertiary d-block">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
+          <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
+            <div class="card-body p-5 text-center">
+              <h4>Verify</h4>
+              <p>Your code was sent to you via email</p>
+              <div></div>
+              <form action="">
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form2Example17"
+                    >Email address</label
+                  >
+                  <input
+                    name="email"
+                    type="email"
+                    id="form2Example17"
+                    value="<%= email %>"
+                    class="form-control form-control-lg"
+                    disabled
+                  />
+                </div>
+                
+                <div class="otp-field mb-4 " name="email">
+                  <input type="number" name="otp" />
+                </div>
+                
+                <button class="btn btn-primary mb-3" type="submit">
+                  Verify
+                </button>
+              </form>
+  
+              <p class="resend text-muted mb-0">
+                Didn't receive code? <button style="background-color: gray;" onclick=resendOtp()>Request again</button>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+
+
+
+
+  <script>
+    const form = document.querySelector("form");
+  
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = form.email.value;
+      const otp = form.otp.value;
+  
+      try {
+    
+        const res = await fetch("/otp", {
+          method: "POST",
+          body: JSON.stringify({ email, otp}),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        console.log(res)
+        const data = await res.json();
+
+        if (data.success) {
+       
+          location.href = "/";
+        }
+      } catch (err) {
+        console.log(err, "err");
+        // alert(err.message)
+      }
+    });
+
+
+async function resendOtp() {
+  const email = form.email.value;
+  console.log(email)
+    try{
+      console.log( "it is the id");
+    const res = await fetch("/resendOtp", {
+      method: "post",
+        body: JSON.stringify({email:email  }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      })
+      console.log(await res.json())
+  }catch(err){
+    console.error("Category management failed:", error);
+  }  
+}
+  </script>

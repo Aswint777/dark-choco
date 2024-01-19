@@ -1,0 +1,76 @@
+<%-include('../partial/header.ejs')%>
+<div class="container">
+<div class="row">
+      
+    <div class="col-md-2">
+  
+      <%- include('../partial/adminSidebar.ejs') %>
+    </div>
+
+
+
+  <div class="col-md-10">
+    <h2 class="mb-4">Add Category</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <!-- Include your admin sidebar content here -->
+        </div>
+        <div class="col-md-10">
+            <form action="addCategory" method="post">
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label">Category Name:</label>
+                    <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="categoryDescription" class="form-label">Short Description:</label>
+                    <textarea class="form-control" id="categoryDescription" name="categoryDescription" rows="4" required></textarea>
+                </div>
+
+                <!-- Add more input fields or form elements as needed -->
+
+                <button type="submit" class="btn btn-primary">Add Category</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+
+    form.addEventListener("submit", async (e) => {
+        // e.preventDefault();
+        console.log('running')
+     
+     
+  const categoryName = form.categoryName.value;
+  const categoryDescription = form.categoryDescription.value;
+
+  
+
+  console.log(categoryName);
+
+  try {
+  
+    const res = await fetch("/addCategory", {
+      method: "POST",
+      body: JSON.stringify({categoryName,categoryDescription }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+   
+    if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+  }
+    const data = await res.json();
+   
+   
+  } catch (err) {
+    console.log(err,'err');
+    // alert(err.message)
+  }
+});
+</script>

@@ -1,0 +1,272 @@
+
+/* //////////////////////////////////  home page ///////////////////////////// */
+.homeBody{
+    background-color: rgb(16, 10, 10);
+    width: 100%;
+    height: 100%;
+    /* margin-top: 10%; */
+}
+
+.navbar{
+    background-color: rgba(9, 9, 8, 0.338) !important;
+    width: 100%;
+    /* position: fixed; */
+    z-index: 5;
+
+}
+
+.navbar A{
+    margin-top: 0%;
+    float: left;
+    display: block;
+    color: floralwhite;
+    text-align: center;
+    padding: 14px;
+    text-decoration: none;
+    /* transition: background-color 0.3s; */
+}
+
+.nav-center{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+}
+.navbar-right {
+    margin-left: auto;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////  home  /////////////////////////////////////////////// */
+
+.image-container {
+    /* position: relative; */
+    max-width: 100%;
+}
+
+.overlay-box {
+    position: absolute;
+    top: 20%;
+    /* left: 20%; */
+    width: 60%;
+    /* padding: 20px; */
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 2px solid #ccc;
+}
+
+.button{
+    color: black !important;
+}
+
+/* ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* ////////////////////////////////   otp            ///////////////////////////////////////////////////// */
+
+/* .otp-field {
+    flex-direction: row;
+    column-gap: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+  /* } */
+  
+  .otp-field input {
+    height: 45px;
+    width: 200px;
+    border-radius: 6px;
+    outline: none;
+    font-size: 1.125rem;
+    text-align: center;
+    border: 1px solid #ddd;
+  }
+  .otp-field input:focus {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+  }
+  .otp-field input::-webkit-inner-spin-button,
+  .otp-field input::-webkit-outer-spin-button {
+    display: none;
+  }
+  
+  .resend {
+    font-size: 12px;
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: black;
+    font-size: 12px;
+    text-align: right;
+    font-family: monospace;
+  }
+  
+  .footer a {
+    color: black;
+    text-decoration: none;
+  }
+
+  /* ////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* //////////////////////////////////////      customer   /////////////////////////////////////////////////////////// */
+
+body{margin-top:20px;
+  background:#eee;
+  }
+  .card {
+      box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+  }
+  .avatar.sm {
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: .818125rem;
+  }
+  .table-nowrap .table td, .table-nowrap .table th {
+      white-space: nowrap;
+  }
+  .table>:not(caption)>*>* {
+      padding: 0.75rem 1.25rem;
+      border-bottom-width: 1px;
+  }
+  table th {
+      font-weight: 600;
+      background-color: #eeecfd !important;
+  }
+
+
+  /* /////////////////////////////////////////////////////////////////////////////////////////// 
+  ///////////////////////////////////////////////   category list /////////////////////////////*/
+  
+  body{margin-top:20px;
+    background-color:#eee;
+    }
+    .project-list-table {
+        border-collapse: separate;
+        border-spacing: 0 12px
+    }
+    
+    .project-list-table tr {
+        background-color: #fff
+    }
+    
+    .table-nowrap td, .table-nowrap th {
+        white-space: nowrap;
+    }
+    .table-borderless>:not(caption)>*>* {
+        border-bottom-width: 0;
+    }
+    .table>:not(caption)>*>* {
+        padding: 0.75rem 0.75rem;
+        background-color: var(--bs-table-bg);
+        border-bottom-width: 1px;
+        box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+    }
+    
+    .avatar-sm {
+        height: 2rem;
+        width: 2rem;
+    }
+    .rounded-circle {
+        border-radius: 50%!important;
+    }
+    .me-2 {
+        margin-right: 0.5rem!important;
+    }
+    img, svg {
+        vertical-align: middle;
+    }
+    
+    a {
+        color: #3b76e1;
+        text-decoration: none;
+    }
+    
+    .badge-soft-danger {
+        color: #f56e6e !important;
+        background-color: rgba(245,110,110,.1);
+    }
+    .badge-soft-success {
+        color: #63ad6f !important;
+        background-color: rgba(99,173,111,.1);
+    }
+    
+    .badge-soft-primary {
+        color: #3b76e1 !important;
+        background-color: rgba(59,118,225,.1);
+    }
+    
+    .badge-soft-info {
+        color: #57c9eb !important;
+        background-color: rgba(87,201,235,.1);
+    }
+    
+    .avatar-title {
+        align-items: center;
+        background-color: #3b76e1;
+        color: #fff;
+        display: flex;
+        font-weight: 500;
+        height: 100%;
+        justify-content: center;
+        width: 100%;
+    }
+    .bg-soft-primary {
+        background-color: rgba(59,118,225,.25)!important;
+    }
+    
+
+    /* //////////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////   add category      ///////////////////////////////////////////////// */
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f8f9fa;
+  }
+
+  /* .container {
+      max-width: 800px;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  } */
+
+  h2 {
+      color: #007bff;
+  }
+
+  form {
+      margin-top: 20px;
+  }
+
+  label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+  }
+
+  input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+  }
+
+  textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+  }
+
+  button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+  }
+
+  button:hover {
+      background-color: #0056b3;
+  }

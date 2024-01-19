@@ -1,0 +1,35 @@
+<div class="homeBody">
+    
+<%-include('../partial/header.ejs')%>
+
+<%if(!userAuth){%>
+    <%-include('../partial/navbar.ejs')%>
+<%}else{%>
+    <%-include('../partial/userNavbar.ejs')%>
+<%}%>
+
+<div class="container-fluid " style="background: url('assets/istockphoto-1316983928-170667a.webp');background-size:cover;height: 100vh;background-position: center;background-repeat: no-repeat;">
+
+    <!-- Image container with Bootstrap's responsive class -->
+    <div class="image-container">
+        <!-- Image -->
+        <!-- <img src="/assets/pexels-eva-bronzini-6261691.png" alt="Your Image" class="img-fluid" style="height: 100%;width: 100%;object-fit: cover;"> -->
+
+        <!-- Overlay Box with Text -->
+        <div style="padding-top: 10%; padding-left: 3%;" class="">
+            <!-- Add your text content here -->
+            <h1 style="color: aliceblue;">Dark Choco</h1>
+            <a href="" class="btn btn-danger" style="text-decoration: none;border: none; background-color: rgb(50, 30, 5) !important;">shop now</a>
+
+            <!-- <p>Additional details or description</p> -->
+        </div>
+    </div>
+</div>
+
+<!-- Example split danger button -->
+
+<%-include('../partial/footer.ejs')-%>
+
+            
+   
+</div>

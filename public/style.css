@@ -223,13 +223,14 @@ body{margin-top:20px;
       background-color: #f8f9fa;
   }
 
-  /* .container {
-      max-width: 800px;
-      margin: 50px auto;
+  .container {
+      max-width:100%;
+      /* height: 100%; */
+      /* margin: 50px auto; */
       background-color: #fff;
-      padding: 20px;
+      /* padding: 20px; */
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  } */
+  }
 
   h2 {
       color: #007bff;
@@ -270,3 +271,99 @@ body{margin-top:20px;
   button:hover {
       background-color: #0056b3;
   }
+
+
+  /* //////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////      add product ////////////////////////////////////////// */
+
+
+  /* Style for the container holding the image upload elements */
+.right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Style for the main image upload section */
+.mainimage {
+    width: 200px;
+}
+
+/* Style for the drop zone */
+.drop-zone {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the "Upload Image" button */
+.drop-zone .btn-success {
+    z-index: 10;
+    position: absolute;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Style for the selected image */
+#selectedImage {
+    width: 100%;
+    max-height: 400px;
+    display: none;
+    z-index: 99;
+}
+
+/* Style for the error message related to the main image */
+#mainimageError {
+    color: red;
+    margin-top: 5px;
+}
+
+/* Style for the side image upload section */
+.sideimage {
+    margin-top: 20px;
+}
+
+/* Style for the drop zone of multiple images */
+#dropZoneMultiple {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+}
+
+/* Style for the "Upload Image" button for multiple images */
+#dropZoneMultiple .btn-success {
+    z-index: 10;
+    position: absolute;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 200px;
+    height: 200px;
+}
+
+/* Style for the container holding multiple images */
+#imageContainer {
+    z-index: 99;
+    margin-top: 10px;
+}
+
+/* Style for the error message related to the side image */
+#sideimageError {
+    color: red;
+    margin-top: 5px;
+}

@@ -66,7 +66,7 @@ const editCategoryPost = async(req,res)=>{
     const edit = await Category.updateOne({_id:id},{$set:{category:categoryName,categoryDescription}})
     console.log(categoryName,categoryDescription)
     res.redirect('/admin/categoryList')
-
+    
 }
 
 module.exports = {

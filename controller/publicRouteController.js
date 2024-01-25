@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const { main } = require("./helperFunction/otp");
 require("dotenv").config();
 
+
 // handle errors
 handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -67,7 +68,6 @@ const userLoginPost = async (req, res) => {
         });
         res.json({ user: user });
       }
-   
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -120,6 +120,7 @@ const adminLoginPost = async (req, res) => {
       if (auth) {
         console.log("password checked");
         const token = jwt.sign({ adminId: admin._id }, process.env.SECRET_KEY);
+        
         res.cookie("adminLoginToken", token, {
           httpOnly: true,
         });

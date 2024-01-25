@@ -19,7 +19,7 @@
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">product Name:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="categoryName2" name="productName" required>
+                                        <input type="text" class="form-control" id="categoryName2" name="productName" value="<%= pro.stock %>" required>
                                     </div>
                                 </div>
 
@@ -27,28 +27,28 @@
                                 <div class="row mb-3">
                                     <label for="categoryDescription1" class="col-sm-4 col-form-label">Short Description:</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" required></textarea>
+                                        <input class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" value="pro.categoryDescription" required></input>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">Quantity</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="Quantity" required>
+                                        <input type="number" class="form-control" id="categoryName2" name="Quantity" value="<%= pro.quantity %>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">amount </label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="amount" required>
+                                        <input type="number" class="form-control" id="categoryName2" name="amount" value="<%= pro.amount %>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">Markup</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="Markup" required>
+                                        <input type="number" class="form-control" id="categoryName2" name="Markup" value="<%= pro.markup %>" required>
                                     </div>
                                 </div>
 
@@ -57,8 +57,9 @@
                                     <div class="col-sm-8">
                                         
                                         <select name="category" id="category" style="width: 270px; height: 35px;">
-                                            <% category.forEach((cat, index) => { %>
-                                      <option value="<%= cat._id %>" style="color: black;"><%= cat.category %></option>
+                                            <% cat.forEach((category, index) => { %>
+                       
+                                      <option value="<%= pro.category._id %>" style="color: black;"><%= category.category %></option>
                                       <% }); %>
                                      
                                     </select>  
@@ -87,8 +88,9 @@
                                           class="form-control-file"
                                           id="image1"
                                           accept="image/*"
+                            
                                         />
-                                        <img src="" alt="Image 1" class="img-fluid" style="max-height: 200px;" id="previewImage1">
+                                        <img src="/products/<%= pro.image1 %>" alt="Image 1" class="img-fluid" style="max-height: 200px;" id="previewImage1">
                                       </div>
                                       <div class="form-group text-center">
                                         <label for="image2">Image 2:</label>
@@ -98,8 +100,9 @@
                                           class="form-control-file"
                                           id="image2"
                                           accept="image/*"
+                                        
                                         />
-                                        <img src="" alt="Image 2" class="img-fluid" style="max-height: 200px;"id="previewImage2">
+                                        <img src="/products/<%= pro.image2 %>" alt="Image 2" class="img-fluid" style="max-height: 200px;"id="previewImage2">
                                       </div>
                                       <div class="form-group text-center">
                                         <label for="image3">Image 3:</label>
@@ -109,8 +112,9 @@
                                           class="form-control-file"
                                           id="image3"
                                           accept="image/*"
+                                     
                                         />
-                                        <img src="" alt="Image 3" class="img-fluid" style="max-height: 200px;"id="previewImage3">
+                                        <img src="/products/<%= pro.image3  %> " alt="Image 3" class="img-fluid" style="max-height: 200px;"id="previewImage3">
                                       </div>
                                 </div>
                                 
@@ -118,11 +122,11 @@
                             
                     </div>
 
-                   
+                  
 
                         <div class="mb-3 row">
                             <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Add Product</button>
+                                <button type="submit" class="btn btn-primary">Edit Product</button>
                             </div>
                         </div>
                     </form>
@@ -132,42 +136,11 @@
     </div>
 </div>
         
-
-
-
 <script>
-// const form = document.querySelector("form");
-// console.log('it is entered into the form');
-
-// form.addEventListener("submit", async (e) => {
-// //   e.preventDefault();
-//   console.log('submit clicked');
-
-//   const formData = new FormData(form);
-//   console.log('Form Data:', formData); 
-
-  
-//   try {
-//     const res = await fetch("/addProduct", {
-//       method: "POST",
-//       body: formData,
-//     });
-
-//     if (!res.ok) {
-//       throw new Error(`HTTP error! Status: ${res.status}`);
-//     }
-
-//     // Handle success
-//   } catch (err) {
-//     // window.alert(err)
-//     console.log(err, 'err');
-//     // Handle errors
-//   }
-// });
 
 
-
-    const form = document.querySelector("form");
+    
+const form = document.querySelector("form");
     console.log('it is entered in to the form')
     
     form.addEventListener("submit", async (e) => {
@@ -185,79 +158,35 @@
     const image1 = formData.get('image1');
     const image2 = formData.get('image2');
     const image3 = formData.get('image3');
-  const data={
-    productName,
-    categoryDescription,
-    Quantity,
-    amount,
-    Markup,
-    category,
-    image1,
-    image2,
-    image3
 
-  }
-  console.log(productName);
-  console.log(image1);
-  console.log(category)
-// alert(JSON.stringify(data))
+    try {
 
-// alert(conformPassword)
-  try {
+console.log('fetch is working',data);
+ const res = await fetch("/admin/addProducts", {
+ method: "POST",
+ //   body: JSON.stringify({productName,categoryDescription,Quantity,amount,Markup,category,image1,image2,image3 }),
+ body: formData,
+ //   headers: {
+ //     "Content-Type": "application/json",
+ //   },
+ }).then((res)=>res.json()).then(res=>{
 
-   console.log('fetch is working',data);
-    const res = await fetch("/admin/addProducts", {
-    method: "POST",
-    //   body: JSON.stringify({productName,categoryDescription,Quantity,amount,Markup,category,image1,image2,image3 }),
-    body: formData,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    }).then((res)=>res.json()).then(res=>{
+     const datas =  res
+     console.log(datas);
+     if(datas.success){
 
-        const datas =  res
-        console.log(datas);
-        if(datas.success){
+         window.location.href ='/admin/adminProductList'
+     }
+ })
+ // console.log(res);
 
-            window.location.href ='/admin/adminProductList'
-        }
-    })
-    // console.log(res);
+ // if(datas.success){
 
-    // if(datas.success){
-
-    // }
+ // }
 
 } catch (err) {
-    console.log('Error:', err);
+ console.log('Error:', err);
 }
 });
-
-
-function updatePreviewImage(inputId, imageId) {
-        console.log("hellooo");
-        const fileInput = document.getElementById(inputId);
-        const previewImage = document.getElementById(imageId);
-
-        fileInput.addEventListener('change', function() {
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                };
-
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.src = '';
-            }
-        });
-    }
-
-    updatePreviewImage('image1', 'previewImage1');
-    updatePreviewImage('image2', 'previewImage2');
-    updatePreviewImage('image3', 'previewImage3');
-
 
 </script>

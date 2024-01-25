@@ -1,40 +1,177 @@
 
 
-<%-include('../partial/header.ejs')%>
+<%- include('../partial/header.ejs') %>
+
+<div class="container my-5">
+  <div class="row">
+      <div class="col-md-5">
+          <div class="main-img">
+            <div id="img-container">
+
+                <img class="img-fluid" src="/products/<%= data.image1 %>" alt="ProductS" id="main">
+            </div>
+              <div class="row my-3 previews">
+                  <div class="col-md-4" onclick="showImage('main','image1')">
+                      <img class="w-100" src="/products/<%= data.image1 %>" alt="Sale" id="image1">
+                  </div>
+                  <div class="col-md-4" onclick="showImage('main','image2')">
+                      <img class="w-100" src="/products/<%= data.image2 %>" alt="Sale" id="image2">
+                  </div>
+                  <div class="col-md-4" onclick="showImage('main','image3')">
+                      <img class="w-100" src="/products/<%= data.image3 %>" alt="Sale" id="image3">
+                  </div>
+                  <!-- <div class="col-md-3">
+                      <img class="w-100" src="https://cdn.pixabay.com/photo/2015/07/24/18/37/model-858748_960_720.jpg" alt="Sale">
+                  </div> -->
+              </div>
+          </div>
+      </div>
+      <div class="col-md-7">
+          <div class="main-description px-2">
+              <div class="category text-bold">
+                Category: <%= data.category.category %>
+                <!-- <h2 > <%= data.category %></h2> -->
+              </div>
+              <div class="product-title text-bold my-3">
+                <%= data.stock %>
+                  <!-- <h5 class="card-title"> <%= data.stock %></h5> -->
+              </div>
+
+              <div class="price-area my-4">
+                  <h4 class="old-price mb-1" style="color: red;"><del> ₹<%= data.markup %></del> 
+                    <!-- <span class="old-price-discount text-danger">(20% off)</span> -->
+                  </h4>
+                  <p class="new-price text-bold mb-1"> ₹<%= data.amount %></p>
+                  <!-- <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p> -->
+              </div>
+
+              <div class="buttons d-flex my-5">
+                  <div class="block">
+                      <a href="#" class="shadow btn custom-btn ">Wishlist</a>
+                  </div>
+                  <div class="block">
+                      <button class="shadow btn custom-btn">Add to cart</button>
+                  </div>
+                  <!-- <div class="block quantity">
+                      <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
+                  </div> -->
+              </div>
+          </div>
+
+          <div class="product-details my-4">
+              <p class="details-title text-color mb-1">Product Details</p>
+              <p class="description"><%= data.categoryDescription %> </p>
+          </div>
+
+          <!-- <div class="row questions bg-light p-3">
+              <div class="col-md-1 icon">
+                  <i class="fa-brands fa-rocketchat questions-icon"></i>
+              </div>
+              <div class="col-md-11 text">
+                  Have a question about our products at E-Store? Feel free to contact our representatives via live chat or email.
+              </div>
+          </div> -->
+
+          <div class="delivery my-4">
+              <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-truck"></i></span> <b>Delivery done in 3 days from date of purchase</b> </p>
+              <p class="text-secondary">Order now to get this product delivery</p>
+          </div>
+          
+          <div class="delivery-options my-4">
+              <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-filter"></i></span> <b>Delivery options</b> </p>
+              <p class="text-secondary">View delivery options here</p>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
 
 <section style="background-color: #eee;">
-    <div class="container py-5">
-      <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 col-xl-4">
-          <div class="card text-black">
-            <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/3.webp"
-              class="card-img-top" alt="Apple Computer" />
-            <div class="card-body">
-              <div class="text-center">
-                <h5 class="card-title">Believing is seeing</h5>
-                <p class="text-muted mb-4">Apple pro display XDR</p>
-              </div>
-              <div>
-                <div class="d-flex justify-content-between">
-                  <span>Pro Display XDR</span><span>$5,999</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span>Pro stand</span><span>$999</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span>Vesa Mount Adapter</span><span>$199</span>
-                </div>
-              </div>
-              <div class="d-flex justify-content-between total font-weight-bold mt-4">
-                <span>Total</span><span>$7,197.00</span>
-              </div>
+    <div class="container ">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <div class="card text-black">
+                    <i class="fab fa-apple fa-lg pt-3 pb-1 px-3"></i>
+                    <img src="/products/<%= data.image1 %>"
+                        class="card-img-top" alt="Apple Computer" />
+
+
+                        
+                        <div class="card-body">
+                          <div class="text-center">
+                            <h5 class="card-title"> <%= data.stock %></h5>
+                            <p class="text-muted mb-4"><%= data.amount %></p>
+                          </div>
+                          <div>
+                            <div class="d-flex justify-content-between">
+                              <span>Pro Display XDR</span><span>$5,999</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <span>Pro stand</span><span>$999</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <span>Vesa Mount Adapter</span><span>$199</span>
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-between total font-weight-bold mt-4">
+                            <span>Total</span><span>$7,197.00</span>
+                          </div>
+                        </div>
+                        
+                        
+                        
+                      </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </section>
+</section>  -->
+
+<script>
+    var options = {
+        width: 400,
+        zoomWidth: 400,
+        offset: {vertical: 0, horizontal: 10}
+    };
+    new ImageZoom(document.getElementById("img-container"), options);
+    
+    function showImage(main,changeImg){
+        let mainImg=document.getElementById(main)
+        let changeImage=document.getElementById(changeImg)
+        
+        let temp=mainImg.src
+        mainImg.src=changeImage.src
+        changeImage.src=temp
+        var options = {
+            width: 400,
+            zoomWidth: 400,
+            offset: {vertical: 0, horizontal: 10}
+        };
+        new ImageZoom(document.getElementById("img-container"), options);
+    }
+    </script>
+
+<%- include('../partial/footer.ejs') %>
 
 
-  <%-include('../partial/footer.ejs')%>
+
+
+
+
+
+
+
+

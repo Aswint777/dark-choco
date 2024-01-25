@@ -4,21 +4,21 @@ const bcrypt = require("bcrypt");
 
 const productSchema = new mongoose.Schema({
     stock: {
-        type:Number ,
+        type:String ,
         required:true,
         trim: true,
       },
-      rating: {
-        type: String,
-        required:true,
-        trim: true,
-      },
-      review: {
-        type: String,
-        required:true,
-        unique: true,
-        trim: true,
-      },
+      // rating: {
+      //   type: String,
+      //   required:true,
+      //   trim: true,
+      // },
+      // review: {
+      //   type: String,
+      //   required:true,
+      //   unique: true,
+      //   trim: true,
+      // },
       image1 : {
         type : String,
         required : true,
@@ -35,7 +35,8 @@ const productSchema = new mongoose.Schema({
 
       },
       category :{
-        type : String,
+        type : mongoose.Schema.Types.ObjectId,
+        ref:"category",
         required : true,
       },
       status : {
@@ -46,6 +47,23 @@ const productSchema = new mongoose.Schema({
         type : String,
         required :true
     },
+    date : {
+      type : Date,
+      default : new Date()
+  },
+  quantity :{
+    type:Number,
+    required : true
+  },
+  amount:{
+    type:Number,
+    required : true
+  },
+  markup : {
+    type:Number,
+    required : true
+  },
+  
     
 });
 

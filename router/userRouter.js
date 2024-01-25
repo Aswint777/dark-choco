@@ -7,7 +7,9 @@ const router = express.Router()
 
 router.get('/productListPage',productListPage)
 
-router.get('/productPage',productPage)
+router.get('/productPage/:id',productPage)
+// router.get('/productPage',productPage)
+
 
 
 

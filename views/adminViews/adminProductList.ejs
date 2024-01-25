@@ -1,0 +1,208 @@
+<%- include('../partial/header.ejs') %>
+
+<div class="container">
+  <div class="row">
+    <div>
+    <h2 style="text-align: center; color: black;">products</h2>
+  </div>
+  
+  <div class="col-md-3">
+    
+    <%- include('../partial/adminSidebar.ejs') %>
+  </div>
+  
+  
+  
+  <div class="col-md-9">
+    <div class="col-12 mb-3 mb-lg-5">
+      <div class="overflow-hidden card table-nowrap table-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0"></h5>
+          <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
+          <button type="button" class="btn btn-success"><a style="color:aliceblue ;" href='addProduct'>Add product</a></button>
+        </div>
+        <div class="table-responsive">
+          <table class="table mb-0">
+            <thead class="small text-uppercase bg-body text-muted">
+              <tr>
+                <!-- <th>Index</th> -->
+                <th>products</th>
+                <th>Category</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>status</th>
+                <th>Added</th>
+                <th class="text-end">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% productList.forEach((products, index) => { %>
+                <tr class="align-middle">
+                  <!-- <td><span class="d-inline-block align-middle"><%= index+1 %></span></td> -->
+                  <td>
+
+                      <div class="d-flex align-items-center">
+                          
+                          <div>
+                            <div class="thumb">
+                                <img class="img-fluid" style="width:20%; height: 20%;" src="/products/<%= products.image1 %>" alt="">
+                              </div>
+                              <div class="h6 mb-0 lh-1"><%= products.stock %></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                    <div class="d-flex align-items-center">
+                          
+                        <div>
+                            <div class="h6 mb-0 lh-1"><%= products.category.category %></div>
+                          </div>
+                      </div>
+                  </td>
+                  <td>
+                  <div class="d-flex align-items-center">
+                          
+                    <div>
+                        <div class="h6 mb-0 lh-1"><%= products.quantity %></div>
+                      </div>
+                  </div>
+              </td>
+              <td>
+              <div class="d-flex align-items-center">
+                          
+                <div>
+                    <div class="h6 mb-0 lh-1">₹<%= products.amount %></div>
+                  </div>
+              </div>
+          </td>
+                    <% if(products.status === true){%>
+                    <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= products._id %>">
+                      block
+                    </button></td>
+                    
+                    <% }else{%>
+                      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= products._id %>">
+                        Unblock
+                      </button></td>
+                      <%}%>
+                  <td><span><%= products.date.toISOString().slice(0, 10) %></span></td>
+                  <td class="text-end">
+                    <div class="dropdown">
+                        <a class="btn btn-success" href="editproduct/<%= products._id %>">Edit</a>
+                    </div>
+                </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        
+
+          <% productList.forEach((products, index) => { %>
+            <div
+            class="modal fade"
+            id="staticBackdrop<%= products._id %>"
+            data-bs-backdrop="static"
+            data-bs-keyboard="false"
+            tabindex="-1"
+            aria-labelledby="staticBackdropLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">
+                    Modal title
+                  </h5>
+                  <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  ></button>
+                </div>
+                <div class="modal-body">
+                  <h5>the status of  the user</h5>
+                </div>
+
+                <div class="modal-footer">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                  >
+                    Close
+                  </button>
+                  <% if(products.status === true){%>
+
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    onclick="manageProduct('<%=products._id%>')"
+                  >
+                    block
+                  </button>
+                  <% }else{%>
+                  <button type="button" class="btn btn-danger"
+                   onclick="manageProduct('<%=products._id%>')">Unblock</button>
+
+                  <%}%>
+                </div>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+
+<script>
+   async function manageProduct(id) {
+    try{
+      console.log(id, "it is the id");
+    const res = await fetch("/admin/manageProduct", {
+      method: "POST",
+        body: JSON.stringify({_id: id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        
+      })
+      console.log(await res.json())
+      window.location.reload()
+  }catch(err){
+    console.error("product management failed:", error);
+  }  
+}
+
+
+
+
+// async function editCategory(_id,categoryName){
+//   console.log('editing here')
+//   console.log(_id)
+//   console.log(categoryName)
+//   try{
+//     const edit =  await fetch("/admin/editCategory", {
+
+//       method: "POST",
+//         body: JSON.stringify({_id,categoryName}),
+//         headers: {
+//           "Content-Type": "application/json",
+//         },  
+//       })
+//       // location.href = '/admin/editCategory'
+//       const data = await res.json();
+//       if(data.success){
+//       }
+//   }catch(error){
+//     console.error("Category edit failed:", error);
+//   }
+//  }
+</script>

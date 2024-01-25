@@ -4,16 +4,17 @@ const session=require('express-session')
 require('dotenv').config();
 const cookieParser = require('cookie-parser')
 const path = require('path')
-
+const morgan=require('morgan')
+const adminLoginToken = require('./middleware/adminMiddleware')
 
 const app = express()
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
 
 
 // load static asset
 app.use(express.static('public'))
-app.use(express.json())
 app.use(cookieParser())
-app.use(express.urlencoded({extended:true}))
 // app.use('/admin',adminRouter)
 
 // setting view engine 
@@ -26,7 +27,7 @@ app.use(session({
     saveUninitialized : true,
     cookie : {maxAge:oneDay}
 }))
-
+app.use(morgan('tiny'))
 app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store"); 
     next();
@@ -43,7 +44,7 @@ const adminRouter = require('./router/adminRouter')
 // Calling router
 app.use('/',publicRouter)
 app.use('/user',userRouter)
-app.use('/admin',adminRouter)
+app.use('/admin', adminRouter)
 
 
 

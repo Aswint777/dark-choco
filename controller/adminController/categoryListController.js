@@ -1,9 +1,17 @@
 const Category = require('../../model/categoryModel')
 
 const categoryList = async (req,res) => {
-    const category = await Category.find({},{categoryDescription:0})
+    let query = req.query
+    
+    if (Object.keys(query).length === 0){
+        const category = await Category.find({},{categoryDescription:0})
+        res.render('adminViews/categoryList',{category:category})
+    } else {
+        const latest = await Category.find().sort(req.query.date) //{} {another:true,chocolate:true}
+        console.log(latest)
+        res.json({latest})
+    }
 
-    res.render('adminViews/categoryList',{category:category})
 }
 
 const manageCategory = async(req,res)=>{

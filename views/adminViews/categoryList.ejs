@@ -9,6 +9,7 @@
   <div class="col-md-3">
     
     <%- include('../partial/adminSidebar.ejs') %>
+    
   </div>
   
   
@@ -16,13 +17,28 @@
   <div class="col-md-9">
     <div class="col-12 mb-3 mb-lg-5">
       <div class="overflow-hidden card table-nowrap table-card">
+        <div style="width: 500px;height: 60; color: gray;">
+          <!-- Example single danger button -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              filter
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"  onclick="filter('{latest:1}')">latest</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Separated link</a></li>
+            </ul>
+          </div>
+        </div>
         <div class="card-header d-flex justify-content-between align-items-center">
           <h5 class="mb-0"></h5>
           <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
           <button type="button" class="btn btn-success"><a style="color:aliceblue ;" href="addCategory">Add Category</a></button>
         </div>
         <div class="table-responsive">
-          <table class="table mb-0">
+          <table class="table mb-0" id="categoryTableBody">
             <thead class="small text-uppercase bg-body text-muted">
               <tr>
                 <th>Index</th>
@@ -32,7 +48,7 @@
                 <th class="text-end">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="tableBody">
               <% category.forEach((category, index) => { %>
                 <tr class="align-middle">
                   <td><span class="d-inline-block align-middle"><%= index+1 %></span></td>
@@ -142,6 +158,81 @@
     console.error("Category management failed:", error);
   }  
 }
+
+async function filter(arg){
+  // alert(arg)
+  console.log('entered the fetch')
+  const res = await fetch(`/admin/categoryList?date=${arg}`,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },    
+  })
+  let data = await res.json()
+  console.log(data)
+  updateTable(data);
+}
+
+
+function updateTable(data) {
+  const bodyOfTable=document.getElementById("tableBody")
+  // Clear existing table rows
+  let rows=[]
+  data.latest.forEach((category, index) => {
+  let row = `
+    <tr class="align-middle">
+      <td><span class="d-inline-block align-middle">${index + 1}</span></td>
+      <td>
+        <div class="d-flex align-items-center">
+          <div>
+            <div class="h6 mb-0 lh-1">${category.category}</div>
+          </div>
+        </div>
+      </td>`;
+
+  if (category.status === true) {
+    row += `
+      <td>
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= category._id %>">
+          block
+        </button>
+      </td>`;
+  } else {
+    row += `
+      <td>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= category._id %>">
+          Unblock
+        </button>
+      </td>`;
+  }
+
+  row += `
+      <td><span>${category.date}</span></td>
+      <td class="text-end">
+        <div class="dropdown">
+          <a class="btn btn-success" href="editCategory/<%= category._id %>">Edit</a>
+        </div>
+      </td>
+    </tr>`;
+
+    rows.push(row)
+});
+
+  
+
+bodyOfTable.innerHTML = rows.join("");
+  
+  // Add new rows based on the fetched data
+  // data.forEach((category, index) => {
+  //   const newRow = document.createElement('tr');
+  //   newRow.classList.add('align-middle');
+        
+  //   // ... Create and append table cells for the new row based on category data ...
+    
+  //   tableBody.appendChild(newRow);
+  // });
+}
+
 
 // async function editCategory(_id,categoryName){
 //   console.log('editing here')

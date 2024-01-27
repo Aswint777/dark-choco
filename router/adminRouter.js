@@ -3,7 +3,7 @@ const express = require('express')
 const { customer, manageUser, SearchCustomer } = require('../controller/adminController/customerController')
 const category = require('../model/categoryModel')
 const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory, editCategoryPost } = require('../controller/adminController/categoryListController')
-const { addProduct, adminProductList, manageProduct, addProductPost, editProduct } = require('../controller/adminController/productController')
+const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
 
@@ -48,7 +48,11 @@ router.post ('/manageProduct',adminLoginToken,manageProduct)
 //edit product 
 
 router.get('/editProduct/:id',adminLoginToken,editProduct)
-router.post('/editProduct')
+router.post('/editProduct' , upload.fields([
+  { name: 'image1', maxCount: 1 },
+  { name: 'image2', maxCount: 1 },
+  { name: 'image3', maxCount: 1 }
+]),editProductPost)
 
 
 module.exports= router

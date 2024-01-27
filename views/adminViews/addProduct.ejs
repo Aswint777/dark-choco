@@ -27,7 +27,7 @@
                                 <div class="row mb-3">
                                     <label for="categoryDescription1" class="col-sm-4 col-form-label">Short Description:</label>
                                     <div class="col-sm-8">
-                                        <textarea class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" required></textarea>
+                                        <textarea class="form-control" id="categoryDescription1" name="productDescription" rows="4" required></textarea>
                                     </div>
                                 </div>
 
@@ -67,9 +67,6 @@
                                    
                                    
                                 </div>
-
-         
-
 
                             </div>
 
@@ -177,7 +174,7 @@
 
       const formData = new FormData(form);
     const productName = formData.get('productName');
-    const categoryDescription = formData.get('categoryDescription');
+    const productDescription = formData.get('productDescription');
     const Quantity = formData.get('Quantity');
     const amount = formData.get('amount');
     const Markup = formData.get('Markup');
@@ -187,7 +184,7 @@
     const image3 = formData.get('image3');
   const data={
     productName,
-    categoryDescription,
+    productDescription,
     Quantity,
     amount,
     Markup,

@@ -14,6 +14,7 @@
 
                         <div class="mb-3 row">
                             <div class="col-md-6">
+                                <input type="hidden" id="_id" name="yourId" value="<%= pro._id %>">
                               
                         
                                 <div class="row mb-3">
@@ -27,7 +28,7 @@
                                 <div class="row mb-3">
                                     <label for="categoryDescription1" class="col-sm-4 col-form-label">Short Description:</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" value="pro.categoryDescription" required></input>
+                                        <input class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" value="pro.productDescription" required></input>
                                     </div>
                                 </div>
 
@@ -114,7 +115,7 @@
                                           accept="image/*"
                                      
                                         />
-                                        <img src="/products/<%= pro.image3  %> " alt="Image 3" class="img-fluid" style="max-height: 200px;"id="previewImage3">
+                                        <img src="/products/<%= pro.image3 %> " alt="Image 3" class="img-fluid" style="max-height: 200px;"id="previewImage3">
                                       </div>
                                 </div>
                                 
@@ -149,8 +150,9 @@ const form = document.querySelector("form");
       console.log('submit clicked')
 
       const formData = new FormData(form);
+      const _id = formData.get('_id')
     const productName = formData.get('productName');
-    const categoryDescription = formData.get('categoryDescription');
+    const productDescription = formData.get('productDescription');
     const Quantity = formData.get('Quantity');
     const amount = formData.get('amount');
     const Markup = formData.get('Markup');
@@ -158,11 +160,14 @@ const form = document.querySelector("form");
     const image1 = formData.get('image1');
     const image2 = formData.get('image2');
     const image3 = formData.get('image3');
+    console.log(image1)
+    console.log(image2)
+    console.log(image3)
 
     try {
 
-console.log('fetch is working',data);
- const res = await fetch("/admin/addProducts", {
+console.log('fetch is working');
+ const res = await fetch("/admin/editProduct", {
  method: "POST",
  //   body: JSON.stringify({productName,categoryDescription,Quantity,amount,Markup,category,image1,image2,image3 }),
  body: formData,
@@ -172,7 +177,7 @@ console.log('fetch is working',data);
  }).then((res)=>res.json()).then(res=>{
 
      const datas =  res
-     console.log(datas);
+     console.log(datas,'33333');
      if(datas.success){
 
          window.location.href ='/admin/adminProductList'

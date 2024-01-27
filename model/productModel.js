@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const { array } = require("../middleware/multer");
 
 
 const productSchema = new mongoose.Schema({
@@ -43,7 +44,7 @@ const productSchema = new mongoose.Schema({
         type : Boolean,
         default : true
       },
-      categoryDescription : {
+      productDescription : {
         type : String,
         required :true
     },
@@ -62,7 +63,12 @@ const productSchema = new mongoose.Schema({
   markup : {
     type:Number,
     required : true
-  },
+  }
+  // image4 :[
+  //   {
+  //     type:String
+  //   }
+  // ]
   
     
 });

@@ -22,6 +22,7 @@
                                         <input type="text" class="form-control" id="categoryName2" name="productName" required>
                                     </div>
                                 </div>
+                                <p id="productNameError" style="color: rgb(246, 4, 4);"></p>
 
 
                                 <div class="row mb-3">
@@ -78,15 +79,21 @@
                                     <h3>Media</h3>
                                     <div class="form-group text-center">
                                         <label for="image1">Image 1:</label>
+                                        
+
                                         <input
                                           type="file"
-                                          name="image1"
+                                          name="image1"     
                                           class="form-control-file"
                                           id="image1"
                                           accept="image/*"
+                                          style="display:none;"
+                                        
                                         />
+                                        
                                         <img src="" alt="Image 1" class="img-fluid" style="max-height: 200px;" id="previewImage1">
-                                      </div>
+                                    </div>
+                                    
                                       <div class="form-group text-center">
                                         <label for="image2">Image 2:</label>
                                         <input
@@ -95,6 +102,7 @@
                                           class="form-control-file"
                                           id="image2"
                                           accept="image/*"
+                                          
                                         />
                                         <img src="" alt="Image 2" class="img-fluid" style="max-height: 200px;"id="previewImage2">
                                       </div>
@@ -106,6 +114,7 @@
                                           class="form-control-file"
                                           id="image3"
                                           accept="image/*"
+                                        
                                         />
                                         <img src="" alt="Image 3" class="img-fluid" style="max-height: 200px;"id="previewImage3">
                                       </div>
@@ -162,10 +171,12 @@
 //   }
 // });
 
-
+console.log('here,.............')
 
     const form = document.querySelector("form");
     console.log('it is entered in to the form')
+    const  productNameError = document.getElementById('productNameError')
+
     
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -201,6 +212,14 @@
 
 // alert(conformPassword)
   try {
+    if(productName===""){
+        console.log('first name required')
+        productNameError.innerHTML = 'proper first name is required'
+        setTimeout(()=>{
+          productNameError.innerHTML = ''
+        },5000)
+        return
+      }
 
    console.log('fetch is working',data);
     const res = await fetch("/admin/addProducts", {

@@ -19,11 +19,13 @@
                     <label for="categoryName" class="form-label">Category Name:</label>
                     <input type="text" class="form-control" id="categoryName" name="categoryName" required>
                 </div>
+                <p id="categoryError" style="color: rgb(246, 4, 4);"></p>
 
                 <div class="mb-3">
                     <label for="categoryDescription" class="form-label">Short Description:</label>
                     <textarea class="form-control" id="categoryDescription" name="categoryDescription" rows="4" required></textarea>
                 </div>
+                <p id="categoryDescriptionError" style="color: rgb(246, 4, 4);"></p>
 
                 <!-- Add more input fields or form elements as needed -->
 
@@ -39,6 +41,8 @@
 <script>
    document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("#add-category");
+    const  categoryError = document.getElementById('categoryError')
+    const  categoryDescriptionError = document.getElementById('categoryDescriptionError')
 
 console.log(form,',,,,,,');
     form.addEventListener("submit", async (e) => {
@@ -54,6 +58,22 @@ console.log(form,',,,,,,');
   console.log(categoryName);
 
   try {
+    if(categoryName===""){
+        console.log('first name required')
+        categoryError.innerHTML = 'proper first name is required'
+        setTimeout(()=>{
+          categoryError.innerHTML = ''
+        },5000)
+        return
+      }
+      if(categoryDescription===""){
+        console.log('first name required')
+        categoryDescriptionError.innerHTML = 'proper first name is required'
+        setTimeout(()=>{
+          categoryDescriptionError.innerHTML = ''
+        },5000)
+        return
+      }
   
     const res = await fetch("/admin/addCategory", {
       method: "POST",

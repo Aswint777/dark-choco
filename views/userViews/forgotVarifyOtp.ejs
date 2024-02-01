@@ -11,7 +11,7 @@
               <p>Your otp was sent to you via email</p>
               <div></div>
               <form action="">
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-4" style="display: none;">
                   <label class="form-label" for="form2Example17"
                     >Email address</label
                   >
@@ -56,8 +56,9 @@
       const otp = form.otp.value;
   
       try {
+        console.log(otp,email)
     
-        const res = await fetch("/otp", {
+        const res = await fetch("/forgotPasswordOtp", {
           method: "POST",
           body: JSON.stringify({ email, otp}),
           headers: {
@@ -70,9 +71,10 @@
         console.log(res)
         const data = await res.json();
 
-        if (data.success) {
+        if (data) {
+          console.log('data is here ')
        
-          location.href = "/";
+          location.href = `/setNewPassword/${encodeURIComponent(email)} `;
         }
       } catch (err) {
         console.log(err, "err");
@@ -86,7 +88,7 @@ async function resendOtp() {
   console.log(email)
     try{
       console.log( "it is the id");
-    const res = await fetch("/resendOtp", {
+    const res = await fetch("/resendForgotOtp", {
       method: "post",
         body: JSON.stringify({email:email  }),
         headers: {

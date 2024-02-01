@@ -54,15 +54,19 @@ const productSchema = new mongoose.Schema({
   },
   quantity :{
     type:Number,
-    required : true
+    required : true,
+    min: 0,
   },
   amount:{
     type:Number,
-    required : true
+    required : true,
+    min: 1,
+    
   },
   markup : {
     type:Number,
-    required : true
+    required : true,
+    min: 1,
   }
   // image4 :[
   //   {

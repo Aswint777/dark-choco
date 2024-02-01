@@ -40,12 +40,15 @@
                       <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example17">Email address</label>
                         <input name="email" type="email" id="form2Example17" class="form-control form-control-lg" />
+                        <p id="emailError" style="color: rgb(246, 4, 4);"></p>  
                       </div>
                       
                       <div class="form-outline mb-4">
                         <label class="form-label" for="form2Example27">Password</label>
                         <input name="password" type="password" id="form2Example27" class="form-control form-control-lg" />
                         <img src="/assets/icons" alt="">
+                        <p id="passwordError" style="color: rgb(246, 4, 4);"></p>
+                    <p id="errors" style="color: rgb(246, 4, 4);"></p>
                       </div>
                       <!-- <a class="medium text-muted" href="#!">Forgot password?</a> -->
                       
@@ -73,6 +76,9 @@
       
 <script>
   const form = document.querySelector("form");
+  const emailError = document.getElementById('emailError')
+  const passwordError = document.getElementById('passwordError')
+  const doubleError = document.getElementById('errors')
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -82,6 +88,21 @@
     const password = form.password.value;
     
     try {
+      if (email === ''){
+        emailError.innerHTML = 'proper email is required'
+        setTimeout(()=>{
+          emailError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (password === ''){
+        console.log('hloooooozzz')
+        passwordError.innerHTML = 'proper password  is required'
+        setTimeout(()=>{
+          passwordError.innerHTML = ''
+       },5000)
+        return 
+      }
       console.log(email, password);
       const res = await fetch("/adminLogin/", {
         method: "POST",
@@ -104,7 +125,10 @@
       }
     } catch (err) {
       console.log(err, "err");
-      // alert(err.message)
+      doubleError.innerHTML = 'somthing wrong in password or email'
+        setTimeout(()=>{
+          doubleError.innerHTML = ''
+       },5000)
     }
   });
 </script>

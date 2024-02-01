@@ -44,7 +44,7 @@
                     
                       />
                     </div>
-                    <p id="firstName" style="color: rgb(246, 4, 4);"></p>
+                    <p id="name" style="color: rgb(246, 4, 4);"></p>
 
                     <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example17"
@@ -57,6 +57,8 @@
                       class="form-control form-control-lg"
                       />
                     </div>
+                    <p id="secondname" style="color: rgb(246, 4, 4);"></p>
+
                     <div class="form-outline mb-4">
                       <label class="form-label" for="form2Example17"
                       >Email address</label
@@ -68,6 +70,7 @@
                       class="form-control form-control-lg"
                     />
                   </div>
+                  <p id="emailEerror" style="color: rgb(246, 4, 4);"></p>
                   <!-- <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example17"
                     >Phone number</label
@@ -92,6 +95,8 @@
                       class="form-control form-control-lg"
                       />
                     </div>
+                    <p id="passswordErrors" style="color: rgb(246, 4, 4);"></p>
+
                     <div class="form-outline mb-4">
                       <p id="error-message" style="color: rgb(246, 4, 4);"></p>
                       <label class="form-label" for="form2Example27"
@@ -104,6 +109,7 @@
                       class="form-control form-control-lg"
                       />
                     </div>
+                    <p id="confirmPasswordError" style="color: rgb(246, 4, 4);"></p>
                     
                     <div class="pt-1 mb-4">
                       <p id="errors-message" style="color: rgb(246, 4, 4);"></p>
@@ -111,11 +117,6 @@
                         Sign In
                       </button>
                     </div>
-                    
-                    
-                    <!-- <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? 
-                      <button type="button" class="btn btn-outline-danger">Create new</button> -->
-                      <!-- <a href="#!" style="color: #393f81;">Register here</a></p> -->
                     </form>
                   </div>
                 </div>
@@ -128,12 +129,19 @@
   <!-- </div> -->
     
     <script>
+      
       const form = document.querySelector("form");
       const emailError = document.querySelector(".email.error");
       const passwordError = document.querySelector(".password.error");
       const errorMessage =document.getElementById('error-message')
       const errorsMessage =document.getElementById('errors-message')
-      const firstName = document.getElementById('firstName')
+      const nameError = document.getElementById('name')
+      const  secondNameError = document.getElementById('secondname')
+      const  emailErrors = document.getElementById('emailEerror')
+      const  passwordErrors = document.getElementById('passswordErrors')
+      const  ConfirmPasswordError = document.getElementById('confirmPasswordError')
+
+
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -156,19 +164,54 @@
     console.log('running')
 // alert(conformPassword)
     try {
-      if(password !== conformPassword){
-        console.log('wait ')
-       
-        errorMessage.innerHTML="password doesn't match "
-        return 
-      }
+      
       if(firstName===""){
-        firstName.innerHTML = 'proper first name is required'
+        console.log('first name required')
+        nameError.innerHTML = 'proper first name is required'
+        setTimeout(()=>{
+          nameError.innerHTML = ''
+        },5000)
         return
       }
-      if(firstName === ''||secondName === ''||email === ''||password === ''||conformPassword ===''){
+      if(secondName===""){ 
+        secondNameError.innerHTML = 'proper second name is required'
+        setTimeout(()=>{
+          secondNameError.innerHTML = ''
+        },5000)
+        return
+      }
+      if(email==="" ){
+       emailErrors.innerHTML = 'proper email  is required'
+       setTimeout(()=>{
+         emailErrors.innerHTML = ''
+       },5000)
+       return
+     }
+     if(password==="" ){
+       passwordErrors.innerHTML = 'password is required'
+       setTimeout(()=>{
+         passwordErrors.innerHTML = ''
+       },5000)
+       return
+     }
+     if(conformPassword==="" ){
+       ConfirmPasswordError.innerHTML = 'confirm password  is required'
+       setTimeout(()=>{
+         ConfirmPasswordError.innerHTML = ''
+       },5000)
+       return
+     }
+     if(password !== conformPassword){
         console.log('wait ')
-       
+        errorMessage.innerHTML="password doesn't match "
+        setTimeout(()=>{
+         errorMessage.innerHTML = ''
+       },5000)
+        return 
+      }
+
+      if(firstName === ''||secondName === ''||email === ''||password === ''||conformPassword ===''){
+        console.log('wait ')    
         errorsMessage.innerHTML="all field is not filled"
         return 
       }
@@ -179,26 +222,18 @@
           "Content-Type": "application/json",
         },
       })
-      // .then(res=>{
-      //   return res.json()
-      // }).then(res=>{
-      //   alert(`dat ${res.user}`)
-      // })
+   
       if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
       const data = await res.json();
-      // if(data.errors){
-      //   emailError.textContent = data.errors.email
-      //   passwordError.textContent = data.errors.password
-      // }
-      // console.log(data, "oooooooo");
+     
       if (data.success) {
         location.href="/otp?email=" + email;
       }
     } catch (err) {
       console.log(err,'err');
-      // alert(err.message)
+
     }
   });
 </script>

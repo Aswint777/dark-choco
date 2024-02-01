@@ -24,7 +24,7 @@
               filter
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item"  onclick="filter('{latest:1}')">latest</a></li>
+              <li><a class="dropdown-item"  onclick="filter('{latest:-1}')">latest</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
               <li><hr class="dropdown-divider"></li>
@@ -160,7 +160,7 @@
 }
 
 async function filter(arg){
-  // alert(arg)
+  alert(arg)
   console.log('entered the fetch')
   const res = await fetch(`/admin/categoryList?date=${arg}`,{
     method: "GET",
@@ -222,15 +222,15 @@ function updateTable(data) {
 
 bodyOfTable.innerHTML = rows.join("");
   
-  // Add new rows based on the fetched data
-  // data.forEach((category, index) => {
-  //   const newRow = document.createElement('tr');
-  //   newRow.classList.add('align-middle');
+//   // Add new rows based on the fetched data
+//   data.forEach((category, index) => {
+//     const newRow = document.createElement('tr');
+//     newRow.classList.add('align-middle');
         
-  //   // ... Create and append table cells for the new row based on category data ...
+//     // ... Create and append table cells for the new row based on category data ...
     
-  //   tableBody.appendChild(newRow);
-  // });
+//     tableBody.appendChild(newRow);
+//   });
 }
 
 

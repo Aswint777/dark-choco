@@ -2,7 +2,7 @@ const express = require('express')
 const authenticateToken = require('../middleware/middleware')
 
 const {home,userLogin, userSignIn, newUser, userLoginPost, adminLogin, getOtp, adminLoginPost, userLogOut, adminLogOut} = require('../controller/publicRouteController')
-const { otpPagePost, resendOtp } = require('../controller/otpController')
+const { otpPagePost, resendOtp, forgotPassword, forgotPasswordPost, forgotVarifyOtp, forgotVarifyOtpPost, setNewPassword, setNewPasswordPost, resendForgotOtp } = require('../controller/otpController')
 
 const router = express.Router()
 
@@ -35,5 +35,24 @@ router.post('/resendOtp',resendOtp)
 router.get('/logOut',userLogOut)
 
 router.get('/adminLogOut',adminLogOut)
+
+// forgot password 
+router.get ('/forgotPasswords',forgotPassword)
+
+router.post ('/forgotPassword',forgotPasswordPost)
+
+// forgot password varifying page 
+
+router. get ('/forgotPasswordOtp/:email',forgotVarifyOtp)
+
+router.post ('/forgotPasswordOtp',forgotVarifyOtpPost)
+
+router.post ('/resendForgotOtp',resendForgotOtp)
+
+// set new password 
+
+router.get ('/setNewPassword/:email',setNewPassword)
+
+router.post('/setNewPassword',setNewPasswordPost)
 
 module.exports = router

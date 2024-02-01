@@ -8,6 +8,13 @@ const User = require('../model/userModel')
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const forgot  = require("./helperFunction/forgotPassword");
+const restPassword = require('../model/forgotPasswordModel')
+
+// const bcrypt = require("bcrypt");
+// const { isEmail } = require("validator");
+
+
 
 
 
@@ -48,7 +55,83 @@ const resendOtp = async(req,res) => {
     res.json({success : true})
 }
 
+
+// forgot password otp page 
+
+const forgotPassword = (req,res)=>{
+    try{
+        
+        console.log('here it is ')
+        res.render('userViews/forgotPassword')
+    }catch(err){
+        console.log(err,"rrrr")
+    }
+}
+    
+const forgotPasswordPost = async (req,res)=>{
+    console.log('post forgot')
+    const {email} = req.body
+ 
+    await forgot(email)
+
+    res.json({email})
+}
+
+// forgot password otp varifying page
+
+const forgotVarifyOtp = (req,res) =>{
+    const {email}= req.params
+    res.render('userViews/forgotVarifyOtp',{email})
+}
+
+const forgotVarifyOtpPost = async(req,res) =>{
+    const {email,otp} = req.body
+    const forgot = await restPassword.findOne({email:email})
+    // let data    
+    if (forgot.otp == otp){
+        const  data = await User.findOne({email:email})
+        res.json({data})
+    }
+}
+
+//set new password
+
+const setNewPassword = (req,res) =>{
+    const {email}= req.params
+    console.log(email)
+    res.render('userViews/setNewPassword',{email})
+}
+
+const setNewPasswordPost = async (req,res)=>{
+    const {email,password} = req.body
+    console.log(email,password)
+
+    const salt = await bcrypt.genSalt();
+    const NewPassword = await bcrypt.hash(password, salt);
+    const data = await User.findOneAndUpdate({email:email},{$set:{password:NewPassword}})
+    res.json({data})   
+}
+
+const resendForgotOtp = async(req,res) => {
+    console.log("resend otp called");
+    const {email} = req.body
+    const resend = await restPassword.findOne({ email });
+    await restPassword.deleteOne({email})
+   
+    console.log(resend)
+    await forgot(email)
+    console.log('Resend working')
+    res.json({success : true})
+}
+
 module.exports = {
     otpPagePost,
-    resendOtp
+    resendOtp,
+    forgotPassword,
+    forgotPasswordPost,
+    forgotVarifyOtp,
+    forgotVarifyOtpPost,
+    setNewPassword,
+    setNewPasswordPost,
+    resendForgotOtp
 }

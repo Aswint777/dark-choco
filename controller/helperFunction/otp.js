@@ -43,9 +43,9 @@ async function main(email,firstName,secondName,password) {
         }
         console.log("Email send succesfully ", info.response);
     });
-    // console.log(otpCreater);
       const otpSave = await otp.create({ otp: otpCreater,email,firstName,secondName,password });
-  // console.log("Message sent: %s", info);
+      console.log(otpSave,'jjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
+ 
 }
 
 module.exports = { main };

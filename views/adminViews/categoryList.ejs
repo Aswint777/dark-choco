@@ -19,23 +19,74 @@
       <div class="overflow-hidden card table-nowrap table-card">
         <div style="width: 500px;height: 60; color: gray;">
           <!-- Example single danger button -->
-          <div class="btn-group">
+
+<!--           
+          <div class="input-group">
+            <div class="form-outline" data-mdb-input-init>
+              <input type="search" id="form1" placeholder="search" class="form-control" />
+             
+            </div>
+            <button type="button" class="btn btn-primary" data-mdb-ripple-init>
+              <i class="fas fa-search"></i>
+            </button>
+            
+            
+          </div> -->
+          <!-- <div >
             <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               filter
             </button>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item"  onclick="filter('{latest:-1}')">latest</a></li>
+              <li><a class="dropdown-item"  onclick="filter('-1')">latest</a></li>
+              <li><a class="dropdown-item"  onclick="filter('1')">oldest</a></li>
               <li><a class="dropdown-item" href="#">Another action</a></li>
               <li><a class="dropdown-item" href="#">Something else here</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="#">Separated link</a></li>
             </ul>
-          </div>
+          </div> -->
         </div>
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="mb-0"></h5>
+          <!-- <h5 class="mb-0">dfjvndkv</h5> -->
+          <div >
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              filter
+            </button>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item"  onclick="filter('-1')">latest</a></li>
+              <li><a class="dropdown-item"  onclick="filter('1')">oldest</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
+              <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+              <!-- <li><hr class="dropdown-divider"></li> -->
+              <!-- <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+            </ul>
+          </div>
+          <!-- ////////////////// -->
+
+           <form action="" id="searchCategory">
+
+             <div class="input-group" style=" margin-left: 10%;">
+              <div class="form-outline" data-mdb-input-init>
+                <% if (query){%>
+                  <input type="search" id="form1" placeholder="search" name="searchQuery" value="<%=query%>" class="form-control" />
+
+                  <%}else{%>
+                    <input type="search" id="form1" placeholder="search" name="searchQuery"  class="form-control" />
+
+               <% }%>
+                <!-- <label class="form-label" for="form1">Search</label> -->
+              </div>
+              <button onclick="searchCategory()" type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                <i class="fas fa-search"></i>
+              </button>
+              
+              
+            </div>
+          </form>
+
+
           <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
-          <button type="button" class="btn btn-success"><a style="color:aliceblue ;" href="addCategory">Add Category</a></button>
+          <button style="width: 180px;" type="button" class="btn btn-success"><a style="color:aliceblue ;" href="addCategory">Add Category</a></button>
         </div>
         <div class="table-responsive">
           <table class="table mb-0" id="categoryTableBody">
@@ -160,7 +211,7 @@
 }
 
 async function filter(arg){
-  alert(arg)
+  
   console.log('entered the fetch')
   const res = await fetch(`/admin/categoryList?date=${arg}`,{
     method: "GET",
@@ -193,66 +244,95 @@ function updateTable(data) {
   if (category.status === true) {
     row += `
       <td>
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= category._id %>">
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop${category._id}">
           block
         </button>
       </td>`;
   } else {
     row += `
       <td>
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= category._id %>">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop${category._id}">
           Unblock
         </button>
       </td>`;
   }
 
   row += `
-      <td><span>${category.date}</span></td>
+      <td><span>${category.date.slice(0, 10) }</span></td>
       <td class="text-end">
         <div class="dropdown">
-          <a class="btn btn-success" href="editCategory/<%= category._id %>">Edit</a>
+          <a class="btn btn-success" href="editCategory/${category._id }">Edit</a>
         </div>
       </td>
     </tr>`;
 
     rows.push(row)
-});
-
+  });
   
-
-bodyOfTable.innerHTML = rows.join("");
-  
-//   // Add new rows based on the fetched data
-//   data.forEach((category, index) => {
-//     const newRow = document.createElement('tr');
-//     newRow.classList.add('align-middle');
-        
-//     // ... Create and append table cells for the new row based on category data ...
-    
-//     tableBody.appendChild(newRow);
-//   });
+  bodyOfTable.innerHTML = rows.join("");
 }
 
 
-// async function editCategory(_id,categoryName){
-//   console.log('editing here')
-//   console.log(_id)
-//   console.log(categoryName)
-//   try{
-//     const edit =  await fetch("/admin/editCategory", {
 
-//       method: "POST",
-//         body: JSON.stringify({_id,categoryName}),
+function searchCategory() {
+        // Get the search input value
+        var searchInput = document.getElementById("form1").value;
+
+        // Get the form element
+        var form = document.getElementById("searchCategory");
+
+        // Set the form action URL with the search query parameter
+        form.action = "/admin/categoryList?searchQuery=" + encodeURIComponent(searchInput);
+
+        // Submit the form
+        form.submit();
+
+}
+
+
+
+
+
+
+// const form = document.querySelector("form");
+  
+
+//   form.addEventListener("submit", async (e) => {
+//     e.preventDefault();
+
+    
+//     // const email = form.email.value;
+//     // const password = form.password.value;
+    
+//     try {
+     
+      
+//       const res = await fetch("/", {
+//         method: "POST",
+//         body: JSON.stringify({ email, password }),
 //         headers: {
 //           "Content-Type": "application/json",
-//         },  
-//       })
-//       // location.href = '/admin/editCategory'
-//       const data = await res.json();
-//       if(data.success){
+//         },
+//       });
+//       if (!res.ok) {
+//         throw new Error(`HTTP error! Status: ${res.status}`);
 //       }
-//   }catch(error){
-//     console.error("Category edit failed:", error);
-//   }
-//  }
+//       const data = await res.json();
+      
+//       console.log(data   );
+//       if (data.admin) {
+//         location.href = "/admin/customer";
+//       }
+//     } catch (err) {
+//       console.log(err, "err");
+//       doubleError.innerHTML = 'somthing wrong in password or email'
+//         setTimeout(()=>{
+//           doubleError.innerHTML = ''
+//        },5000)
+//     }
+//   });
+
+  
+
+ 
 </script>

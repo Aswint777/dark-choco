@@ -6,13 +6,26 @@ const categoryList = async (req,res) => {
     
     if (Object.keys(query).length === 0){
         const category = await Category.find({},{categoryDescription:0})
-        res.render('adminViews/categoryList',{category:category})
-    } else {
-        
-        const latest = await Category.find().sort(req.query.date) //{} {another:true,chocolate:true}
+        res.render('adminViews/categoryList',{category,query:''})
+    } else if (req.query.date) {
+        console.log(req.query)
+        const latest = await Category.find().sort({date:Number(req.query.date)}) //{} {another:true,chocolate:true}
 
         console.log(latest)
         res.json({latest})
+    }else if(req.query.searchQuery){
+        try{
+            
+            console.log(req.query.searchQuery,'lllllllllllllllllllllllllllllllllllllllll')
+            const category= await Category.find({
+                category: { $regex: req.query.searchQuery, $options: "i" }
+            });
+            const query = req.query.searchQuery
+            res.render('adminViews/categoryList',{category,query})
+            
+        }catch(error){
+            console.log(error)
+        }
     }
 
 }
@@ -45,15 +58,28 @@ const addCategoryPost = async function (req,res) {
     console.log('add category')
     const {categoryName,categoryDescription} = req.body
     try{
-     
-        const category = await Category.create({ category:categoryName , categoryDescription : categoryDescription });
-       res.json({success:true})
+        const dupe= await Category.find({
+            category: { $regex: categoryName, $options: "i" }
+        });
+        console.log(dupe,'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+        
+        if(dupe.length !== 0){
 
-    }catch(err){
-        console.log(err)
-        res.status(400).send("error, category is not created ");
+            throw Error('category already here')
+        }else if(categoryName.length>20 ){
+            console.log()
+            throw Error('Category name is too long')
+            
+        }
+        else {
+            const category = await Category.create({ category:categoryName , categoryDescription : categoryDescription });
+             res.json({success:true})
+            
+        }
+    }catch(error){
+        console.log(error,'kkkk')
+        res.json({success:false , error:error.message});
     }
- 
 }
 
 const editCategory = async (req,res) =>{

@@ -22,7 +22,7 @@
           <button type="button" class="btn btn-success"><a style="color:aliceblue ;" href='addProduct'>Add product</a></button>
         </div>
         <div class="table-responsive">
-          <table class="table mb-0">
+          <table class="table mb-0" id="dataTable">
             <thead class="small text-uppercase bg-body text-muted">
               <tr>
                 <!-- <th>Index</th> -->
@@ -160,7 +160,23 @@
 </div>
 
 
+
 <script>
+//  console.log('oooooooooooooooooooo')
+$(document).ready(function () {
+      $('#dataTable').DataTable({
+        "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+      });
+  });
+
+
+
+
    async function manageProduct(id) {
     try{
       console.log(id, "it is the id");
@@ -178,6 +194,8 @@
     console.error("product management failed:", error);
   }  
 }
+
+
 
 
 
@@ -204,3 +222,16 @@
 //   }
 //  }
 </script>
+<!-- 
+<script>
+  $(document).ready(function () {
+      $('#dataTable').DataTable({
+        "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false
+      });
+  });
+</script> -->

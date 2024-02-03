@@ -47,6 +47,7 @@ const otpPagePost = async (req,res)=>{
 const resendOtp = async(req,res) => {
     console.log("resend otp called");
     const {email} = req.body
+    console.log(email,'jassssssssssssssss')
     const resend = await Otp.findOne({ email });
     await Otp.deleteOne({email})
    

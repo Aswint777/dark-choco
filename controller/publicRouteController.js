@@ -79,6 +79,7 @@ const newUser = async function (req, res) {
   const { firstName, secondName, email, password } = req.body;
 
   try {
+
     // const user = await User.create({ firstName, secondName, email, password });
     // const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
     // res.cookie("loginToken", token, { httpOnly: true, maxAge: maxAge * 1000 });

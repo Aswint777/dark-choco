@@ -2,12 +2,29 @@
 <%-include('../partial/header.ejs')%>
 <!-- <img src="" alt=""> -->
 
+<!-- <div class="content-wrapper" style="min-height: 823px;">
+
+  <div class="modal fade" id="formModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+              <h1 class="m-0 text-dark mt-3">Room close in: <span id="timer"></span></h1>
+          </div>
+      </div>
+  </div>
+
+</div> -->
+
+
+
+
 <section class="container-fluid bg-body-tertiary d-block">
     <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-4" style="min-width: 500px;">
           <div class="card bg-white mb-5 mt-5 border-0" style="box-shadow: 0 12px 15px rgba(0, 0, 0, 0.02);">
             <div class="card-body p-5 text-center">
               <h4>Verify</h4>
+              <p id="timers" style="display: none; color: rgb(246, 4, 4) ;">SignUp again</p>
               <p>Your otp was sent to you via email</p>
               <div></div>
               <form action="">
@@ -28,15 +45,23 @@
                 <div class="otp-field mb-4 " name="email">
                   <input type="number" name="otp" />
                 </div>
-                
-                <button class="btn btn-primary mb-3" type="submit">
-                  Verify
-                </button>
+                <div class="d-flex justify-content-center gap-3">
+
+                  <span class=" " style="display: flex;align-items: center;justify-content: center;" id="timer">03:00</span>
+                  <button class="btn btn-primary mb-3" type="submit">
+                    Verify
+                  </button>
+                </div>
               </form>
+              
+
+            
+
+                <p class="resend text-muted mb-0" style="display: none;" id="resendBtn">
+                  Didn't receive otp? <button style="background-color: gray;" onclick=resendOtp()>Request again</button>
+                </p>
+             
   
-              <p class="resend text-muted mb-0">
-                Didn't receive otp? <button style="background-color: gray;" onclick=resendOtp()>Request again</button>
-              </p>
             </div>
           </div>
         </div>
@@ -46,8 +71,53 @@
 
 
 
+  
+
+
 
   <script>
+
+document.addEventListener('DOMContentLoaded', () => {
+            let timer =300 ; // 300 seconds = 5 minutes
+            let interval = setInterval(() => {
+                if (timer === 0) {
+                    clearInterval(interval);
+                    showData();
+                }
+            
+                timer--;
+            }, 1000);
+
+            function updateTime(content) {
+                document.getElementById('timers').textContent = content;
+            }
+
+            function showData() {
+                // Display your data or perform actions after 5 minutes
+                document.getElementById('timers').style.display = 'block'; // Show the element
+            }
+        });
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+    let timer = 180; // 300 seconds
+    let interval = setInterval(() => {
+        if (timer === 0) {
+            clearInterval(interval);
+            document.getElementById("resendBtn").style.display='block'
+        }
+
+        const minutes = Math.floor(timer / 60);
+        const seconds = timer % 60;
+
+        updateTime(`${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`);
+        timer--;
+    }, 1000);
+    function updateTime(content) {
+        document.getElementById('timer').textContent = content;
+    }
+});
+
     const form = document.querySelector("form");
   
     form.addEventListener("submit", async (e) => {
@@ -82,8 +152,9 @@
 
 
 async function resendOtp() {
+  
   const email = form.email.value;
-  console.log(email)
+  console.log(email,'hahahhhaahhhahhahahhhaaaaaaaaaaars')
     try{
       console.log( "it is the id");
     const res = await fetch("/resendOtp", {

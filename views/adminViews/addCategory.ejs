@@ -16,14 +16,15 @@
         <div class="col-md-10">
             <form id="add-category">
                 <div class="mb-3">
+                  <p id="catchError" style="color: rgb(246, 4, 4);"></p>
                     <label for="categoryName" class="form-label">Category Name:</label>
-                    <input type="text" class="form-control" id="categoryName" name="categoryName" required>
+                    <input type="text" class="form-control" id="categoryName" name="categoryName" >
                 </div>
                 <p id="categoryError" style="color: rgb(246, 4, 4);"></p>
 
                 <div class="mb-3">
                     <label for="categoryDescription" class="form-label">Short Description:</label>
-                    <textarea class="form-control" id="categoryDescription" name="categoryDescription" rows="4" required></textarea>
+                    <textarea class="form-control" id="categoryDescription" name="categoryDescription" rows="4" ></textarea>
                 </div>
                 <p id="categoryDescriptionError" style="color: rgb(246, 4, 4);"></p>
 
@@ -39,10 +40,12 @@
 
 
 <script>
+ 
    document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("#add-category");
     const  categoryError = document.getElementById('categoryError')
     const  categoryDescriptionError = document.getElementById('categoryDescriptionError')
+    const catchError = document.getElementById('catchError')
 
 console.log(form,',,,,,,');
     form.addEventListener("submit", async (e) => {
@@ -56,11 +59,12 @@ console.log(form,',,,,,,');
   
 
   console.log(categoryName);
+  console.log(typeof(categoryName))
 
   try {
-    if(categoryName===""){
+    if(categoryName==="" ){
         console.log('first name required')
-        categoryError.innerHTML = 'proper first name is required'
+        categoryError.innerHTML = ' Category name is required'
         setTimeout(()=>{
           categoryError.innerHTML = ''
         },5000)
@@ -68,7 +72,7 @@ console.log(form,',,,,,,');
       }
       if(categoryDescription===""){
         console.log('first name required')
-        categoryDescriptionError.innerHTML = 'proper first name is required'
+        categoryDescriptionError.innerHTML = 'Description is required'
         setTimeout(()=>{
           categoryDescriptionError.innerHTML = ''
         },5000)
@@ -82,19 +86,30 @@ console.log(form,',,,,,,');
         "Content-Type": "application/json",
       },
     })
-   
-    if (!res.ok) {
-    throw new Error(`HTTP error! Status: ${res.status}`);
-  }
-  const data = await res.json()
+    
+    const data = await res.json()
+    console.log('llllllllllllll===========',data?.error)
+    if(data.error){
+      catchError.innerHTML = data?.error
+          setTimeout(()=>{
+            catchError.innerHTML = ''
+          },5000)
+      console.log(error,'err');
+    }
+  //   if (res.success === false) {
+  //   // throw new Error(`HTTP error! Status: ${res.data}`);
+  // }
+
+
     if(data.success){
       // alert('asdadfs')
         location.href = 'categoryList'
     }
     
    
-  } catch (err) {
-    console.log(err,'err');
+  } catch (error) {
+    
+    console.log(error,'err');
     // alert(err.message)
   }
 });

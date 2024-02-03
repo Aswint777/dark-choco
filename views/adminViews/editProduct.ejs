@@ -6,7 +6,7 @@
         </div>
 
         <div class="col-md-10">
-            <h2 class="mb-4">Add product</h2>
+            <h2 class="mb-4">Edit product</h2>
             <div class="row">
                 
                 <div class="col-md-10">
@@ -28,7 +28,7 @@
                                 <div class="row mb-3">
                                     <label for="categoryDescription1" class="col-sm-4 col-form-label">Short Description:</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" id="categoryDescription1" name="categoryDescription" rows="4" value="pro.productDescription" required></input>
+                                        <input class="form-control" id="categoryDescription1" name="productDescription" rows="4" value="<%=pro.productDescription %>" required></input>
                                     </div>
                                 </div>
 
@@ -142,9 +142,9 @@
         
 <script>
 
-
     
-const form = document.querySelector("form");
+    const form = document.querySelector("form");
+    
     console.log('it is entered in to the form')
     
     form.addEventListener("submit", async (e) => {

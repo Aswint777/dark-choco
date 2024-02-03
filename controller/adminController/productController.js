@@ -59,6 +59,7 @@ const addProductPost = async (req, res) => {
 const adminProductList = async (req, res) => {
   // console.log('admin product list page is here')
   const productList = await product.find().populate("category");
+  console.log(productList)
   res.render("adminViews/adminProductList", { productList });
 };
 
@@ -89,7 +90,7 @@ const editProduct = async (req, res) => {
   const pro = await product.findOne({ _id: id }).populate("category");
   const cat = await Category.find({});
   
-  console.log(pro);
+  console.log(pro.productDescription,"lolllll");
 
   res.render("adminViews/editProduct", { pro, cat });
 };
@@ -106,7 +107,7 @@ const editProductPost = async (req, res) => {
     markup,
     category,
   } = req.body;
-  // console.log(req.files)
+  console.log(productDescription,'haaaaaaaaaaaaaaaaaai')
   const image1 = req.files["image1"]; // Contains the uploaded file information for 'image1'
   const image2 = req.files["image2"]; // Contains the uploaded file information for 'image2'
   const image3 = req.files["image3"]; // Contains the uploaded file information for 'image3'

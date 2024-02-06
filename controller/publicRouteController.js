@@ -88,7 +88,9 @@ const newUser = async function (req, res) {
 
   try {
     const data = await otp.findOne({email:email})
-    if (data){
+    if(password.length < 6 ){
+      throw Error('password is not strong')
+    }else if (data){
       await otp.deleteOne({email:email})
     }
 
@@ -97,7 +99,8 @@ const newUser = async function (req, res) {
   } catch (error) {
     // const errors = handleErrors(errors)
     console.log(error, "error in singIn");
-    res.status(400).send("error, user not created ");
+    // res.status(400).send("error, user not created ");
+    res.json({success:false , error:error.message});
   }
   console.log("reached");
 };

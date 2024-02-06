@@ -58,6 +58,22 @@
                                 <label style="font-size: 11px;">email</label>
                                 <input type="text" class="form-control" name="email" placeholder="" value="<%=profile.email %>">
                             </div>
+                            <h6>Set New Password</h6>
+                            <div class="mb-3">
+                                <label style="font-size: 11px;">Old Password</label>
+                                <input type="text" class="form-control" name="OldPassword" placeholder="" value="">
+                            </div>
+                            <div class="mb-3">
+                                <label style="font-size: 11px;">New Password</label>
+                                <input type="text" class="form-control" name="newPassword" placeholder="" value=""> 
+                            </div>
+                            <div class="mb-3">
+                                <label style="font-size: 11px;">confirm New password</label>
+                                <input type="text" class="form-control" name="confirmNewPassword" placeholder="" value="">
+                                <p id="confirmNewPasswordError" style="color: rgb(246, 4, 4);"></p>
+                                <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+
+                            </div>
                             
                         </div>
                     </div>
@@ -70,9 +86,12 @@
                 console.log('kkkkkkk')
                 const form = document.querySelector("form");
                 const successMassage = document.getElementById('successMassage')
-        //         const passwordError = document.getElementById('passwordError')
-        //         const errors = document.getElementById('errors')
-        // const catchError = document.getElementById('catchError')
+                // const passswordErrors = document.getElementById('passswordErrors')
+                // const oldPasswordError = document.getElementById('oldPasswordError')
+                // const newPasswordError = document.getElementById('newPasswordError')
+                const confirmNewPasswordError = document.getElementById('confirmNewPasswordError')
+
+                const catchError = document.getElementById('catchError')
       
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
@@ -87,14 +106,28 @@
         const address =formData.get('address')
         const pinNumber = formData.get('pinNumber')
         const email = formData.get('email')
+        const OldPassword = formData.get("OldPassword")
+        const newPassword = formData.get("newPassword")
+        const confirmNewPassword = formData.get("confirmNewPassword")
         
-        console.log(firstName)
+
+        
+        console.log(newPassword,'jjdjjdfhjd')
         console.log(formData,'oooooooooooooooo')
           
-          try {     
+          try {    
+        if(newPassword !== confirmNewPassword){
+            confirmNewPasswordError.innerHTML = 'password is not matched'
+            setTimeout(()=>{
+                confirmNewPasswordError.innerHTML = ''
+            },5000)
+            return
+        }
+            
+            
             const res = await fetch("userProfilePage", {
               method: "POST",
-             body:JSON.stringify({firstName,secondName,email,phoneNumber,address,pinNumber}),
+             body:JSON.stringify({firstName,secondName,email,phoneNumber,address,pinNumber,OldPassword,newPassword}),
               headers: {
                 "Content-Type": "application/json",
               },
@@ -106,6 +139,16 @@
                 successMassage.innerHTML = ''
               },5000)
             }
+
+      if(data.error){
+        console.log('fixed herrrrrre')
+      catchError.innerHTML = data?.error
+          setTimeout(()=>{
+            catchError.innerHTML = ''
+          },5000)
+      console.log(error,'err');
+    }
+
             // if(data.error){
             //   console.log( data?.error,'erroooooooooooooooooooooooooooooo');
             //   catchError.innerHTML = data?.error

@@ -32,7 +32,9 @@ const otpPagePost = async (req,res)=>{
         const otpVarify = await Otp.findOne({ email });
         console.log(otpVarify.otp,'back')
         console.log(otp,"good")
-        if (otp == otpVarify.otp){
+        if(otp != otpVarify.otp){
+            throw Error('invalid otp')
+        }else if (otp == otpVarify.otp){
             console.log(otp,otpVarify.otp)
             const user = await User.create({ firstName:otpVarify.firstName, secondName:otpVarify.secondName, email:otpVarify.email, password:otpVarify.password });
             const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
@@ -40,7 +42,9 @@ const otpPagePost = async (req,res)=>{
             res.json({success:true});
         }
     }catch(error){
-        res.status(400).json({ error: error.message });
+        // res.status(400).json({ error: error.message });
+        res.json({success:false , error:error.message});
+    
     }
 } 
 
@@ -72,10 +76,25 @@ const forgotPassword = (req,res)=>{
 const forgotPasswordPost = async (req,res)=>{
     console.log('post forgot')
     const {email} = req.body
- 
-    await forgot(email)
+    try{
+        const data = await User.find({email:email})
 
-    res.json({email})
+        const check = await restPassword.findOneAndDelete({email:email})
+        console.log(check,'uuuaaaaa')
+
+        console.log(data,'aaaaaaaaaaaaaaaaaaa')
+        if(data.length == 0){
+            throw Error('enter a Valid email')
+
+        }else{
+            await forgot(email)
+        
+            res.json({email})
+        }
+    }catch(error){
+        res.status(400).json({ error: error.message });
+    }
+ 
 }
 
 // forgot password otp varifying page
@@ -87,11 +106,18 @@ const forgotVarifyOtp = (req,res) =>{
 
 const forgotVarifyOtpPost = async(req,res) =>{
     const {email,otp} = req.body
-    const forgot = await restPassword.findOne({email:email})
-    // let data    
-    if (forgot.otp == otp){
-        const  data = await User.findOne({email:email})
-        res.json({data})
+    try{
+
+        const forgot = await restPassword.findOne({email:email})
+        if (forgot.otp != otp){
+            throw Error('otp is not matched')
+        // let data    
+        }else if (forgot.otp == otp){
+            const  data = await User.findOne({email:email})
+            res.json({data})
+        }
+    }catch(error){
+        res.json({success:false , error:error.message});
     }
 }
 

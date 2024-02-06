@@ -27,6 +27,8 @@
                 
                 <div class="otp-field mb-4 " name="email">
                   <input type="number" name="otp" />
+                  <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+
                 </div>
                 
                 <button class="btn btn-primary mb-3" type="submit">
@@ -49,6 +51,7 @@
 
   <script>
     const form = document.querySelector("form");
+    const catchError = document.getElementById("catchError")
   
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -65,11 +68,20 @@
             "Content-Type": "application/json",
           },
         });
-        if (!res.ok) {
-          throw new Error(`HTTP error! Status: ${res.status}`);
-        }
-        console.log(res)
         const data = await res.json();
+
+        
+      if(data.error){
+      catchError.innerHTML = data?.error
+          setTimeout(()=>{
+            catchError.innerHTML = ''
+          },5000)
+      console.log(error,'err');
+    }
+        // if (!res.ok) {
+        //   throw new Error(`HTTP error! Status: ${res.status}`);
+        // }
+
 
         if (data) {
           console.log('data is here ')

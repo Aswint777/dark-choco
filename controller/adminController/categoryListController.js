@@ -84,7 +84,7 @@ const addCategoryPost = async function (req,res) {
             throw Error('category already here')
         }else if(categoryName.length>20 ){
             console.log()
-            throw Error('Category name is too long')
+            throw Error('Category name is too long') 
               
         }
         else {

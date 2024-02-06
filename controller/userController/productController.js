@@ -10,7 +10,7 @@ const productPage = async (req,res)=>{
         const data = await product.findOne({_id:id}).populate('category')
         console.log(data)
         
-        res.render('userViews/productPage',{data})
+        res.render('userViews/productPage',{data,userAuth:true})
     }catch(error){
         console.log(error.message)
     }

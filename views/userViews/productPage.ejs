@@ -1,7 +1,14 @@
 
 <%- include('../partial/header.ejs') %>
 
-<%- include('../partial/userNavbar.ejs') %>
+
+<%if(!userAuth){%>
+    <%-include('../partial/navbar.ejs')%>
+<%}else{%>
+    <%-include('../partial/userNavbar.ejs')%>
+<%}%>
+
+<!-- <%- include('../partial/userNavbar.ejs') %> -->
 
 
 

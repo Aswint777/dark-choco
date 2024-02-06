@@ -73,3 +73,20 @@
             
    
 </div>
+
+
+<script>
+    
+    async function getProduct(id){
+        console.log(id,"helloooooooooooooooooooooooooooooooooooooooooooooooo")
+        try{
+
+            const singleProduct = await axios.get(`/user/productPage/${id}`)
+            window.location.href = `/user/productPage/${id}`
+            
+        }catch(err){
+            console.log(err.message)
+        }
+    }
+
+</script>

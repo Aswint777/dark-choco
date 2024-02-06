@@ -39,5 +39,28 @@
 </div>
 
 
+<script>
+     document.addEventListener("DOMContentLoaded", () => {
+        const categoryError = document.getElementById('categoryError')
+        const categoryDescriptionError = document.getElementById('categoryDescriptionError')
+        const categoryName = form.categoryName.value;
+        const categoryDescription = form.categoryDescription.value
+      if(categoryName== ""){
+        categoryError.innerHTML = 'category name required'
+          setTimeout(()=>{
+            categoryError.innerHTML = ''
+          },5000)
+       }
+       if(categoryDescription== ""){
+        categoryDescriptionError.innerHTML = 'category name required'
+          setTimeout(()=>{
+            categoryDescriptionError.innerHTML = ''
+          },5000)
+       }
 
+
+
+     })
+
+</script>
 

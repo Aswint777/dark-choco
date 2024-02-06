@@ -3,35 +3,48 @@ const Category = require('../../model/categoryModel')
 
 
 const productListPage = async (req,res)=>{
-    let productList
-    if (req.query.category){
-        const {category} = req.query
+    // let productList
+    // if (req.query.category){
+    //     const {category} = req.query
+         
         
-        
-        console.log(category,'lollllll')
-         productList = await product.find({category:category}).populate('category')
-         console.log(productList,'gotttt')
-         const categoryList = await Category.find()
+    //     console.log(category,'lollllll')
+    //      productList = await product.find({category:category}).populate('category')
+    //      console.log(productList,'gotttt')
+    //      const categoryList = await Category.find()
 
-         res.render('userViews/productListPage',{productList,categoryList})
+    //      res.render('userViews/productListPage',{productList,categoryList})
 
-    }else{
+    // }else{
         console.log('okkokkookokokokokok')
 
-         productList = await product.find({status:true}).populate('category')
+        const productList = await product.find({status:true}).populate('category')
          const categoryList = await Category.find()
-         res.render('userViews/productListPage',{productList,categoryList})
-    }
+         res.render('userViews/productListPage',{productList,categoryList,userAuth:true})
+    // }
+}
+
+const productFilter = async(req,res)=>{
+    console.log('woooooooooooooooooooooooooooooooooooooooooooooohhhhhhhhhhhh')
+        const category = req.params.id
+         
+        
+        console.log(category,'lollllll')
+         productList = await product.find({category:category,status:true}).populate('category')
+         console.log(productList,'gotttt')
+         const categoryList = await Category.find()
+         res.json({productList})
+
+        //  res.render('userViews/productListPage',{productList,categoryList})
+
+    
 }
 
 
 
 
 
-
-
-
-
 module.exports = {
-    productListPage
+    productListPage,
+    productFilter
 }

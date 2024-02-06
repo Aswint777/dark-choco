@@ -3,11 +3,20 @@ const Category = require('../../model/categoryModel')
 const categoryList = async (req,res) => {
     let query = req.query
     console.log(query,'yeeeeeeeeeeeeeeeeees')
+
+    var i = 0
+    const page = parseInt(req.query.page) || 1;
+    const count = await Category.find().count();
+    const pageSize = 3;
+    const totalOrder = Math.ceil(count / pageSize);
+    const skip = (page - 1) * pageSize;
+    // const user = await Category.find().skip(skip).limit(pageSize)
     
-    if (Object.keys(query).length === 0){
-        const category = await Category.find({},{categoryDescription:0})
-        res.render('adminViews/categoryList',{category,query:''})
-    } else if (req.query.date) {
+    // if (Object.keys(query).length === 0){
+    //     const category = await Category.find({},{categoryDescription:0})
+    //     res.render('adminViews/categoryList',{category,query:''})
+    // } 
+    if (req.query.date) {
         console.log(req.query)
         const latest = await Category.find().sort({date:Number(req.query.date)}) //{} {another:true,chocolate:true}
 
@@ -21,11 +30,18 @@ const categoryList = async (req,res) => {
                 category: { $regex: req.query.searchQuery, $options: "i" }
             });
             const query = req.query.searchQuery
-            res.render('adminViews/categoryList',{category,query})
+            res.render('adminViews/categoryList',{category,query,totalOrder,
+                pageSize,
+               page: page})
             
         }catch(error){
             console.log(error)
         }
+    }else{
+        const category = await Category.find({},{categoryDescription:0}).skip(skip).limit(pageSize)
+        res.render('adminViews/categoryList',{category,query:'',totalOrder,
+        pageSize,
+       page: page})
     }
 
 }
@@ -69,7 +85,7 @@ const addCategoryPost = async function (req,res) {
         }else if(categoryName.length>20 ){
             console.log()
             throw Error('Category name is too long')
-            
+              
         }
         else {
             const category = await Category.create({ category:categoryName , categoryDescription : categoryDescription });

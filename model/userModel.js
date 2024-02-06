@@ -33,6 +33,17 @@ const userSchema = new mongoose.Schema({
   status :{
     type:Boolean,
     default:true
+  },
+  phoneNumber :{
+    type : Number,
+    min : 10,
+    max : 15
+  },
+  address :{
+    type:String
+  },
+  pinNumber : {
+    type : Number
   }
 });
 

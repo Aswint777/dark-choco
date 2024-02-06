@@ -4,6 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { main } = require("./helperFunction/otp");
 require("dotenv").config();
+const otp = require('../model/otpModel')
+const product = require('../model/productModel')
 
 
 // handle errors
@@ -32,9 +34,10 @@ const createToken = (id) => {
   });
 };
 // get for home
-const home = (req, res) => {
-  // if()
-  res.render("userViews/home", { userAuth: true });
+const home = async (req, res) => {
+  const productList = await product.find({status:true}).populate('category').sort({date:-1}).limit(4)
+  console.log(productList)
+  res.render("userViews/home", { userAuth: true ,productList});
 };
 
 // get for userLogin
@@ -55,22 +58,27 @@ const userLoginPost = async (req, res) => {
   try {
     const user = await User.findOne({ email });
     // const user = await User.login(email, password);
-    if(user.status === false){
-        throw Error
+    if(!user){
+      throw Error("Enter the valid email")
     }
-    if (user) {
+    else if (user.status === false) {
+      throw Error("Your account is blocked")
+    }else{
       const auth = await bcrypt.compare(password, user.password);
-      if (auth) {
+      if (!auth) {
+        throw Error("Check Your Password")
+      }else{
         console.log("password checked");
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
         res.cookie("loginToken", token, {
           httpOnly: true,
         });
-        res.json({ user: user });
+        res.json({success:true})
       }
     }
   } catch (error) {
     res.status(400).json({ error: error.message });
+    // res.json({success:false , error:error.message});
   }
 };
 
@@ -79,11 +87,11 @@ const newUser = async function (req, res) {
   const { firstName, secondName, email, password } = req.body;
 
   try {
+    const data = await otp.findOne({email:email})
+    if (data){
+      await otp.deleteOne({email:email})
+    }
 
-    // const user = await User.create({ firstName, secondName, email, password });
-    // const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
-    // res.cookie("loginToken", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    // console.log(user.email)
     await main(email,firstName,secondName,password)
     res.json({ success : true  });
   } catch (error) {
@@ -146,6 +154,11 @@ const adminLogOut = (req, res) => {
   res.redirect("/");
 };
 
+//about page 
+const about = (req,res)=>{
+  res.render('userViews/about')
+}
+
 module.exports = {
   home,
   userLogin,
@@ -156,5 +169,6 @@ module.exports = {
   adminLogin,
   adminLoginPost,
   userLogOut,
-  adminLogOut
+  adminLogOut,
+  about
 };

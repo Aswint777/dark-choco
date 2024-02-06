@@ -59,6 +59,7 @@
                     <img src="/assets/icons" alt="" />
                     <p id="passwordError" style="color: rgb(246, 4, 4);"></p>
                     <p id="errors" style="color: rgb(246, 4, 4);"></p>
+                    <p id="catchError" style="color: rgb(246, 4, 4);"></p>
 
                   </div>
                   <a class="medium text-muted" href="forgotPasswords">Forgot password?</a>
@@ -92,6 +93,7 @@
   const emailError = document.getElementById('emailError')
   const passwordError = document.getElementById('passwordError')
   const errors = document.getElementById('errors')
+  const catchError = document.getElementById('catchError')
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -126,24 +128,29 @@
           "Content-Type": "application/json",
         },
       });
-      if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      }
       const data = await res.json();
-      // if(data.errors){
-      //   emailError.textContent = data.errors.email
-      //   passwordError.textContent = data.errors.password
-      // }
-      console.log(data  );
-      if (data.user) {
-        location.href = "/";
+      if(data.error){
+        console.log( data?.error,'erroooooooooooooooooooooooooooooo');
+        catchError.innerHTML = data?.error
+        setTimeout(()=>{
+          catchError.innerHTML = ''
+        },5000)
       }
+      // if (!res.ok) {
+      //   throw new Error(`HTTP error! Status: ${res.status}`);                    
+      // }
+     
+      if(data.success){
+      // alert('asdadfs')
+        location.href = '/'
+    }
+    
     } catch (err) {
       // alert(err.message)
-      errors.innerHTML = 'somthing wrong in password or email'
-      setTimeout(()=>{
-        errors.innerHTML = ''
-      },5000)
+      // errors.innerHTML = 'somthing wrong in password or email'
+      // setTimeout(()=>{
+      //   errors.innerHTML = ''
+      // },5000)
       console.log(err, "err");
     }
   });

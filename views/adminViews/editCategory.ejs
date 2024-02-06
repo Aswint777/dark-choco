@@ -19,12 +19,12 @@
         <div class="col-md-10">
             <form action="/admin/editCategory/<%= cat._id %>" method="post">
                 <div class="mb-3">
-                    <label for="categoryName" class="form-label" ></label>
+                    <label for="categoryName" class="form-label" >CategoryName</label>
                     <input type="text" class="form-control" id="categoryName" name="categoryName" value="<%= cat.category %>"  required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="categoryDescription" class="form-label"></label>
+                    <label for="categoryDescription" class="form-label">CategoryDescription</label>
                     <input class="form-control" id="categoryDescription" name="categoryDescription" rows="4"  value="<%= cat.categoryDescription %>" required></>
                 </div>
 

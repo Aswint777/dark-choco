@@ -33,8 +33,9 @@
             </thead>
             <tbody>
               <% user.forEach((customer, index) => { %>
+
                 <tr class="align-middle">
-                  <td><span class="d-inline-block align-middle"><%= index+1 %></span></td>
+                  <td><span class="d-inline-block align-middle"><%=(page - 1) * pageSize + index + 1%></span></td>
                   <td>
                     <div class="d-flex align-items-center">
                       <div>
@@ -65,6 +66,29 @@
               <% }); %>
             </tbody>
           </table>
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <% for (let i = 1; i <= totalOrder; i++) { %>
+                <li class="page-item">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          
 
           <% user.forEach((customer, index) => { %>
             <div

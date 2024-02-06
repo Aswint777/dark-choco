@@ -20,31 +20,7 @@
         <div style="width: 500px;height: 60; color: gray;">
           <!-- Example single danger button -->
 
-<!--           
-          <div class="input-group">
-            <div class="form-outline" data-mdb-input-init>
-              <input type="search" id="form1" placeholder="search" class="form-control" />
-             
-            </div>
-            <button type="button" class="btn btn-primary" data-mdb-ripple-init>
-              <i class="fas fa-search"></i>
-            </button>
-            
-            
-          </div> -->
-          <!-- <div >
-            <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              filter
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item"  onclick="filter('-1')">latest</a></li>
-              <li><a class="dropdown-item"  onclick="filter('1')">oldest</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Separated link</a></li>
-            </ul>
-          </div> -->
+
         </div>
         <div class="card-header d-flex justify-content-between align-items-center">
           <!-- <h5 class="mb-0">dfjvndkv</h5> -->
@@ -102,7 +78,7 @@
             <tbody id="tableBody">
               <% category.forEach((category, index) => { %>
                 <tr class="align-middle">
-                  <td><span class="d-inline-block align-middle"><%= index+1 %></span></td>
+                  <td><span class="d-inline-block align-middle"><%=(page - 1) * pageSize + index + 1%></span></td>
                   <td>
                     <div class="d-flex align-items-center">
                       <div>
@@ -129,6 +105,29 @@
               <% }); %>
             </tbody>
           </table>
+
+          <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <% for (let i = 1; i <= totalOrder; i++) { %>
+                <li class="page-item">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
+              <% } %>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          
           <% category.forEach((category, index) => { %>
             <div
             class="modal fade"
@@ -289,50 +288,4 @@ function searchCategory() {
 
 }
 
-
-
-
-
-
-// const form = document.querySelector("form");
-  
-
-//   form.addEventListener("submit", async (e) => {
-//     e.preventDefault();
-
-    
-//     // const email = form.email.value;
-//     // const password = form.password.value;
-    
-//     try {
-     
-      
-//       const res = await fetch("/", {
-//         method: "POST",
-//         body: JSON.stringify({ email, password }),
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//       });
-//       if (!res.ok) {
-//         throw new Error(`HTTP error! Status: ${res.status}`);
-//       }
-//       const data = await res.json();
-      
-//       console.log(data   );
-//       if (data.admin) {
-//         location.href = "/admin/customer";
-//       }
-//     } catch (err) {
-//       console.log(err, "err");
-//       doubleError.innerHTML = 'somthing wrong in password or email'
-//         setTimeout(()=>{
-//           doubleError.innerHTML = ''
-//        },5000)
-//     }
-//   });
-
-  
-
- 
 </script>

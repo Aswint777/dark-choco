@@ -77,12 +77,12 @@
           </td>
                     <% if(products.status === true){%>
                     <td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= products._id %>">
-                      block
+                      List
                     </button></td>
                     
                     <% }else{%>
                       <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= products._id %>">
-                        Unblock
+                        UnList
                       </button></td>
                       <%}%>
                   <td><span><%= products.date.toISOString().slice(0, 10) %></span></td>
@@ -121,7 +121,7 @@
                   ></button>
                 </div>
                 <div class="modal-body">
-                  <h5>the status of  the user</h5>
+                  <h5>the status of  the product</h5>
                 </div>
 
                 <div class="modal-footer">
@@ -153,6 +153,30 @@
           <% }); %>
 
         </div>
+        
+        
+        <nav aria-label="Page navigation example">
+          <ul class="pagination">
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <% for (let i = 1; i <= totalOrder; i++) { %>
+              <li class="page-item">
+                <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+              </li>
+            <% } %>
+            <li class="page-item">
+              <a class="page-link" href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
       </div>
     </div>
   </div>

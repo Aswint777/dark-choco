@@ -57,10 +57,20 @@ const addProductPost = async (req, res) => {
 //product list
 
 const adminProductList = async (req, res) => {
+
+  var i = 0
+        const page = parseInt(req.query.page) || 1;
+        const count = await product.find().count();
+        const pageSize = 3;
+        const totalOrder = Math.ceil(count / pageSize);
+        const skip = (page - 1) * pageSize;
+     
   // console.log('admin product list page is here')
-  const productList = await product.find().populate("category");
+  const productList = await product.find().populate("category").skip(skip).limit(pageSize);
   console.log(productList)
-  res.render("adminViews/adminProductList", { productList });
+  res.render("adminViews/adminProductList", { productList , totalOrder,
+    pageSize,
+   page: page});
 };
 
 const manageProduct = async (req, res) => {

@@ -211,24 +211,24 @@ console.log('here,.............')
         },5000)
         return
       }
-      if(Quantity === ""){
+      if(Quantity === ""||parseInt(Quantity)<1){
         console.log('first name required')
-        quantityError.innerHTML = 'Product quantity is required'
+        quantityError.innerHTML = 'proper Product quantity is required'
         setTimeout(()=>{
           quantityError.innerHTML = ''
         },5000)
         return
       }
-      if(amount === ""){
+      if(amount === "" || parseInt(amount)<1){
         console.log('first name required')
-        amountError.innerHTML = 'price required'
+        amountError.innerHTML = ' proper price required'
         setTimeout(()=>{
           amountError.innerHTML = ''
         },5000)
         return
       }
-      if(Markup === ""){
-        markupError.innerHTML = 'Markup price is required'
+      if(Markup === ""|| parseInt(Markup)<1){
+        markupError.innerHTML = 'proper Markup price is required'
         setTimeout(()=>{
           markupError.innerHTML = ''
         },5000)
@@ -258,27 +258,27 @@ console.log('here,.............')
 });
 
 
-// function updatePreviewImage(inputId, imageId,deletebuttonId) {
-//         console.log("hellooo");
-//         const fileInput = document.getElementById(inputId);
-//         const previewImage = document.getElementById(imageId);
+function updatePreviewImage(inputId, imageId,deletebuttonId) {
+        console.log("hellooo");
+        const fileInput = document.getElementById(inputId);
+        const previewImage = document.getElementById(imageId);
 
-//         fileInput.addEventListener('change', function() {
-//             const file = fileInput.files[0];
-//             if (file) {
-//                 const reader = new FileReader();
+        fileInput.addEventListener('change', function() {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
 
-//                 reader.onload = function(e) {
-//                     previewImage.src = e.target.result;  
-//                     document.getElementById(deletebuttonId).style.display = 'block';
-//                 };
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;  
+                    document.getElementById(deletebuttonId).style.display = 'block';
+                };
 
-//                 reader.readAsDataURL(file);
-//             } else {
-//                 previewImage.src = '';
-//             }
-//         });
-//     }
+                reader.readAsDataURL(file);
+            } else {
+                previewImage.src = '';
+            }
+        });
+    }
 
 
 //     function initCropper(inputId, previewId, deleteButtonId) {

@@ -67,7 +67,7 @@ const adminProductList = async (req, res) => {
      
   // console.log('admin product list page is here')
   const productList = await product.find().populate("category").skip(skip).limit(pageSize);
-  console.log(productList)
+
   res.render("adminViews/adminProductList", { productList , totalOrder,
     pageSize,
    page: page});
@@ -75,9 +75,8 @@ const adminProductList = async (req, res) => {
 
 const manageProduct = async (req, res) => {
   const { _id } = req.body;
-  console.log(_id);
   const pro = await product.findOne({ _id: _id });
-  console.log(pro);
+
   let products;
   if (pro.status === true) {
     products = await product.updateOne(
@@ -99,8 +98,6 @@ const editProduct = async (req, res) => {
  
   const pro = await product.findOne({ _id: id }).populate("category");
   const cat = await Category.find({});
-  
-  console.log(pro.productDescription,"lolllll");
 
   res.render("adminViews/editProduct", { pro, cat });
 };
@@ -114,18 +111,15 @@ const editProductPost = async (req, res) => {
     productDescription,
     quantity,
     amount,
-    markup,
+    Markup,
     category,
   } = req.body;
-  console.log(productDescription,'haaaaaaaaaaaaaaaaaai')
+  console.log (Markup,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+  // console.log(productDescription,'haaaaaaaaaaaaaaaaaai')
   const image1 = req.files["image1"]; // Contains the uploaded file information for 'image1'
   const image2 = req.files["image2"]; // Contains the uploaded file information for 'image2'
   const image3 = req.files["image3"]; // Contains the uploaded file information for 'image3'
-  console.log(image2, "111111");
-  console.log(image3, "22222222");
-  console.log(image1, "33333333");
-  console.log(yourId, "lllllllllll");
-  console.log(productName);
+
 
   const editProduct = await product.find({ _id: yourId });
 
@@ -134,7 +128,7 @@ const editProductPost = async (req, res) => {
     productDescription: productDescription,
     quantity: quantity,
     amount: amount,
-    markup: markup,
+    markup: Markup,
     category: category,
    
   };

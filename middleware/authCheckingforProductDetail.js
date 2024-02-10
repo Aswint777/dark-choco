@@ -23,7 +23,7 @@ async function checkUserBeforeProductDetail(req, res, next) {
       console.log(err);
       return res.render('userViews/productPage',{data,userAuth:false})
     }
-    console.log(user);
+    console.log(user,'oioioi');
     const userData = await User.findById(user.userId);
     if (!userData.status) {
       return res.render('userViews/productPage',{data,userAuth:false})

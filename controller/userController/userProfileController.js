@@ -9,7 +9,7 @@ const userProfile = async (req,res)=>{
         const data = jwt.verify(token, process.env.SECRET_KEY);
         const {userId}= data      
         const profile = await User.findOne({_id:userId})
-        console.log(profile)
+        console.log(profile,'lllllllllllllllllll')
     res.render('userViews/userProfilePage',{profile})
 }
 

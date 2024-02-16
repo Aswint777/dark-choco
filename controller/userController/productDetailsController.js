@@ -27,22 +27,26 @@ const addToCart =async (req,res)=>{
         const data = jwt.verify(token, process.env.SECRET_KEY);
         const {userId}= data 
         console.log(userId,'jjjjjjjj')
+        const {_id} = req.body
+        const productPrice = await product.findOne({_id:_id})
+        console.log(productPrice,'iiiiiiiii')
+        const price = productPrice.amount
+        console.log(price,'i got the price')
 
         let addCart
         const checkCart = await cart.findOne({userData:userId})
         console.log(checkCart)
-        const {_id} = req.body
         if (checkCart){
 
             addCart = await cart.findOneAndUpdate(
                 {userData:new mongoose.Types.ObjectId(userId), "products.product_id": { $ne: _id } },
-                { $addToSet: {products:{ product_id: _id,quantity:1 }} },
+                { $addToSet: {products:{ product_id: _id,quantity:1,oneProductTotal:price }} },
                 { new: true })
         }else{
            
             addCart = await cart.create(
                 { products:[
-                    { product_id:_id , quantity:1 }
+                    { product_id:_id , quantity:1,oneProductTotal:price }
                 ],userData:userId})
             
             console.log(addCart)

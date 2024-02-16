@@ -5,7 +5,7 @@ const cartSchema = new mongoose.Schema({
         {
             quantity : {
                 type : Number,
-                // min :1,
+                min :1,
                 
             },
             product_id :{
@@ -14,6 +14,10 @@ const cartSchema = new mongoose.Schema({
                 required : true,
                 
             },
+            oneProductTotal:{
+                type : Number,
+
+            }
         }
     ],
    

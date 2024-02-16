@@ -8,6 +8,7 @@ const checkUserBeforeProductDetail = require('../middleware/authCheckingforProdu
 const { GetCart, cartUpdateQuantity } = require('../controller/userController/cartController')
 const { productPage, addToCart } = require('../controller/userController/productDetailsController')
 const { getCheckOutPage } = require('../controller/userController/checkOutController')
+const { addAddressPost, editAddress, deleteAddress } = require('../controller/userController/addressController')
 
 
 const router = express.Router()
@@ -36,6 +37,14 @@ router.post('/updateQuantity',cartUpdateQuantity)
 // check Out page
 
 router.get('/checkOutPage',getCheckOutPage)
+
+// address modaal 
+
+router.post('/addAddressPost',addAddressPost)
+
+router.post('/editAddress',editAddress)
+
+router.post('/deleteAddress',deleteAddress)
 
 
 

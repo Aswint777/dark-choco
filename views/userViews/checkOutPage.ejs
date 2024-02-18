@@ -1,209 +1,264 @@
-<%-include('../partial/header.ejs')%>
+<%-include('../partial/header.ejs')%> 
+<%- include('../partial/userNavbar.ejs')%>
 
+<section class="h-100 h-custom" style="background-color: #eee">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+            <form  id="placeOrderForm">
+            <div class="row">
+              <div class="col-lg-7">
+                <div>
+                  <div
+                    class="text-black-50 rounded-3"
+                    style="background-color: #d8d3cee8"
+                  >
+                    <div class="card-body">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-4"
+                      ></div>
+                      <%- include('../componentViews/addressModaal') %>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <div>
+                  <div
+                    class="text-black-50 rounded-3"
+                    style="background-color: #d8d3cee8"
+                  >
+                    <div class="card-body">
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-4"
+                      ></div>
 
-<section class="h-100 h-custom" style="background-color: #eee;">
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <div class="card">
-            <div class="card-body p-4">
-  
-              <div class="row">
+              
+                        <div
+                          class="d-flex justify-content-between align-items-center mb-4"
+                        >
+                          <h5 class="mb-0">Payment Options</h5>
+                        </div>
+                        <div class="row">
+                          <div class="col-1"></div>
+                          <div class="col-11">
+                            <div class="card mb-3">
+                              <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                  <div>
+                                    <input
+                                    onclick="paymentMethods('cod')"
+                                      type="radio"
+                                      name="Payment"
+                                      value="cod"
+                                      id="paymentMethod"
+                                    />
+                                    <button style="background: none">
+                                      <i
+                                        style="
+                                          font-size: 24px;
+                                          color: rgb(8, 8, 8);
+                                        "
+                                        class="fa-solid fa-sack-dollar"
+                                      ></i>
+                                    </button>
+                                  </div>
 
-                
-  
-                <div class="col-lg-7">
+                                  <div>
+                                    <input
+                                      type="radio"
+                                      name="Payment"
+                                      value=""
+                                      id="paymentMethod"
+                                    />
+                                    <img
+                                      style="width: 50px"
+                                      src="/assets/QIc_CCEg_400x400.jpg"
+                                      alt=""
+                                    />
+                                  </div>
 
-                    <div>
-  
-                        <div class=" text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-                          <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                  <div>
+                                    <input
+                                      type="radio"
+                                      name="Payment"
+                                      value=""
+                                      id="paymentMethod"
+                                    />
+                                    <button style="background: none">
+                                      <i
+                                        style="
+                                          font-size: 24px;
+                                          color: rgba(0, 0, 0, 0.932);
+                                        "
+                                        class="fa-solid fa-wallet"
+                                      ></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
-                            <%- include('../componentViews/addressModaal') %>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-5">
+                <div>
+                  <div
+                    class="text-black rounded-3"
+                    style="background-color: #d8d3cee8"
+                  >
+                    <div class="card-body">
+
+
+
+                      <% cartData.products.forEach(product => { %>
+                      <div class="card mb-3">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row align-items-center">
+                              <div>
+                                <img src="/products/<%= product.product_id.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                              </div>
+                              <div class="ms-3">
+                                <h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
+                                <h5 style="display: none;"></h5> <!-- Assuming product has a 'name' property -->
+                                <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
+                              </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                              <div style="width: 80px;">
+                                <!-- Assuming product has a 'price' property -->
+                                <h5 style="color: rgb(22, 142, 22);" class="mb-0"><%= product.quantity %></h5>
+                              </div>
+                             
+                              <div style="width: 80px;">
+                              
+                                <h5 style="color: rgb(33, 139, 33);" class="mb-0">₹<%= product.product_id.amount %></h5>
+                              </div>
+                            </div>
                             
                           </div>
                         </div>
-        
-                    </div>
-                    <br>
-                    <div>
-  
-                        <div class=" text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-                          <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-4">
-                      
-                            </div>
-      
-        
-                            <form class="mt-4">
-                                <div class="d-flex justify-content-between align-items-center mb-4">
-                                    <h5 class="mb-0"> Payment Options</h5>
-                                  </div>
-                                <div class="d-flex justify-content-between">
-          
-            
-                                <button type="button" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
-                                  <div class="d-flex justify-content-between">
-                                    <span class="text-primary">Add New Address <i class=""></i></span>
-                                  </div>
-                                </button>
-                                <div  class="d-flex justify-content-end">
-                                  <a class=" text-black"></a>
-                                </div>
-                                                        
-                              </div>
-                              <br>
-                                <div class="form-outline form-white mb-4">
-                                <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                                  placeholder="" />
-                              </div>
-                            </form>
-      
-       
-                          </div>
-                        </div>
-        
-                    </div>
+                      </div>
+                      <% }) %>
 
-                  
 
-                </div>
-                <div class="col-lg-5">
-                <div >
-  
-                  <div class=" text-black rounded-3" style="background-color:  #d8d3cee8;">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-4">
+
+
+
+
+
+                      <div
+                        class="d-flex justify-content-between align-items-center mb-4"
+                      >
                         <h5 class="mb-0">Total Payment</h5>
                       </div>
-<!--   
-                      <p class="small mb-2">Card type</p>
-                      <a href="#!" type="submit" class="text-white"><i
-                          class="fab fa-cc-mastercard fa-2x me-2"></i></a>
-                      <a href="#!" type="submit" class="text-white"><i
-                          class="fab fa-cc-visa fa-2x me-2"></i></a>
-                      <a href="#!" type="submit" class="text-white"><i
-                          class="fab fa-cc-amex fa-2x me-2"></i></a>
-                      <a href="#!" type="submit" class="text-white"><i class="fab fa-cc-paypal fa-2x"></i></a> -->
-  
-                      <form class="mt-4">
-                        
-  
-                      </form>
-  
-                      <!-- <hr class="my-4"> -->
-  
+
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Sub Total</p>
-                        <p class="mb-2">₹66.00</p>
+                        <p class="mb-2">₹<%= subTotal %></p>
                       </div>
-  
+
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Shipping</p>
                         <p class="mb-2">free</p>
                       </div>
-                      
+
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Tax</p>
-                        <p class="mb-2">66</p>
+                        <p class="mb-2">₹<%= tax %></p>
                       </div>
-                      
+
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Discount</p>
                         <p class="mb-2">0.00</p>
                       </div>
 
-                      <hr class="my-4">
-  
+                      <hr class="my-4" />
+
                       <div class="d-flex justify-content-between mb-4">
                         <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="text-success mb-2">₹8666</</p>
+                        <p class="text-success mb-2">₹<%= total %></p>
                       </div>
-  
-                      <button type="button" class="btn btn-success btn-block btn-lg " style="margin-left:54%;">
-                        <div class="d-flex justify-content-between">
-                          <!-- <span>$4818.00</span> -->
-                          <span>Proceed to Checkout </span>
+
+                      <button
+                        onclick="placeOrder()"
+                        type="button"
+                        class="btn btn-success btn-block btn-lg"
+                        style="margin-left: 54%"
+                      >
+                        <div class="d-flex justify-content-end">
+                          <span>Place Order</span>
                         </div>
                       </button>
-  
                     </div>
                   </div>
-  
                 </div>
-                <br>
-                <!-- ////////////////////////////////////// -->
-                <!-- <div>
-  
-                  <div class=" text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h6 class="text-black mb-0">Coupon Code</h6>
-                      </div>
-                      <hr class="my-4">
-
-  
-                      <form class="mt-4">
-                          <div class="form-outline form-white mb-4">
-                          <input type="text" id="typeName" class="form-control form-control-lg" siez="17"
-                            placeholder="" />
-                          <label class="form-label" for="typeName">Cardholder's Name</label>
-                        </div>
-                      
-  
-                      </form>
-
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Subtotal</p>
-                        <p class="mb-2">$4798.00</p>
-                      </div>
-  
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Shipping</p>
-                        <p class="mb-2">$20.00</p>
-                      </div>
-  
-                      <div class="d-flex justify-content-between mb-4">
-                        <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="mb-2">$4818.00</p>
-                      </div> -->
-<!-- 
-                      
-                      <div class="d-flex justify-content-between">
-
-  
-                      <button type="button" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
-                        <div class="d-flex justify-content-between">
-            
-                          <span class="text-primary">Apply Coupon <i class=""></i></span>
-                        </div>
-                      </button>
-                      <div  class="d-flex justify-content-end">
-                        <a class=" text-black" href=""> find <i class="fas fa-search text-black"></i></a>
-                      </div>
-                                              
-                    </div>
-
- 
-                    </div>
-                  </div>
-  
-                </div> --> 
+                <br />
               </div>
-  
-              </div>
-  
             </div>
+           </form>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<!-- ///snackbar -->
 
+<script>
+  
+  // const placeOrderForm = document.querySelector("form");
+  
+  function billingAddress(address){
+    // alert(address)
+    return address
+  }
+  function paymentMethods(method){
+    return method
+  }
+  
+  //   placeOrderForm.addEventListener("submit", async (e) => {
+    //     e.preventDefault();
+    //     const formData = new FormData(e.target);
+    
+    // const address = billingAddress(formData);
+    // const method = paymentMethods(formData);
+    
+    // console.log(address,'dghdfuighdk')
+    // console.log(paymentMethod)
+    
+    async function placeOrder(){
+      // const address = document.getElementsByName('address').value
+      const address = document.querySelector('input[type="radio"][name="address"]:checked').value;
+      const paymentMethod = document.querySelector('input[type="radio"][name="Payment"]:checked').value;
+      // alert(address,'jsckdjck')
+      console.log(address,'address')
+      console.log(paymentMethod,'method')
 
+      // try{
+        const res = await fetch("/user/placeOrder/", {
+        method: "POST",
+        body: JSON.stringify({address,paymentMethod}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const data = await res.json();
+      if(data.success == true){
+        console('success it is ')
+        location.href = '/user/getSuccessPage'
+      }
+      // }catch(error){
+      //   console.log(error,'drthfdb')
 
+      // }
+      
+    } 
+  // })
 
-
-
-  <!-- ///snackbar -->
+</script>

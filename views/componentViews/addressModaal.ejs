@@ -13,13 +13,12 @@
 
       
       
-      <% addressList.forEach(user => { %>
+      <% addressList.forEach((user,index) => { %>
         <% user.addressData.forEach(address => { %>
           
           <div class=" row">
             <div class="col-1">
-              <input type="radio" name="1" value="<%= address._id %>" />
-
+              <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>" />
             </div>
             <div class="col-11">
           <div class="card mb-3">
@@ -28,6 +27,7 @@
                         <div class="d-flex flex-row align-items-center">
                             
                             <div class="ms-3">
+                              <!-- <h1><%= address._id %></h1> -->
                                 <h5><%= address.firstName %> <%= address.secondName %></h5>
                                 <p class="small mb-0"><%= address.address %></p>
                                 <p class="small mb-0"><%= address.country %>, <%= address.state %>, <%= address.city %>, <%= address.pinCode %></p>
@@ -52,10 +52,7 @@
           </div>
           </div>
         <% }); %>
-      <% }); %>
-
-
-      
+      <% }); %>  
     </div>
   </div>
 </div>
@@ -304,7 +301,7 @@ aria-hidden="true"
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    console.log('bcjsnckjsdc')
+   
     const firstName = form.firstName.value;
     const secondName = form.secondName.value; 
     const address = form.address.value;  
@@ -314,13 +311,13 @@ aria-hidden="true"
     const pinCode = form.pinCode.value; 
     const email = form.email.value;  
     const phoneNumber = form.phoneNumber.value;  
-    console.log(firstName,'klklklklkklklkkl')
+   
 
 
 
     try {
       if (firstName === ''){
-        console.log('hloooooozzz')
+      
         firstNameError.innerHTML = 'Enter your First Name '
         setTimeout(()=>{
           firstNameError.innerHTML = ''
@@ -336,7 +333,7 @@ aria-hidden="true"
         return 
       }
       if (address === ''){
-        console.log('hloooooozzz')
+        
         addressError.innerHTML = 'Enter your Address'
         setTimeout(()=>{
           addressError.innerHTML = ''
@@ -344,7 +341,7 @@ aria-hidden="true"
         return 
       }
       if (country === ''){
-        console.log('hloooooozzz')
+
         countryError.innerHTML = 'Enter your country Name'
         setTimeout(()=>{
           countryError.innerHTML = ''
@@ -352,7 +349,7 @@ aria-hidden="true"
         return 
       }
       if (state === ''){
-        console.log('hloooooozzz')
+
         stateError.innerHTML = 'Enter your state Name'
         setTimeout(()=>{
           stateError.innerHTML = ''
@@ -360,7 +357,7 @@ aria-hidden="true"
         return 
       }
       if (city === ''){
-        console.log('hloooooozzz')
+  
         cityError.innerHTML = 'Enter your city Name'
         setTimeout(()=>{
           cityError.innerHTML = ''
@@ -368,7 +365,7 @@ aria-hidden="true"
         return 
       }
       if (pinCode === '' || pinCode.length != 6){
-        console.log('hloooooozzz')
+      
         pinCodeError.innerHTML = 'enter your pin Code'
         setTimeout(()=>{
           pinCodeErrorpinCodeError.innerHTML = ''
@@ -383,7 +380,7 @@ aria-hidden="true"
         return 
       }
       if (phoneNumber === '' || phoneNumber.length < 10){
-        console.log('hloooooozzz')
+    
         phoneNumberError.innerHTML = 'Enter your Contact Number'
         setTimeout(()=>{
           phoneNumberError.innerHTML = ''
@@ -443,8 +440,6 @@ aria-hidden="true"
     phoneNumbers.value = phoneNumber
     address_id.value = _id
 
-
-    
   }
 
 async function existingAddressEdit(){
@@ -477,7 +472,7 @@ async function existingAddressEdit(){
 }
 
 async function deleteAddress(id){
-  console.log(id,'gggggggg')
+  
   const res = await fetch("/user/deleteAddress", {
         method: "POST",
         body: JSON.stringify({ id }),
@@ -488,6 +483,5 @@ async function deleteAddress(id){
       const data = await res.json();
   
 }
-
 
 </script>

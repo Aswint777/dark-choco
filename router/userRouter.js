@@ -5,10 +5,12 @@ const { productListPage, productFilter } = require('../controller/userController
 const { userProfile, userProfilePost } = require('../controller/userController/userProfileController')
 const checkUserAuthenticationBeforeAction = require('../middleware/authCheckingforProductList')
 const checkUserBeforeProductDetail = require('../middleware/authCheckingforProductDetail')
-const { GetCart, cartUpdateQuantity } = require('../controller/userController/cartController')
+const { GetCart, cartUpdateQuantity, deleteCartProduct, proceedToCheckout } = require('../controller/userController/cartController')
 const { productPage, addToCart } = require('../controller/userController/productDetailsController')
-const { getCheckOutPage } = require('../controller/userController/checkOutController')
+const { getCheckOutPage, placeOrder } = require('../controller/userController/checkOutController')
 const { addAddressPost, editAddress, deleteAddress } = require('../controller/userController/addressController')
+const { getSuccessPage } = require('../controller/userController/orderSuccessController')
+const { userOrderHistoryPage, userOrderDetails } = require('../controller/userController/userOrderController')
 
 
 const router = express.Router()
@@ -32,11 +34,18 @@ router.post('/productFilter/category/:id',productFilter)
 //cart
 
 router.get('/cart',GetCart)
+
 router.post('/updateQuantity',cartUpdateQuantity)
+
+router.post('/deleteCartProduct',deleteCartProduct)
+
+router.post('/proceedToCheckout',proceedToCheckout)
 
 // check Out page
 
 router.get('/checkOutPage',getCheckOutPage)
+
+router.post ('/placeOrder',placeOrder)
 
 // address modaal 
 
@@ -45,6 +54,18 @@ router.post('/addAddressPost',addAddressPost)
 router.post('/editAddress',editAddress)
 
 router.post('/deleteAddress',deleteAddress)
+
+// order success page 
+
+router.get('/getSuccessPage',getSuccessPage)
+
+//user order History page
+ 
+router.get('/userOrderHistory',userOrderHistoryPage)
+
+// user order Details Page 
+
+router.get( '/userOrderDetails',userOrderDetails)
 
 
 

@@ -103,53 +103,57 @@ const editProduct = async (req, res) => {
 };
 
 const editProductPost = async (req, res) => {
-  console.log("editting now");
-  console.log(req.body, "body");
-  const {
-    yourId,
-    productName,
-    productDescription,
-    quantity,
-    amount,
-    Markup,
-    category,
-  } = req.body;
-  console.log (Markup,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-  // console.log(productDescription,'haaaaaaaaaaaaaaaaaai')
-  const image1 = req.files["image1"]; // Contains the uploaded file information for 'image1'
-  const image2 = req.files["image2"]; // Contains the uploaded file information for 'image2'
-  const image3 = req.files["image3"]; // Contains the uploaded file information for 'image3'
+  try{
+    console.log("editting now");
+    console.log(req.body, "body");
+    const {
+      yourId,
+      productName,
+      productDescription,
+      quantity,
+      amount,
+      Markup,
+      category,
+    } = req.body;
+    const image1 = req.files["image1"]; // Contains the uploaded file information for 'image1'
+    const image2 = req.files["image2"]; // Contains the uploaded file information for 'image2'
+    const image3 = req.files["image3"]; // Contains the uploaded file information for 'image3'
+  
+    console.log(req.body,'body')
+    const editProduct = await product.find({ _id: yourId });
+    console.log(editProduct,'keyyyyyyyyyyyy')
+  
+    let obj = {
+      stock: productName,
+      productDescription: productDescription,
+      quantity: quantity,
+      amount: amount,
+      markup: Markup,
+      category: category,
+     
+    };
+  
+    if (image1) {
+      obj.image1 = image1[0].filename;
+    }
+    if (image2) {
+      obj.image2 = image2[0].filename;
+    }
+    if (image3) {
+      obj.image3 = image3[0].filename;
+    }
+    const obj2 = {...obj}
+  console.log(yourId)
+  console.log(obj,'obj2 is this')
+    let data=await product.findOneAndUpdate({_id:yourId},{$set:{...obj2}},{new:true})
+    console.log(data,'fllllllllllllll') 
+    res.json({'success' : true})
+  
 
-
-  const editProduct = await product.find({ _id: yourId });
-
-  let obj = {
-    stock: productName,
-    productDescription: productDescription,
-    quantity: quantity,
-    amount: amount,
-    markup: Markup,
-    category: category,
-   
-  };
-
-  if (image1) {
-    obj.image1 = image1[0].filename;
-  }
-  if (image2) {
-    obj.image2 = image2[0].filename;
-  }
-  if (image3) {
-    obj.image3 = image3[0].filename;
+  }catch(error){
+    console.log(error)
   }
  
-
-  const obj2 = {...obj}
-
-  let data=await product.findOneAndUpdate({_id:yourId},{$set:{...obj}},{new:true})
-  console.log(data) 
-  res.json({'success' : true})
-
 
 };
 

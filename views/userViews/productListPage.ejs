@@ -141,11 +141,7 @@ function updateTable(data){
     
 
     async function getProduct(id){
-        console.log(id,"helloooooooooooooooooooooooooooooooooooooooooooooooo")
-        try{
-            // alert('sdf')
-
-            // const singleProduct = await axios.get(`/user/productPage/${id}`)//
+        try{  
             const singleProduct = await axios.get(`/user/productPage/${id}`)
             window.location.href = `/user/productPage/${id}`
             

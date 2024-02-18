@@ -25,13 +25,8 @@ const productListPage = async (req,res)=>{
 }
 
 const productFilter = async(req,res)=>{
-    console.log('woooooooooooooooooooooooooooooooooooooooooooooohhhhhhhhhhhh')
-        const category = req.params.id
-         
-        
-        console.log(category,'lollllll')
+        const category = req.params.id      
          productList = await product.find({category:category,status:true}).populate('category')
-         console.log(productList,'gotttt')
          const categoryList = await Category.find()
          res.json({productList})
 

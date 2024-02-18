@@ -6,20 +6,15 @@ const { default: mongoose } = require('mongoose');
 
 
 const productPage = async (req,res)=>{
-    // res.render('userViews/productPage')
     try{
-
         console.log('product page here -------------------- ')
-        const {id} = req.params
-      
-        const data = await product.findOne({_id:id}).populate('category')
-        
+        const {id} = req.params   
+        const data = await product.findOne({_id:id}).populate('category')     
         res.render('userViews/productPage',{data,userAuth:true})
     }catch(error){
         console.log(error.message)
     }
 }
-
 
 const addToCart =async (req,res)=>{
     try{
@@ -42,26 +37,18 @@ const addToCart =async (req,res)=>{
                 {userData:new mongoose.Types.ObjectId(userId), "products.product_id": { $ne: _id } },
                 { $addToSet: {products:{ product_id: _id,quantity:1,oneProductTotal:price }} },
                 { new: true })
-        }else{
-           
+        }else{ 
             addCart = await cart.create(
                 { products:[
                     { product_id:_id , quantity:1,oneProductTotal:price }
-                ],userData:userId})
-            
+                ],userData:userId}) 
             console.log(addCart)
         }
         res.json({_id})
     }catch(error){
         console.log(error)
-    }
-   
-
+    }  
 }
-
-
-
-
 
 
 

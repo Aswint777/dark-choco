@@ -136,21 +136,11 @@
           catchError.innerHTML = ''
         },5000)
       }
-      // if (!res.ok) {
-      //   throw new Error(`HTTP error! Status: ${res.status}`);                    
-      // }
-     
       if(data.success){
-      // alert('asdadfs')
         location.href = '/'
     }
     
     } catch (err) {
-      // alert(err.message)
-      // errors.innerHTML = 'somthing wrong in password or email'
-      // setTimeout(()=>{
-      //   errors.innerHTML = ''
-      // },5000)
       console.log(err, "err");
     }
   });

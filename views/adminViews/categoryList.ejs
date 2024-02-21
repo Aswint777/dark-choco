@@ -95,7 +95,7 @@
                         Unblock
                       </button></td>
                       <%}%>
-                  <td><span><%= category.date.toISOString().slice(0, 10) %></span></td>
+                  <td><span><%= category.date.toISOString().slice(0, 10).split('-').reverse().join('-') %></span></td>
                   <td class="text-end">
                     <div class="dropdown">
                         <a class="btn btn-success" href="editCategory/<%= category._id %>">Edit</a>

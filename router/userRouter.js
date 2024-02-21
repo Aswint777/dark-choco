@@ -8,7 +8,7 @@ const checkUserBeforeProductDetail = require('../middleware/authCheckingforProdu
 const { GetCart, cartUpdateQuantity, deleteCartProduct, proceedToCheckout } = require('../controller/userController/cartController')
 const { productPage, addToCart } = require('../controller/userController/productDetailsController')
 const { getCheckOutPage, placeOrder } = require('../controller/userController/checkOutController')
-const { addAddressPost, editAddress, deleteAddress } = require('../controller/userController/addressController')
+const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
 const { getSuccessPage } = require('../controller/userController/orderSuccessController')
 const { userOrderHistoryPage, userOrderDetails } = require('../controller/userController/userOrderController')
 
@@ -67,7 +67,11 @@ router.get('/userOrderHistory',userOrderHistoryPage)
 
 router.get( '/userOrderDetails',userOrderDetails)
 
+//address page only
 
+router.get('/addresspage',addressOnlyPage)
+
+    
 
 
 module.exports= router

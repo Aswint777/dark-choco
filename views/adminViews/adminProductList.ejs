@@ -85,7 +85,7 @@
                         UnList
                       </button></td>
                       <%}%>
-                  <td><span><%= products.date.toISOString().slice(0, 10) %></span></td>
+                  <td><span><%= products.date.toISOString().slice(0, 10).split('-').reverse().join('-') %></span></td>
                   <td class="text-end">
                     <div class="dropdown">
                         <a class="btn btn-success" href="editproduct/<%= products._id %>">Edit</a>

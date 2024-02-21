@@ -160,7 +160,7 @@
 
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Sub Total</p>
-                        <p class="mb-2">₹<%= subTotal %></p>
+                          <p class="mb-2"  >₹ <span id="subTotal"><%= subTotal %></span></p>
                       </div>
 
                       <div class="d-flex justify-content-between">
@@ -170,7 +170,7 @@
 
                       <div class="d-flex justify-content-between">
                         <p class="mb-2">Tax</p>
-                        <p class="mb-2">₹<%= tax %></p>
+                        <p class="mb-2" >₹<span id="tax"><%= tax %></span></p>
                       </div>
 
                       <div class="d-flex justify-content-between">
@@ -182,7 +182,7 @@
 
                       <div class="d-flex justify-content-between mb-4">
                         <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="text-success mb-2">₹<%= total %></p>
+                        <p class="text-success mb-2">₹<span  id="total"><%= total %></span></p>
                       </div>
 
                       <button
@@ -221,37 +221,40 @@
   function paymentMethods(method){
     return method
   }
-  
-  //   placeOrderForm.addEventListener("submit", async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData(e.target);
-    
-    // const address = billingAddress(formData);
-    // const method = paymentMethods(formData);
-    
-    // console.log(address,'dghdfuighdk')
-    // console.log(paymentMethod)
     
     async function placeOrder(){
       // const address = document.getElementsByName('address').value
       const address = document.querySelector('input[type="radio"][name="address"]:checked').value;
       const paymentMethod = document.querySelector('input[type="radio"][name="Payment"]:checked').value;
+      let subTotal = document.getElementById('subTotal').textContent
+      let tax = document.getElementById('tax').textContent
+      let  total = document.getElementById('total').textContent
+      subTotal = parseFloat(subTotal)
+      tax = parseFloat(tax)
+      total = parseFloat(total)
+
+
+
       // alert(address,'jsckdjck')
       console.log(address,'address')
       console.log(paymentMethod,'method')
+      console.log(subTotal,tax,total,'oooo')
 
       // try{
         const res = await fetch("/user/placeOrder/", {
         method: "POST",
-        body: JSON.stringify({address,paymentMethod}),
+        body: JSON.stringify({address,paymentMethod,subTotal,tax,total}),
         headers: {
           "Content-Type": "application/json",
         },
       })
+      // console.log(res.id,'lll')
       const data = await res.json();
-      if(data.success == true){
-        console('success it is ')
-        location.href = '/user/getSuccessPage'
+      const _id = data.id
+      console.log(_id,'jdgsfjdh')
+      if(_id){
+        location.href = `/user/getSuccessPage?_id=${_id}`
+        
       }
       // }catch(error){
       //   console.log(error,'drthfdb')
@@ -259,6 +262,5 @@
       // }
       
     } 
-  // })
 
 </script>

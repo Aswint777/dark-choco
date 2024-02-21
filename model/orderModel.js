@@ -4,78 +4,84 @@ const bcrypt = require("bcrypt");
 
 
 const productSchema = new mongoose.Schema({
-    stock: {
-        type:String ,
-        // required:true,
-        trim: true,
-      },
-      // rating: {
-      //   type: String,
-      //   required:true,
-      //   trim: true,
-      // },
-      // review: {
-      //   type: String,
-      //   required:true,
-      //   unique: true,
-      //   trim: true,
-      // },
-      image1 : {
-        type : String,
-        // required : true,
+    products :[
+        {
+            quantity : {
+                type : Number,
+                min :1,
+                
+            },
+            // product_id :{
+            //     type : mongoose.Schema.Types.ObjectId,
+            //     ref:"product",
+            //     required : true,
+                
+            // },
+            oneProductTotal:{
+                type : Number,
 
-      },
-      image2 : {
-        type : String,
-        // required : true,
+            },
+            stock: {
+              type:String ,
+              // required:true,
+              trim: true,
+            },
+           
+            image1 : {
+              type : String,
+              // required : true,
+      
+            },
+            image2 : {
+              type : String,
+              // required : true,
+      
+            },
+            image3 : {
+              type : String,
+              // required : true,
+      
+            },
+            // category :{
+            //   type : mongoose.Schema.Types.ObjectId,
+            //   ref:"category",
+            //   required : true,
+            // },
+            status : {
+              type : Boolean,
+              default : true
+            },
+            productDescription : {
+              type : String,
+              // required :true
+          },
+          date : {
+            type : Date,
+            default : new Date()
+        },
+        quantity :{
+          type:Number,
+          // required : true,
+          min: 0,
+        },
+        amount:{
+          type:Number,
+          // required : true,
+          min: 1,
+          
+        },
+        markup : {
+          type:Number,
+          // required : true,
+          min: 1,
+        }
+        }
+    ],
+})
 
-      },
-      image3 : {
-        type : String,
-        // required : true,
-
-      },
-      category :{
-        type : String,
-        // required : true,
-      },
-     
-      productDescription : {
-        type : String,
-        required :true
-    },
-    date : {
-      type : Date,
-      default : new Date()
-  },
-  quantity :{
-    type:Number,
-    // required : true,
-    min: 0,
-  },
-  amount:{
-    type:Number,
-    // required : true,
-    min: 1,
-    
-  },
-  markup : {
-    type:Number,
-    // required : true,
-    min: 1,
-  }
-  // image4 :[
-  //   {
-  //     type:String
-  //   }
-  // ]
-  
-    
-});
 
 
-
-const addressSchema = new mongoose.Schema({
+const   addressSchema = new mongoose.Schema({
 
         firstName: {
             type: String,
@@ -88,15 +94,10 @@ const addressSchema = new mongoose.Schema({
         },
         address: {
             type: String,
-            // required: true,
-            unique: true,  
+           
         },
         country: {
             type: String,
-            // required: [true, "please enter the email"],
-            unique: true,
-            trim: true,
-            
         },
         state: {
             type: String,
@@ -120,12 +121,7 @@ const addressSchema = new mongoose.Schema({
             // required: true, 
             
         },
-    userData :{
-        type : mongoose.Schema.Types.ObjectId,
-        ref:"userData",
-        // required : true,
-        unique : true
-    },
+   
   });
   
   
@@ -143,10 +139,10 @@ const userSchema = new mongoose.Schema({
     email: {
       type: String,
     //   required: [true, "please enter the email"],
-      unique: true,
+    
       trim: true,
-      lowercase: true,
-      validate: [isEmail, "please enter a valid email"],
+      // lowercase: true,
+      // validate: [isEmail, "please enter a valid email"],
     },
    
     date :{
@@ -159,8 +155,8 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumber :{
       type : Number,
-      min : 10,
-      max : 15
+      // min : 10,
+      // max : 15
     },
     address :{
       type:String
@@ -184,13 +180,17 @@ const orderSchema = new mongoose.Schema({
       tax: {
         type: Number,
       },
-      totalPrice: {
+      total: {
         type: Number,
         required: true,
       },
       quantity: {
         type: Number,
         min: 0,
+      },
+      date : {
+        type : Date,
+        default : new Date()
       },
       status: {
         type: String,
@@ -209,22 +209,94 @@ const orderSchema = new mongoose.Schema({
         ],
         default: "pending",
       },
-      products: [productSchema],
+      products :[
+        {
+            quantity : {
+                type : Number,
+                min :1,
+                
+            },
+            // product_id :{
+            //     type : mongoose.Schema.Types.ObjectId,
+            //     ref:"product",
+            //     required : true,
+                
+            // },
+            oneProductTotal:{
+                type : Number,
+
+            },
+            stock: {
+              type:String ,
+              // required:true,
+              trim: true,
+            },
+           
+            image1 : {
+              type : String,
+              // required : true,
+      
+            },
+            image2 : {
+              type : String,
+              // required : true,
+      
+            },
+            image3 : {
+              type : String,
+              // required : true,
+      
+            },
+            // category :{
+            //   type : mongoose.Schema.Types.ObjectId,
+            //   ref:"category",
+            //   required : true,
+            // },
+            status : {
+              type : Boolean,
+              default : true
+            },
+            productDescription : {
+              type : String,
+              // required :true
+          },
+          date : {
+            type : Date,
+            default : new Date()
+        },
+        quantity :{
+          type:Number,
+          // required : true,
+          min: 0,
+        },
+        amount:{
+          type:Number,
+          // required : true,
+          min: 1,
+          
+        },
+        markup : {
+          type:Number,
+          // required : true,
+          min: 1,
+        }
+        }
+    ],
       paymentMode: {
         type: String,
         required: true,
-        enum: ["cashOnDelivery", "razorPay", "myWallet"],
+        enum: ["cod", "razorPay", "myWallet"],
       },
       address :addressSchema,
-      user:userSchema,
+      userDetails:userSchema,
       userData :{
         type : mongoose.Schema.Types.ObjectId,
         ref:"userData",
-        required : true,
-        unique : true
+        // required : true,
+        // unique : true
     },
 });
 
 
-const order = mongoose.model('order',cartSchema)
+const order = mongoose.model('order',orderSchema)
 module.exports = order

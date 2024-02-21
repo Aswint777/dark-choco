@@ -133,6 +133,7 @@ const editAddress = async (req,res)=>{
       );
       
      console.log(existingAddress,'address updated')
+     res.json({success:true})
     }catch(error){
       res.status(400).json({ error: error.message });
     }
@@ -157,9 +158,25 @@ const deleteAddress = async (req,res)=>{
   }
 }
 
+
+const addressOnlyPage = async(req,res)=>{
+
+  try{
+    const token = req.cookies.loginToken;
+        const data = jwt.verify(token, process.env.SECRET_KEY);
+        const { userId } = data;
+        const addressList = await Address.find({userData:userId})
+       
+    res.render('userviews/addressPage',{addressList}) 
+}catch(error){
+    console.log(error)
+
+}}
+
 module.exports = {
   addAddressPost,
   editAddress,
-  deleteAddress
+  deleteAddress,
+  addressOnlyPage
 
 };

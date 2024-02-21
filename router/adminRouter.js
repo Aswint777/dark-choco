@@ -6,6 +6,7 @@ const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory
 const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
+const { getAdminOrderManagement, adminOrderDetails, updateStatus } = require('../controller/adminController/adminOrderManagementController')
 
 
 const router = express.Router()
@@ -54,5 +55,14 @@ router.post('/editProduct' , upload.fields([
   { name: 'image3', maxCount: 1 }
 ]),editProductPost)
 
+
+// get order management page
+router.get('/adminOrderManagement',getAdminOrderManagement)
+
+// get order details page 
+
+router.get('/adminOrderDetails',adminOrderDetails)
+
+router .post ('/updateStatus',updateStatus)
 
 module.exports= router

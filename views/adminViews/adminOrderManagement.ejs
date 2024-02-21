@@ -1,6 +1,4 @@
 <%- include('../partial/header.ejs') %>
-<%- include('../partial/userNavbar.ejs') %>
-
 
 <div class="container">
   <div class="row">
@@ -8,7 +6,7 @@
       <%- include('../partial/userSidebar.ejs') %>
     </div>
     <div class="col-md-10 col-12">
-      <h2 style="text-align: center; color: black;">Order History</h2>
+      <h2 style="text-align: center; color: black;">Order Management</h2>
       <div class="col-12 mb-3 mb-lg-5">
         <div class="overflow-hidden card table-nowrap table-card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -21,21 +19,28 @@
                 <tr>
                   <th>Index</th>
                   <th>Name</th>
+                  <th>product</th>
                   <th>Email</th>
                   <th>Created Date</th>
-                  <th>status</th>
                   <th>total</th>
-                  <th class="text-end">Action</th>
+                  <th>Created Date</th>
+                  <th >Action</th>
+                  <th >Details</th>
+
+
                 </tr>
               </thead>
               <tbody>
             
-                <% orderHistory.forEach((list,index) => { %>
-                  <tr class="align-middle">
+                <% orderList.forEach((list,index) => { %>
+                
+                  <tr  class="align-middle">
+                   
                     <td><span class="d-inline-block align-middle"><%= index+1 %></span></td>
+                    <td><%= list.userDetails.firstName %></td>
+
                     <td>
                       <% list.products.forEach(pro => { %>
-
                       <div class="d-flex align-items-center">
                         <div>
                           <div class="h6 mb-0 lh-1"><%= pro.stock %></div>
@@ -46,24 +51,36 @@
 
                     <td><%= list.userDetails.email %></td>
                     <td><span><%= list.date.toISOString().slice(0, 10).split('-').reverse().join('-') %></span></td>
-                    <td><span><%= list.status %></span></td>
-                    <td><span><%= list.total%></span></td>
+                    <td><%= list.total %></td>
+                    <td><%= list.userDetails.email %></td>
+
                     <td class="text-end">
                       <div class="dropdown">
                         <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
                           <i class="" aria-hidden="true"></i>
                         </a>
-                        <button style=" background: none; color: blue;" onclick="viewDetails('<%=list._id %>')"> View details</button>
-
-                        <!-- <a onclick="orderDetails('<%=list._id %>')">Order Details</a> -->
-                       
-                          <!-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            Block
-                          </button> -->
-                       
+                    
+                        <div class="row mb-3">
+                          <!-- <label for="cars" class="col-sm-4 col-form-label">Category</label> -->
+                          <div class="col-sm-8">
+                              
+                              <select name="status" id="status" style="width: 130px; height: 35px;"
+                              onchange="updateStatus('<%= list._id %>')">
+                                
+                            <option value="pending" style="color: black;">pending</option>
+                            <option value="processing" style="color: black;">processing</option>
+                            <option value="shipped" style="color: black;">shipped</option>
+                            <option value="delivered" style="color: black;">delivered</option>
+                            <option value="canceled" style="color: black;">canceled</option>   
+                          </select>  
+                      </div>                   
+                  </div>                    
                       </div>
                     </td>
+                    <td><button onclick="viewDetails('<%=list._id %>')" style="background: none; color: blue;">view</button></td>
+
                   </tr>
+                  <!-- </div> -->
                   <% }) %>
 
 
@@ -102,9 +119,32 @@
   </div>
 </div>
 
+
+
+
+
 <script>
-  async function viewDetails(_id){
-    console.log(_id)
-    location.href = `/user/userOrderDetails?_id=${_id}`
+ async function viewDetails(_id){
+
+    location.href = `/admin/adminOrderDetails?_id=${_id}`
+
   }
+
+  async function updateStatus (_id){
+    const status = document.getElementById('status').value
+    console.log(status,_id,'djdjfndj')
+    
+    const res = await fetch("/admin/updateStatus/", {
+        method: "POST",
+        body: JSON.stringify({_id,status}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+    });
+
+
+  }
+
+
 </script>
+

@@ -17,8 +17,9 @@
             <div class="text-center">
                 <h1 style="color: green;">Congratulations</h1>
                 <p>Your order is placed</p>
-                <p>Total Amount : ₹234</p>
-                <a href="">View details</a>
+                <p>Total Amount : ₹ <%=total%> </p>
+            
+                <button style=" background: none; color: blue;" onclick="viewDetails('<%= _id %>')"> View details</button>
             </div>
             <hr>
             <p style="color: rgb(52, 160, 52);">Thank you for your purchase, we hope you are happy in this order</p>
@@ -26,3 +27,12 @@
         </div>
     </div>
 </div>
+
+
+<script>
+  async function viewDetails(_id){
+    location.href = `/user/userOrderDetails?_id=${_id}`
+
+        // console.log(_id)
+    }
+</script>

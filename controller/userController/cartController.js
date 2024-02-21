@@ -11,13 +11,14 @@ const GetCart = async (req, res) => {
     const cartData = await cart
       .findOne({ userData: userId })
       .populate("products.product_id");
-    console.log(cartData);
-    if (cartData) {
-    const cartTotal = await cart.aggregate([
-        { $match: { userData:new mongoose.Types.ObjectId(userId) } },
-        { $unwind: "$products" },
-        { $group: { _id: null, total: { $sum: "$products.oneProductTotal" } } }
+      if (cartData) {
+        const cartTotal = await cart.aggregate([
+          { $match: { userData:new mongoose.Types.ObjectId(userId) } }, 
+          { $unwind: "$products" },
+          { $group: { _id: null, total: { $sum: "$products.oneProductTotal" } } }
       ]);
+        
+        console.log(cartTotal);
       const subTotal  = cartTotal[0]?.total;
       const tax = (subTotal * 3) / 100;
       const total = subTotal + tax;

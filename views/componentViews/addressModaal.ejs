@@ -1,7 +1,7 @@
 
 <div>
   <div class=" text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-    <div class="card-body">
+    <div class="card-body ">
       <!-- <div class="d-flex justify-content-between align-items-center mb-4">
         
       </div> -->
@@ -17,12 +17,12 @@
         <% user.addressData.forEach(address => { %>
           
           <div class=" row">
-            <div class="col-1">
-              <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>" />
-            </div>
-            <div class="col-11">
-          <div class="card mb-3">
+            <!-- <div class="col-11"> -->
+              <div class="card mb-3">
                 <div class="card-body">
+                  <div class="">
+                    <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>" />
+                  </div>
                     <div class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center">
                             
@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-          </div>
+          <!-- </div> -->
           </div>
         <% }); %>
       <% }); %>  
@@ -364,7 +364,7 @@ aria-hidden="true"
         },5000)
         return 
       }
-      if (pinCode === '' || pinCode.length != 6){
+      if (pinCode === '' ){
       
         pinCodeError.innerHTML = 'enter your pin Code'
         setTimeout(()=>{
@@ -405,7 +405,7 @@ aria-hidden="true"
       }
      
       if(data.success){
-       
+       window.location.reload()
       // alert('asdadfs')
         // location.href = '/'
     }
@@ -468,6 +468,12 @@ async function existingAddressEdit(){
         },
       });
       const data = await res.json();
+      if(data.success){
+       window.location.reload()
+      // alert('asdadfs')
+        // location.href = '/'
+    }
+
   })
 }
 

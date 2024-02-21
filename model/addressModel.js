@@ -17,13 +17,13 @@ const addressSchema = new mongoose.Schema({
         address: {
             type: String,
             required: true,
-            unique: true,  
+      
         },
         country: {
             type: String,
             required: [true, "please enter the email"],
-            unique: true,
-            trim: true,
+          
+
             
         },
         state: {
@@ -53,7 +53,7 @@ const addressSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref:"userData",
         required : true,
-        unique : true
+     
     },
   });
   

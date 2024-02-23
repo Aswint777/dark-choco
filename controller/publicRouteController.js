@@ -159,7 +159,7 @@ const adminLogOut = (req, res) => {
 
 //about page 
 const about = (req,res)=>{
-  res.render('userViews/about')
+  res.render('userViews/about', { userAuth: true })
 }
 
 module.exports = {

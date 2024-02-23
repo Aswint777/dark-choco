@@ -115,7 +115,8 @@ aria-hidden="true"
         </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Address</label>
-          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="address">
+          <!-- <input type="text" class="form-control" id="exampleInputEmail1"  name="address"> -->
+          <textarea class="form-control" id="address"  name="address"></textarea>
           <p id="addressError" style="color: rgb(246, 4, 4);"></p>
 
         </div>
@@ -220,7 +221,7 @@ aria-hidden="true"
         </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Address</label>
-          <input type="text" class="form-control" id="addresses" aria-describedby="emailHelp" name="address">
+          <input type="text" class="form-control" id="addresses" name="address">
           <p id="addressError" style="color: rgb(246, 4, 4);"></p>
 
         </div>
@@ -304,15 +305,17 @@ aria-hidden="true"
    
     const firstName = form.firstName.value;
     const secondName = form.secondName.value; 
-    const address = form.address.value;  
+    // const address = form.address.value;  
     const country = form.country.value;  
     const state = form.state.value;  
     const city = form.city.value;  
     const pinCode = form.pinCode.value; 
     const email = form.email.value;  
     const phoneNumber = form.phoneNumber.value;  
-   
-
+   const address = document.getElementById('address').value
+console.log(firstName,secondName,address,country,state,city,pinCode,email,phoneNumber,'add address')
+console.log(form)
+console.log(address)
 
 
     try {
@@ -332,7 +335,7 @@ aria-hidden="true"
         },5000)
         return 
       }
-      if (address === ''){
+      if (address == ''){
         
         addressError.innerHTML = 'Enter your Address'
         setTimeout(()=>{

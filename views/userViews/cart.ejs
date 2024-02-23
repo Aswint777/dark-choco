@@ -1,138 +1,174 @@
 <%- include('../partial/header.ejs') %>
 <%- include('../partial/userNavbar.ejs') %>
 
-
-<section class="h-100 h-custom" style="background-color: #eee;">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col">
-        <div class="card">
-          <div class="card-body p-4">
-
-            <div class="row">
-
-              <div class="col-lg-7">
-                <h5 class="mb-3"><a href="#!" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
-                <hr>
-
-                <div class="d-flex justify-content-between align-items-center mb-4">
-                  <div>
-                    <!-- <p class="mb-1">Shopping cart</p> -->
-                    <p class="mb-0">You have <%= cartData.products.length %> items in your cart</p>
-                  </div>
-                  <div>
-                    <!-- <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p> -->
-                  </div>
-                </div>
-
-                <% cartData.products.forEach(product => { %>
-                  <div class="card mb-3">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between">
-                        <div class="d-flex flex-row align-items-center">
-                          <div onclick="window.location.href='/user/productPage/<%= product.product_id._id %>'">
-                            <img src="/products/<%= product.product_id.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
-                          </div>
-                          <div class="ms-3">
-                            <h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
-                            <h5 style="display: none;"><%= product.product_id._id %></h5> <!-- Assuming product has a 'name' property -->
-                            <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
-                          </div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                          <div style="width: 80px;">
-                            <!-- Assuming product has a 'price' property -->
-                            <h5 class="mb-0">₹<%= product.product_id.amount %></h5>
-                          </div>
-                          <div class="d-flex align-items-center justify-content-between">
-                            <button class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')">
-                              <i class="fas fa-minus"></i>
-                            </button>
-                            <input id="quantityInput_<%= product.product_id._id %>" min="0" name="quantity" value="<%= product.quantity %>" type="number" style="width: 50px;" class="form-control form-control-sm" onchange="sendData('<%= product.product_id._id %>')" />
-                            <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
-                              <i class="fas fa-plus"></i>
-                            </button>
-                          </div>
-                          <div style="width: 80px;">
-                            <!-- Assuming product has a 'price' property -->
-                            <h5 class="mb-0">₹<%= product.oneProductTotal %></h5>
-                          </div>
-                          <button onclick="deleteProduct('<%= product._id %>')" style="background: none;">
-                            <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
-                          </button>
-                        </div>
-                        
+<%if(!cartData || !cartData.products||cartData.products?.length<=0){%>
+  <div  style=" margin-top: 5%;">
+    <!-- <h1>your cart is empty</h1> -->
+    <div class="container-fluid  mt-100" >
+      <div class="row" >
+      
+       <div class="col-md-12" >
+       
+           <div class="card">
+         <!-- <div class="card-header">
+         <h5>Cart</h5>
+         </div> -->
+         <div class="card-body cart">
+             <div class="col-sm-12 empty-cart-cls text-center">
+               <img src="https://i.imgur.com/dCdflKN.png" width="130" height="130" class="img-fluid mb-4 mr-3">
+               <h3><strong>Your Cart is Empty</strong></h3>
+               <h4>Add something to make me happy :)</h4>
+               <a href="/" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
+               
+             
+             </div>
+         </div>
+     </div>
+         
+       
+       </div>
+      
+      </div>
+     
+     </div>
+  </div>
+  <%}else{%>
+    <section class="h-100 h-custom" style="background-color: #eee;">
+      <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col">
+            <div class="card">
+              <div class="card-body p-4">
+    
+                <div class="row">
+    
+                  <div class="col-lg-7">
+                    <h5 class="mb-3"><a href="#!" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Continue shopping</a></h5>
+                    <hr>
+    
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                      <div>
+                        <!-- <p class="mb-1">Shopping cart</p> -->
+                        <p class="mb-0">You have <%= cartData.products.length %> items in your cart</p>
                       </div>
-                      <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+                      <div>
+                        <!-- <p class="mb-0"><span class="text-muted">Sort by:</span> <a href="#!" class="text-body">price <i class="fas fa-angle-down mt-1"></i></a></p> -->
+                      </div>
                     </div>
-                  </div>
-                <% }) %>
-
-              </div>
-              <div class="col-lg-5">
-                <div>
-                  <form action="">
-                  <div class="text-black rounded-3" style="background-color:  #d8d3cee8;">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h5 class="mb-0">Total Payment</h5>
-                      </div>
-                      <h3 style="display: none;"><%= cartData._id %></h3>
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Sub Total</p>
-                        <p class="mb-2">₹<%= subTotal %>.00</p>
-                      </div>
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Shipping</p>
-                        <p class="mb-2">free</p>
-                      </div>
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Tax</p>
-                        <p class="mb-2"><%= tax %></p>
-                      </div>
-                      <div class="d-flex justify-content-between">
-                        <p class="mb-2">Discount</p>
-                        <p class="mb-2">0.00</p>
-                      </div>
-                      <hr class="my-4">
-                      <div class="d-flex justify-content-between mb-4">
-                        <p class="mb-2">Total(Incl. taxes)</p>
-                        <p class="text-success mb-2">₹<%= total %></p>
-                      </div>
-                      <button onclick="proceedToCheckout('<%= subTotal %>','<%= tax %>','<%= total %>','<%= cartData._id %>')"
-                        type="button" class="btn btn-success btn-block btn-lg " style="margin-left:54%;">
-                        <div class="d-flex justify-content-between">
-                          <span>Proceed to Checkout </span>  
-                        </div>
-                      </button>
-                      <p id="catchError2" style="color: rgb(246, 4, 4);"></p>
-                      <!-- <h1>ydfvhijzdvhkl</h1> -->
-                    </div>
-                  </div>
-                </form>
-                </div>
-                <br>
-                <!-- ////////////////////////////////////// -->
-                <div>
-                  <div class="text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-                    <div class="card-body">
-                      <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h6 class="text-black mb-0">Coupon Code</h6>
-                      </div>
-                      <hr class="my-4">
-                      <form class="mt-4">
-                        <div class="form-outline form-white mb-4">
-                          <input type="text" id="typeName" class="form-control form-control-lg" siez="17" placeholder="" />
-                        </div>
-                      </form>
-                      <div class="d-flex justify-content-between">
-                        <button type="button" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
+                    
+                  
+                      
+    
+                    <% cartData.products.forEach(product => { %>
+                      <div class="card mb-3">
+                        <div class="card-body">
                           <div class="d-flex justify-content-between">
-                            <span class="text-primary">Apply Coupon <i class=""></i></span>
+                            <div class="d-flex flex-row align-items-center">
+                              <div onclick="window.location.href='/user/productPage/<%= product.product_id._id %>'">
+                                <img src="/products/<%= product.product_id.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+                              </div>
+                              <div class="ms-3">
+                                <h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
+                                <h5 style="display: none;"><%= product.product_id._id %></h5> <!-- Assuming product has a 'name' property -->
+                                <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
+                              </div>
+                            </div>
+                            <div class="d-flex flex-row align-items-center">
+                              <div style="width: 80px;">
+                                <!-- Assuming product has a 'price' property -->
+                                <h5 class="mb-0">₹<%= product.product_id.amount %></h5>
+                              </div>
+                              <div class="d-flex align-items-center justify-content-between">
+                                <button class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')">
+                                  <i class="fas fa-minus"></i>
+                                </button>
+                                <input id="quantityInput_<%= product.product_id._id %>" min="0" name="quantity" value="<%= product.quantity %>" type="number" style="width: 50px;" class="form-control form-control-sm" onchange="sendData('<%= product.product_id._id %>')" />
+                                <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
+                                  <i class="fas fa-plus"></i>
+                                </button>
+                              </div>
+                              <div style="width: 80px;">
+                                <!-- Assuming product has a 'price' property -->
+                                <h5 class="mb-0">₹<%= product.oneProductTotal %></h5>
+                              </div>
+                              <button onclick="deleteProduct('<%= product._id %>')" style="background: none;">
+                                <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+                              </button>
+                            </div>
+                            
                           </div>
-                        </button>
-                        <div class="d-flex justify-content-end">
-                          <a class="text-black" href=""> find <i class="fas fa-search text-black"></i></a>
+                          <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+                        </div>
+                      </div>
+                    <% }) %>
+             
+                  </div>
+                  <div class="col-lg-5">
+                    <div>
+                      <form action="">
+                      <div class="text-black rounded-3" style="background-color:  #d8d3cee8;">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="mb-0">Total Payment</h5>
+                          </div>
+                          <h3 style="display: none;"><%= cartData._id %></h3>
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2">Sub Total</p>
+                            <p class="mb-2">₹<%= subTotal %>.00</p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2">Shipping</p>
+                            <p class="mb-2">free</p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2">Tax</p>
+                            <p class="mb-2"><%= tax %></p>
+                          </div>
+                          <div class="d-flex justify-content-between">
+                            <p class="mb-2">Discount</p>
+                            <p class="mb-2">0.00</p>
+                          </div>
+                          <hr class="my-4">
+                          <div class="d-flex justify-content-between mb-4">
+                            <p class="mb-2">Total(Incl. taxes)</p>
+                            <p class="text-success mb-2">₹<%= total %></p>
+                          </div>
+                          <button onclick="proceedToCheckout('<%= subTotal %>','<%= tax %>','<%= total %>','<%= cartData._id %>')"
+                            type="button" class="btn btn-success btn-block btn-lg " style="margin-left:54%;">
+                            <div class="d-flex justify-content-between">
+                              <span>Proceed to Checkout </span>  
+                            </div>
+                          </button>
+                          <p id="catchError2" style="color: rgb(246, 4, 4);"></p>
+                          <!-- <h1>ydfvhijzdvhkl</h1> -->
+                        </div>
+                      </div>
+                    </form>
+                    </div>
+                    <br>
+                    <!-- ////////////////////////////////////// -->
+                    <div>
+                      <div class="text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
+                        <div class="card-body">
+                          <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h6 class="text-black mb-0">Coupon Code</h6>
+                          </div>
+                          <hr class="my-4">
+                          <form class="mt-4">
+                            <div class="form-outline form-white mb-4">
+                              <input type="text" id="typeName" class="form-control form-control-lg" siez="17" placeholder="" />
+                            </div>
+                          </form>
+                          <div class="d-flex justify-content-between">
+                            <button type="button" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
+                              <div class="d-flex justify-content-between">
+                                <span class="text-primary">Apply Coupon <i class=""></i></span>
+                              </div>
+                            </button>
+                            <div class="d-flex justify-content-end">
+                              <a class="text-black" href=""> find <i class="fas fa-search text-black"></i></a>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -143,9 +179,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  <%}%>
 
 <script>
   const catchError = document.getElementById('catchError')

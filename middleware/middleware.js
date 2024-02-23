@@ -27,6 +27,9 @@ async function authenticateToken(req, res, next) {
         if(!userData.status){
             return res.redirect('/userLogin')
         }
+        // if(userData){
+        //     return res.render('userViews/home')
+        // }
         console.log(userData)
         
 

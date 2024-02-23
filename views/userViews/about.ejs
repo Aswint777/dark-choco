@@ -1,5 +1,10 @@
 <%-include('../partial/header.ejs')%>
-<%-include('../partial/navbar.ejs')%>
+
+<%if(!userAuth){%>
+  <%-include('../partial/navbar.ejs')%>
+<%}else{%>
+  <%-include('../partial/userNavbar.ejs')%>
+<%}%>
 
 
 <!-- About 1 - Bootstrap Brain Component -->

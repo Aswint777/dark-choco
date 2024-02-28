@@ -6,6 +6,7 @@ const { otpPagePost, resendOtp, forgotPassword, forgotPasswordPost, forgotVarify
 const loginMiddleWare = require('../middleware/loginMiddleWare')
 const signUpMiddleWare = require('../middleware/signUpMiddleWare')
 const aboutToken = require('../middleware/aboutMiddleWare')
+const adminLoginAuth = require('../middleware/adminLoginMidilware')
 
 const router = express.Router()
 
@@ -23,7 +24,7 @@ router.get('/userSignIn',signUpMiddleWare,userSignIn)
 router.post('/userSignIn',newUser)
 
 //admin login page 
-router.get('/adminLogin',adminLogin)
+router.get('/adminLogin',adminLoginAuth,adminLogin)
 
 router.post('/adminLogin',adminLoginPost)
 

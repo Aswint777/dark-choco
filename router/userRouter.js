@@ -10,7 +10,8 @@ const { productPage, addToCart } = require('../controller/userController/product
 const { getCheckOutPage, placeOrder } = require('../controller/userController/checkOutController')
 const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
 const { getSuccessPage } = require('../controller/userController/orderSuccessController')
-const { userOrderHistoryPage, userOrderDetails } = require('../controller/userController/userOrderController')
+const { userOrderHistoryPage, userOrderDetails, cancelOrder } = require('../controller/userController/userOrderController')
+const { getWishList, addToWishList } = require('../controller/userController/wishListController')
 
 
 const router = express.Router()
@@ -67,9 +68,16 @@ router.get('/userOrderHistory',userOrderHistoryPage)
 
 router.get( '/userOrderDetails',userOrderDetails)
 
+router.post('/cancelOrder',cancelOrder)
+
 //address page only
 
 router.get('/addresspage',addressOnlyPage)
+
+// wishList 
+router.get('/getWishList',getWishList)
+
+router.post('/addToWishList',addToWishList)
 
     
 

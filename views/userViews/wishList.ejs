@@ -1,0 +1,90 @@
+<%- include('../partial/header.ejs') %>
+<%- include('../partial/userNavbar.ejs') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    .in-stock-box {
+      background: #ff0000;
+      font-size: 12px;
+      text-align: center;
+      border-radius: 25px;
+      padding: 4px 15px;
+      display: inline-block;
+      color: #fff;
+    }
+    .trash-icon {
+      font-size: 20px;
+      color: #212529;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="main-heading border-b ">My wishlist</h2>
+        <!-- <div class="table-responsive"> -->
+			<% list.products.forEach(product => { %>
+
+                <div class="card mb-3">
+					<div class="card-body">
+					  <div class="d-flex justify-content-between">
+						<div class="d-flex flex-row align-items-center">
+						  <div >
+							<img src="/products/<%= product.product_id.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+						  </div>
+						  <div class="ms-3">
+							<h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
+							<h5 style="display: none;">_id </h5> <!-- Assuming product has a 'name' property -->
+							<p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
+						  </div>
+						</div>
+						<div class="d-flex flex-row align-items-center">
+						  <div >
+							<!-- Assuming product has a 'price' property -->
+							<h5 class="mb-0">₹<%= product.product_id.amount %></h5>
+						  </div>
+						  </div>
+						  <div class="d-flex flex-row align-items-center">
+
+							<div class="block">
+								<button onclick="addToCart('')" class="shadow btn custom-btn" style="border-color: rgb(55, 119, 141);">Add to cart</button>
+							</div>
+							
+					
+						  
+						</div>
+
+						<div class="d-flex align-items-center justify-content-between" >
+							<div class="block">
+								<button class="shadow btn custom-btn" style="border-color: rgb(55, 119, 141);">in stock</button>
+							</div>
+							
+						  </div>
+						<div class="d-flex flex-row align-items-center">
+
+						  <button  style="background: none;"
+							data-bs-toggle="modal" data-bs-target="#exampleModal">
+							<a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
+						  </button>
+						</div>
+					</div>
+					<!-- <p id="catchError" style="color: rgb(246, 4, 4);"></p> -->
+				  </div>
+				  <!-- <p id="quantityError" style="color: rgb(246, 4, 4);"></p> -->
+				</div>
+				<% }) %>
+
+               
+        <!-- </div> -->
+      </div>
+    </div>
+  </div>
+</body>
+</html>

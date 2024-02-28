@@ -55,7 +55,7 @@
 
               <div class="buttons d-flex my-5">
                   <div class="block">
-                      <a href="#" class="shadow btn custom-btn ">Wishlist</a>
+                      <button onclick="addToWishList('<%= data._id %>')" class="shadow btn custom-btn ">Wishlist</button>
                   </div>
                   <div class="block">
                       <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn">Add to cart</button>
@@ -121,7 +121,6 @@
 
     async function  addToCart(_id){
         try{
-            console.log(_id,'entered here')
         const res = await fetch("/user/addToCart/", {
         method: "POST",
         body: JSON.stringify({ _id:_id }),
@@ -135,6 +134,24 @@
         }
 
     }
+
+    async function addToWishList(_id){
+        try{
+            console.log(_id,'entered here')
+        const res = await fetch("/user/addToWishList/", {
+        method: "POST",
+        body: JSON.stringify({ _id}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+        }catch(error){
+            console.log(error,'ooooooooooooi')
+        }
+
+    }
+
     </script>
 
 <%- include('../partial/footer.ejs') %>

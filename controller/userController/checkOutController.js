@@ -5,6 +5,7 @@ const products = require("../../model/productModel");
 const order = require("../../model/orderModel");
 const { default: mongoose } = require("mongoose");
 const user = require("../../model/userModel");
+const product = require("../../model/productModel");
 
 const getCheckOutPage = async (req, res) => {
   try {
@@ -37,11 +38,18 @@ const placeOrder = async (req, res) => {
 
     const cartData = await cart
       .findOne({ userData: userId })
-      .populate("products.product_id", "-quantity");
+      .populate("products.product_id","-quantity");
 
-    console.log(cartData, "dgjdfhjdkjds");
+    // console.log(cartData, "dgjdfhjdkjds");
+    // console.log(cartData.products.product_id,"populated the product")
+    
+   let mapQuantity= cartData.products.map(async(pro)=>{
+      console.log(pro,"before updation")
+      const decrimentProductQuantity = await product.findOneAndUpdate({_id: pro.product_id._id},{$inc:{quantity:-pro.quantity}},{new:true})
+      console.log(decrimentProductQuantity,'quantity dicriment is here')
+    })
     const cartDetails = cartData.products;
-    console.log(cartDetails, "cartDetails");
+    // console.log(cartDetails, "cartDetails");
     let orderProductDetails = [];
     for (let i = 0; i < cartDetails.length; i++) {
       let productFinal = cartDetails[i].product_id.toObject();
@@ -51,12 +59,12 @@ const placeOrder = async (req, res) => {
         productFinal
       );
       // let a = {quantity:cartDetails[i].quantity,...productFinal}
-      console.log(destructuredProduct, "happy");
+      // console.log(destructuredProduct, "happy");
 
       orderProductDetails.push(destructuredProduct);
       // console.log(cartDetails.length,'iii')
     }
-    console.log(orderProductDetails.length);
+    // console.log(orderProductDetails.length);
 
     const userDetails = await user.findOne({ _id: userId });
 
@@ -85,7 +93,7 @@ const placeOrder = async (req, res) => {
     const totalQuantity = Quantity[0]?.total;
     // console.log(totalQuantity, 'totalQuantity');
 
-    console.log(orderProductDetails, "kkkkkk");
+    // console.log(orderProductDetails, "kkkkkk");
 
     const orderData = await order.create({
       subTotal: subTotal,
@@ -101,9 +109,9 @@ const placeOrder = async (req, res) => {
     if (orderData){
       const deleteCart = await cart.findOneAndDelete({userData:userId})
     }
-    console.log(orderData, "dfhgdjfhkdfjdfk");
+    // console.log(orderData, "dfhgdjfhkdfjdfk");
     const id = orderData._id;
-    console.log(id);
+    // console.log(id);
     res.json({ id: id });
   } catch (error) {
     console.log(`error in place order ${error}`);

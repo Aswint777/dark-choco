@@ -71,6 +71,7 @@
                                       name="Payment"
                                       value=""
                                       id="paymentMethod"
+                                      
                                     />
                                     <img
                                       style="width: 50px"
@@ -196,6 +197,8 @@
                         </div>
                       </button>
                     </div>
+                    <p id="addressMessage" style="color: rgb(246, 4, 4);"></p>
+
                   </div>
                 </div>
                 <br />
@@ -211,6 +214,9 @@
 <!-- ///snackbar -->
 
 <script>
+  const addressMessage = document.getElementById('addressMessage')
+  const paymentMessage = document.getElementById('paymentMessage')
+
   
   // const placeOrderForm = document.querySelector("form");
   
@@ -232,6 +238,24 @@
       subTotal = parseFloat(subTotal)
       tax = parseFloat(tax)
       total = parseFloat(total)
+
+      if(address == null ){
+        console.log('wait ')
+        addressMessage.innerHTML="password doesn't match "
+        setTimeout(()=>{
+         addressMessage.innerHTML = ''
+       },5000)
+        return 
+      }
+      
+      if(paymentMethod == null ){
+        console.log('wait ')
+        paymentMessage.innerHTML="password doesn't match "
+        setTimeout(()=>{
+         paymentMessage.innerHTML = ''
+       },5000)
+        return 
+      }
 
 
 

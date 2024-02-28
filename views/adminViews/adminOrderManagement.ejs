@@ -64,14 +64,14 @@
                           <!-- <label for="cars" class="col-sm-4 col-form-label">Category</label> -->
                           <div class="col-sm-8">
                               
-                              <select name="status" id="status" style="width: 130px; height: 35px;"
+                              <select name="status" id="status" style="width: 130px; height: 35px; color: rgb(216, 30, 30);" 
                               onchange="updateStatus('<%= list._id %>')">
-                                
+                              <option  value="<%=list.status %>"  style="color: rgb(49, 227, 46);"><%=list.status %></option>
                             <option value="pending" style="color: black;">pending</option>
                             <option value="processing" style="color: black;">processing</option>
                             <option value="shipped" style="color: black;">shipped</option>
-                            <option value="delivered" style="color: black;">delivered</option>
-                            <option value="canceled" style="color: black;">canceled</option>   
+                            <option value="delivered" style="color: rgb(10, 161, 43);">delivered</option>
+                            <option value="rejected" style="color: rgb(169, 25, 25);">rejected</option>   
                           </select>  
                       </div>                   
                   </div>                    
@@ -131,7 +131,12 @@
   }
 
   async function updateStatus (_id){
-    const status = document.getElementById('status').value
+    // var selectElement = document.getElementById('status');
+        // var selectedOption = selectElement.options[selectElement.selectedIndex];
+        // var selectedStatus = selectedOption.text;
+        // selectedOption.text =  selectedStatus;
+        const statusElement = document.getElementById('status');
+        const status = statusElement.value 
     console.log(status,_id,'djdjfndj')
     
     const res = await fetch("/admin/updateStatus/", {
@@ -141,8 +146,8 @@
           "Content-Type": "application/json",
         },
     });
-
-
+    const data = await res.json()
+    console.log({data})
   }
 
 

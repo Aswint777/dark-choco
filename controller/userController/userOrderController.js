@@ -24,7 +24,28 @@ const userOrderDetails = async(req,res)=>{
     res.render('userViews/userOrderDetailsPage',{details})
 }
 
+const cancelOrder = async (req,res)=>{
+    try{
+        const token = req.cookies.loginToken;
+        const data = jwt.verify(token, process.env.SECRET_KEY);
+        const { userId } = data; 
+        if(userId){
+            console.log(req.body)
+            const { _id } = req.body 
+            console.log(_id )
+            const cancel = await order.findOneAndUpdate({_id : _id } ,{$set:{status:"canceled"}},{new: true})
+            console.log(cancel,'canceled')
+            res.json({succuss : true})
+        }
+        
+    }catch(error){
+        console.log(error)
+    }
+    
+}
+
 module.exports = {
     userOrderHistoryPage,
-    userOrderDetails
+    userOrderDetails,
+    cancelOrder
 }

@@ -11,12 +11,14 @@ const GetCart = async (req, res) => {
     const cartData = await cart
       .findOne({ userData: userId })
       .populate("products.product_id");
-    console.log(cartData);
+
     const cartTotal = await cart.aggregate([
       { $match: { userData: new mongoose.Types.ObjectId(userId) } },
       { $unwind: "$products" },
       { $group: { _id: null, total: { $sum: "$products.oneProductTotal" } } },
     ]);
+
+    // const maxQuantity = await product. findOne({})
     console.log(cartTotal);
     const subTotal = cartTotal[0]?.total;
     const tax = (subTotal * 3) / 100;
@@ -42,7 +44,7 @@ const GetCart = async (req, res) => {
     console.log(error);
   }
 };
-
+ 
 const cartUpdateQuantity = async (req, res) => {
   try {
     console.log("tttettttttttttt");

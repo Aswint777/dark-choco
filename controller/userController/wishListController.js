@@ -2,6 +2,8 @@ const wishList = require("../../model/wishListModel");
 const jwt = require("jsonwebtoken");
 const product = require("../../model/productModel");
 const user = require("../../model/userModel");
+const { default: mongoose } = require("mongoose");
+
 
 const getWishList = async (req, res) => {
     try{
@@ -47,7 +49,26 @@ const addToWishList = async (req, res) => {
   console.log(addWishList,"added to wishList")
 };
 
+const deleteWishListProduct = async (req, res) => {
+  try {
+    console.log(req.body, "kuuu");
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const { id } = req.body;
+    const result = await wishList.updateOne(
+      { userData: userId },
+      { $pull: { products: { _id: new mongoose.Types.ObjectId(id.trim()) } } }
+    );
+    console.log(result, "result");
+    res.json({ success: true });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
+};
+
 module.exports = {
   getWishList,
-  addToWishList
+  addToWishList,
+  deleteWishListProduct
 };

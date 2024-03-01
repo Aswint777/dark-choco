@@ -69,7 +69,8 @@
                               </div>
                               <div class="ms-3">
                                 <h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
-                                <h5 style="display: none;"><%= product.product_id._id %></h5> <!-- Assuming product has a 'name' property -->
+                                <!-- <h5 id="product_id" style="display: none;"><%= product._id %></h5>  -->
+                                <input id="product_id" value="<%= product._id %>"  type="text" >
                                 <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
                               </div>
                             </div>
@@ -92,14 +93,14 @@
                                 <h5 class="mb-0" >₹<%= product.oneProductTotal %></h5>
                               </div>
                               <button  style="background: none;"
-                                data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                data-bs-toggle="modal" data-bs-target="#exampleModal<%= product._id %>">
                                 <a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
                               </button>
                             </div>
 
                             <!-- modal -->
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal<%= product._id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -239,7 +240,8 @@
 
   function sendData(id) {
     const quantityValue = document.getElementById("quantityInput_" + id).value;
-    console.log(typeof(parseInt(quantityValue)),'kl')
+    console.log(parseInt(quantityValue),'kl')
+    console.log(id)
 
     // if(parseInt(quantityValue) == 0){
     //   quantityError.innerHTML = 'error in the quantity of 1'
@@ -266,10 +268,10 @@
       .then(data => {
         console.log('Response from backend:', data);
         if(data.success == true){
-          window.location.reload()
+          // window.location.reload()
         }
         if(data.success== false){
-          window.location.reload()
+          // window.location.reload()
       catchError.innerHTML = data?.error
           setTimeout(()=>{
             catchError.innerHTML = ''
@@ -291,7 +293,11 @@
       });
   }
 
+ 
+
   async function deleteProduct(id){
+    // const deleteProduct = document.getElementById("product_id").value
+// console.log(deleteProduct)
     console.log(id,'oioiioioioioi')
     const res = await fetch("/user/deleteCartProduct/", {
       method: "POST",

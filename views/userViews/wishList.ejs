@@ -1,90 +1,198 @@
-<%- include('../partial/header.ejs') %>
-<%- include('../partial/userNavbar.ejs') %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wishlist</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  <style>
-    .in-stock-box {
-      background: #ff0000;
-      font-size: 12px;
-      text-align: center;
-      border-radius: 25px;
-      padding: 4px 15px;
-      display: inline-block;
-      color: #fff;
-    }
-    .trash-icon {
-      font-size: 20px;
-      color: #212529;
-    }
-  </style>
-</head>
-<body>
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-12">
-        <h2 class="main-heading border-b ">My wishlist</h2>
-        <!-- <div class="table-responsive"> -->
-			<% list.products.forEach(product => { %>
+<%- include('../partial/header.ejs') %> <%- include('../partial/userNavbar.ejs')
+%>
+<link
+  rel="stylesheet"
+  href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+/>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-                <div class="card mb-3">
-					<div class="card-body">
-					  <div class="d-flex justify-content-between">
-						<div class="d-flex flex-row align-items-center">
-						  <div >
-							<img src="/products/<%= product.product_id.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
-						  </div>
-						  <div class="ms-3">
-							<h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
-							<h5 style="display: none;">_id </h5> <!-- Assuming product has a 'name' property -->
-							<p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
-						  </div>
-						</div>
-						<div class="d-flex flex-row align-items-center">
-						  <div >
-							<!-- Assuming product has a 'price' property -->
-							<h5 class="mb-0">₹<%= product.product_id.amount %></h5>
-						  </div>
-						  </div>
-						  <div class="d-flex flex-row align-items-center">
 
-							<div class="block">
-								<button onclick="addToCart('')" class="shadow btn custom-btn" style="border-color: rgb(55, 119, 141);">Add to cart</button>
-							</div>
-							
-					
-						  
-						</div>
+<div class="container" style="background-color: white;">
+  <div class="row">
+    <div class="col-md-3"><%- include('../partial/userSidebar.ejs') %></div>
 
-						<div class="d-flex align-items-center justify-content-between" >
-							<div class="block">
-								<button class="shadow btn custom-btn" style="border-color: rgb(55, 119, 141);">in stock</button>
-							</div>
-							
-						  </div>
-						<div class="d-flex flex-row align-items-center">
+    <div class="col-md-9">
+      <!-- <div class="container mt-5"> -->
+      <!-- <div class="row"> -->
+      <!-- <div class="col-md-12"> -->
 
-						  <button  style="background: none;"
-							data-bs-toggle="modal" data-bs-target="#exampleModal">
-							<a href="#!" style="color: #cecece;"><i class="fas fa-trash-alt"></i></a>
-						  </button>
-						</div>
-					</div>
-					<!-- <p id="catchError" style="color: rgb(246, 4, 4);"></p> -->
-				  </div>
-				  <!-- <p id="quantityError" style="color: rgb(246, 4, 4);"></p> -->
-				</div>
-				<% }) %>
+      <h2 class="main-heading border-b">My wishlist</h2>
+      <!-- <div class="table-responsive"> -->
+      <% list.products.forEach(product => { %>
+      <div class="card mb-3">
+        <div class="card-body">
+          <div class="d-flex gap-2 justify-content-between">
+            <div class="d-flex flex-row align-items-center" style="gap: 2px">
+              <div
+                onclick="window.location.href='/user/productPage/<%= product.product_id._id %>'"
+              >
+                <img
+                  src="/products/<%= product.product_id.image1 %>"
+                  class="img-fluid rounded-3"
+                  alt="Shopping item"
+                  style="width: 65px"
+                />
+              </div>
+              <div class="ms-3">
+                <h5><%= product.product_id.stock %></h5>
+                <!-- Assuming product has a 'name' property -->
+                <h5 style="display: none"><%= product.product_id._id %></h5>
+                <!-- Assuming product has a 'name' property -->
+                <p class="small mb-0"></p>
+                <!--  Assuming product has a 'details' property -->
+              </div>
+            </div>
+            <!-- <div class="d-flex justify-content-between"> -->
 
-               
-        <!-- </div> -->
+            <div class="d-flex flex-row align-items-center" style="gap: 15px">
+              <div>
+                <!-- Assuming product has a 'price' property -->
+                <h5 class="mb-0">₹<%= product.product_id.amount %></h5>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="block">
+                  <button
+                    class=""
+                    style="background-color: #b95914; border-radius: 5px"
+                  >
+                    in stock
+                  </button>
+                </div>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <div style="margin-right: 30%">
+                  <div class="block">
+                    <button
+                      class="shadow btn custom-btn"
+                      style="border-color: rgb(48, 189, 64)"
+					  onclick="addToCart('<%=product.product_id._id %>')"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <button
+                style="background: none"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+				onclick="deleteProduct('<%= product._id %>')"
+              >
+                <a href="#!" style="color: #cecece"
+                  ><i class="fas fa-trash-alt"></i
+                ></a>
+              </button>
+            </div>
+            <!-- </div> -->
+            <!-- modal -->
+
+            <!-- <div
+              class="modal fade"
+              id="exampleModal"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+        
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <h5>
+                      If you delete the product it will no longer show in the
+                      cart
+                    </h5>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                    >
+                      continue
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+            <!--  -->
+          </div>
+          <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+        </div>
+        <p id="quantityError" style="color: rgb(246, 4, 4)"></p>
       </div>
+      <% }) %>
+
+      <!-- </div> -->
     </div>
   </div>
-</body>
-</html>
+</div>
+<!-- </div> -->
+
+<!-- class="shadow btn custom-btn" -->
+
+
+
+<script>
+	 async function  addToCart(_id){
+        try{
+        const res = await fetch("/user/addToCart/", {
+        method: "POST",
+        body: JSON.stringify({ _id:_id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+        }catch(error){
+            console.log(error,'ooooooooooooi')
+        }
+
+    }
+
+	async function deleteProduct(id) {
+  const willDelete = await swal({
+    title: "Are you sure?",
+    text: "Once deleted, you will not be able to recover this product!",
+    icon: "warning",
+    buttons: true,
+    dangerMode: true,
+  });
+
+  if (willDelete) {
+    const res = await fetch("/user/deleteWishListProduct/", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.success == true) {
+      swal("Poof! The product has been deleted!", {
+        icon: "success",
+      }).then(() => {
+        window.location.reload();
+      });
+    }
+  } else {
+    swal("The product is safe!");
+  }
+}
+
+
+
+</script>

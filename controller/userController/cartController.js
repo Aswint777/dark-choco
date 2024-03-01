@@ -2,6 +2,7 @@ const product = require("../../model/productModel");
 const cart = require("../../model/cartModel");
 const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
+const { trim } = require("validator");
 
 const GetCart = async (req, res) => {
   try {
@@ -24,6 +25,7 @@ const GetCart = async (req, res) => {
     const tax = (subTotal * 3) / 100;
     const total = subTotal + tax;
     if (cartData) {
+      console.log(cartData)
       res.render("userViews/cart", {
         cartData,
         subTotal,
@@ -93,10 +95,11 @@ const deleteCartProduct = async (req, res) => {
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
-    const { id } = req.body;
+    const { id} = req.body;
+    console.log(id)
     const result = await cart.updateOne(
       { userData: userId },
-      { $pull: { products: { _id: new mongoose.Types.ObjectId(id.trim()) } } }
+      { $pull: { products: { _id: new mongoose.Types.ObjectId(id) }} },{new:true}
     );
     console.log(result, "result");
     res.json({ success: true });

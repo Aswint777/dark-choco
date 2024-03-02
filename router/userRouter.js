@@ -7,7 +7,7 @@ const checkUserAuthenticationBeforeAction = require('../middleware/authCheckingf
 const checkUserBeforeProductDetail = require('../middleware/authCheckingforProductDetail')
 const { GetCart, cartUpdateQuantity, deleteCartProduct, proceedToCheckout } = require('../controller/userController/cartController')
 const { productPage, addToCart } = require('../controller/userController/productDetailsController')
-const { getCheckOutPage, placeOrder } = require('../controller/userController/checkOutController')
+const { getCheckOutPage, placeOrder, razorPayHandler } = require('../controller/userController/checkOutController')
 const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
 const { getSuccessPage } = require('../controller/userController/orderSuccessController')
 const { userOrderHistoryPage, userOrderDetails, cancelOrder } = require('../controller/userController/userOrderController')
@@ -69,6 +69,8 @@ router.get('/userOrderHistory',userOrderHistoryPage)
 router.get( '/userOrderDetails',userOrderDetails)
 
 router.post('/cancelOrder',cancelOrder)
+
+router.post('/verify-payment',razorPayHandler)
 
 //address page only
 

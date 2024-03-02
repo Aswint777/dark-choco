@@ -67,9 +67,10 @@
 
                                   <div>
                                     <input
+                                    onclick="paymentMethods('razorPay')"
                                       type="radio"
                                       name="Payment"
-                                      value=""
+                                      value="razorPay"
                                       id="paymentMethod"
                                       
                                     />
@@ -82,9 +83,11 @@
 
                                   <div>
                                     <input
+                                    onclick="paymentMethods('myWallet')"
+
                                       type="radio"
                                       name="Payment"
-                                      value=""
+                                      value="myWallet"
                                       id="paymentMethod"
                                     />
                                     <button style="background: none">
@@ -276,15 +279,98 @@
       const data = await res.json();
       const _id = data.id
       console.log(_id,'jdgsfjdh')
-      if(_id){
+      if(data.success == true){
         location.href = `/user/getSuccessPage?_id=${_id}`
-        
+      }else if(data.online == true){
+        console.log('online is this',data);
+        razOrPay(data);
+
       }
+
+
       // }catch(error){
       //   console.log(error,'drthfdb')
 
       // }
       
     } 
+
+    
+  function razorpayHandler(payment, order) {
+    console.log('mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm');
+    const address = document.querySelector('input[type="radio"][name="address"]:checked').value;
+      const paymentMethod = document.querySelector('input[type="radio"][name="Payment"]:checked').value;
+    let subTotal = document.getElementById('subTotal').textContent
+      let tax = document.getElementById('tax').textContent
+      let  total = document.getElementById('total').textContent
+      subTotal = parseFloat(subTotal)
+      tax = parseFloat(tax)
+      total = parseFloat(total)
+
+    console.log("Inside handler", payment, order);
+
+    fetch('/user/verify-payment', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            payment,
+            order,address,paymentMethod,subTotal,tax,total
+        }),
+    })
+    .then(result => result.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Response received successfully');
+            window.location.href = '/ordersuccess'; 
+        } else {
+          
+            console.log('Response not received');
+            window.location.href = ''; 
+        }
+    })
+    .catch(error => {
+        console.error('Fetch error:', error);
+    });
+}
+//-----------------------------------------------------------------------------------------------------------------
+function razOrPay(data) {
+  console.log('haiiii')
+  console.log(data,'kkkkkkkkkkkkkkkkkk')
+  const amount = parseInt( data.createOrder.amount)
+  console.log( amount,'amount')
+  const id =""+data.createOrder.id
+  console.log( id,'id')
+
+    let options = {
+        "key": "rzp_test_9JEC6JyecFZzL8",
+        "amount": amount,
+        "currency": "INR",
+        "name": "Dark Choco",
+        "description": "Test Transaction",
+        "image": "https://example.com/your_logo",
+        "order_id":id.trim(),
+        "handler": function (payment) {
+          console.log("..........payment",payment);
+            razorpayHandler(payment, data); 
+        },
+        "prefill": {
+            "name": "Dark Choco",
+        },
+        "notes": {
+            "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+            "color": "#5DFFE5"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+    
+}
+
+
 
 </script>

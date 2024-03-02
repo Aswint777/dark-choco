@@ -6,6 +6,35 @@ const order = require("../../model/orderModel");
 const { default: mongoose } = require("mongoose");
 const user = require("../../model/userModel");
 const product = require("../../model/productModel");
+const Razorpay = require('razorpay');
+const razorPay = require("../helperFunction/razorPay");
+require("dotenv").config();
+const crypto = require("crypto");
+const { log } = require("console");
+
+
+
+
+// var instance = new Razorpay({
+//   key_id: 'rzp_test_9JEC6JyecFZzL8',
+//   key_secret:'cfzVG1hJT34TiLqaITY9I4u4',
+// });
+
+// async function generateRazorPay (id,total){
+//   console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
+//   console.log(total,id,'razorPay total')
+//   var options = {
+//     amount: total,  
+//     currency: "INR",
+//     receipt: ""+id
+//   };
+//   instance.orders.create(options, function(err, order) {
+//     console.log(order);
+//   });
+
+// }
+
+
 
 const getCheckOutPage = async (req, res) => {
   try {
@@ -58,9 +87,7 @@ const placeOrder = async (req, res) => {
         { quantity: cartDetails[i].quantity },
         productFinal
       );
-      // let a = {quantity:cartDetails[i].quantity,...productFinal}
-      // console.log(destructuredProduct, "happy");
-
+      
       orderProductDetails.push(destructuredProduct);
       // console.log(cartDetails.length,'iii')
     }
@@ -95,6 +122,7 @@ const placeOrder = async (req, res) => {
 
     // console.log(orderProductDetails, "kkkkkk");
 
+    if ( paymentMethod == "cod"){
     const orderData = await order.create({
       subTotal: subTotal,
       tax: tax,
@@ -106,19 +134,136 @@ const placeOrder = async (req, res) => {
       userDetails: userDetails,
       products: orderProductDetails,
     });
-    if (orderData){
-      const deleteCart = await cart.findOneAndDelete({userData:userId})
+    if(orderData){
+
+      const id = orderData._id;
+        const deleteCart = await cart.findOneAndDelete({userData:userId})
+        res.json({ success : true ,id: id });
     }
-    // console.log(orderData, "dfhgdjfhkdfjdfk");
-    const id = orderData._id;
+
+    //////// RazorPay /////////////////////////////////////////
+    }else if( paymentMethod == "razorPay"){
+      console.log('haaaaaaaaaaaaaaaaaaaaaai')
+      // console.log('razer pay',id)
+      // var instance = new Razorpay({ key_id: 'YOUR_KEY_ID', key_secret: 'YOUR_SECRET' })
+      const options = {
+        amount: total,  // amount in the smallest currency unit
+        currency: "INR",
+        receipt:  crypto.randomBytes(10).toString("hex"), 
+      };
+      console.log(options,'options')
+     
+     await razorPay
+                   .createRazorPayOrder(options)
+                   .then((createOrder)=>{
+                    console.log(createOrder,'.......................................m');
+                    res.json({online:true,createOrder,options})
+                   })
+                   .catch((err)=>{
+                    console.error('Error creating Razorpay order:', err);
+        res.status(500).json({ error: 'Error creating Razorpay order' });
+                   })
+
+      
+    }
     // console.log(id);
-    res.json({ id: id });
   } catch (error) {
     console.log(`error in place order ${error}`);
   }
 };
 
+
+
+
+const razorPayHandler = async(req,res)=>{
+  try {
+    console,log('handling started')
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+
+    const cartData = await cart
+      .findOne({ userData: userId })
+      .populate("products.product_id","-quantity");
+
+    // console.log(cartData, "dgjdfhjdkjds");
+    // console.log(cartData.products.product_id,"populated the product")
+    
+   let mapQuantity= cartData.products.map(async(pro)=>{
+      const decrimentProductQuantity = await product.findOneAndUpdate({_id: pro.product_id._id},{$inc:{quantity:-pro.quantity}},{new:true})
+     
+    })
+    const cartDetails = cartData.products;
+    let orderProductDetails = [];
+    for (let i = 0; i < cartDetails.length; i++) {
+      let productFinal = cartDetails[i].product_id.toObject();
+      let destructuredProduct = Object.assign(
+        {},
+        { quantity: cartDetails[i].quantity },
+        productFinal
+      );
+      
+      orderProductDetails.push(destructuredProduct);
+    }
+
+    const userDetails = await user.findOne({ _id: userId });
+
+    const { address, paymentMethod, subTotal, tax, total } = req.body;
+
+    const addressData = await Address.findOne(
+      {
+        userData: userId,
+        addressData: {
+          $elemMatch: { _id: new mongoose.Types.ObjectId(address.trim()) },
+        },
+      },
+      {
+        "addressData.$": 1,
+      }
+    );
+
+    const orderAddress = addressData.addressData[0];
+
+    const Quantity = await cart.aggregate([
+      { $match: { userData: new mongoose.Types.ObjectId(userId) } },
+      { $unwind: "$products" },
+      { $group: { _id: null, total: { $sum: "$products.quantity" } } },
+    ]);
+    const totalQuantity = Quantity[0]?.total;
+
+  
+    const orderData = await order.create({
+      subTotal: subTotal,
+      tax: tax,
+      total: total,
+      paymentMode: paymentMethod,
+      quantity: totalQuantity,
+      userData: new mongoose.Types.ObjectId(userId),
+      address: orderAddress,
+      userDetails: userDetails,
+      products: orderProductDetails,
+    });
+    if(orderData){
+
+      const id = orderData._id;
+        const deleteCart = await cart.findOneAndDelete({userData:userId})
+        console.log('online payment success ...................................')
+        res.json({ success : true ,id: id });
+    }
+
+    
+    } catch (error) {
+    console.log(`error in place order ${error}`);
+  }
+
+}
+
+
+
+
+
 module.exports = {
   getCheckOutPage,
   placeOrder,
+  razorPayHandler
 };

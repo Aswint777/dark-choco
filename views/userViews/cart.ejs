@@ -70,7 +70,7 @@
                               <div class="ms-3">
                                 <h5><%= product.product_id.stock %></h5> <!-- Assuming product has a 'name' property -->
                                 <!-- <h5 id="product_id" style="display: none;"><%= product._id %></h5>  -->
-                                <input id="product_id" value="<%= product._id %>"  type="text" >
+                                <input id="product_id" value="<%= product._id %>"  type="text" style="display: none;" >
                                 <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
                               </div>
                             </div>
@@ -83,7 +83,7 @@
                                 <button id="decriment" class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')">
                                   <i class="fas fa-minus"></i>
                                 </button>
-                                <input id="quantityInput_<%= product.product_id._id %>" min="1" max="" name="quantity" value="<%= product.quantity %>" type="number" style="width: 50px;" class="form-control form-control-sm" onchange="sendData('<%= product.product_id._id %>')" disabled />
+                                <input id="quantityInput_<%= product.product_id._id %>" min="1" max="<%= product.product_id.quantity %>" name="quantity" value="<%= product.quantity %>" type="number" style="width: 50px;" class="form-control form-control-sm" onchange="sendData('<%= product.product_id._id %>')" disabled />
                                 <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
                                   <i class="fas fa-plus"></i>
                                 </button>
@@ -268,7 +268,7 @@
       .then(data => {
         console.log('Response from backend:', data);
         if(data.success == true){
-          // window.location.reload()
+          window.location.reload()
         }
         if(data.success== false){
           // window.location.reload()
@@ -313,6 +313,7 @@
   }
 
  async function proceedToCheckout(subTotal,tax,total,cartId){
+  // console.log()
     try{
       console.log(tax)
       console.log(cartId)

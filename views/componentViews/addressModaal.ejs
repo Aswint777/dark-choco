@@ -21,11 +21,10 @@
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="">
-                    <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>"  required/>
+                    <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>" />
                   </div>
                     <div class="d-flex justify-content-between">
                         <div class="d-flex flex-row align-items-center">
-                            
                             <div class="ms-3">
                               <!-- <h1><%= address._id %></h1> -->
                                 <h5><%= address.firstName %> <%= address.secondName %></h5>
@@ -41,29 +40,29 @@
                               data-bs-toggle="modal" data-bs-target="#editAddress" style="background: none;"> 
                                 <i style='font-size:24px; color: rgba(0, 0, 0, 0.646);' class='far'>&#xf044;</i>
                               </button>
-                                
+                              
                             </div>
                             <button onclick="deleteAddress(' <%= address._id %>')"
-                            style="background: none;"><i style='font-size:24px; color: rgba(0, 0, 0, 0.598);' class="fa-solid fa-trash"></i></button>
+                              style="background: none;"><i style='font-size:24px; color: rgba(0, 0, 0, 0.598);' class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
             </div>
-          <!-- </div> -->
+            <!-- </div> -->
           </div>
-        <% }); %>
-      <% }); %>  
+          <% }); %>
+          <% }); %>  
+        </div>
+      </div>
     </div>
-  </div>
-</div>
-
-<div class="d-flex justify-content-between">
- <button type="button" class="btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-   style="border-radius:15px; background-color: #fff;">
-   <div  class="d-flex justify-content-between">
-      <span class="text-primary">Add New Address <i class=""></i></span>
-   </div>
- </button>
+    
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+      style="border-radius:15px; background-color: #fff;">
+      <div  class="d-flex justify-content-between">
+        <span class="text-primary">Add New Address <i class=""></i></span>
+      </div>
+    </button>
  
  <div  class="d-flex justify-content-end">
    <a class=" text-black"></a>
@@ -490,6 +489,13 @@ async function deleteAddress(id){
         },
       });
       const data = await res.json();
+      if(data.success){
+        myFunction()
+        setTimeout(()=>{
+          window.location.reload()
+        },2000)
+
+      }
   
 }
 

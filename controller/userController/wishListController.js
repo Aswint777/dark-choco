@@ -21,32 +21,39 @@ const getWishList = async (req, res) => {
 };
 
 const addToWishList = async (req, res) => {
-    console.log('hlooppppppppppppppppppppppppp')
-  const token = req.cookies.loginToken;
-  const data = jwt.verify(token, process.env.SECRET_KEY);
-  const { userId } = data;
-  const userDetails = await wishList.findOne({ userData: userId });
+  try{
 
-  console.log(req.body);
-  const { _id } = req.body;
-  console.log(_id);
-  let addWishList
-  if (userDetails) {
-    addWishList = await wishList.findOneAndUpdate(
-      {
-        userData: new mongoose.Types.ObjectId(userId),
-        "products.product_id": { $ne: _id },
-      },
-      { $addToSet: { products: { product_id: _id } } },
-      { new: true }
-    );
-  } else {
-    addWishList = await wishList.create({
-      products: [{ product_id: _id }],
-      userData: userId,
-    });
-  }
-  console.log(addWishList,"added to wishList")
+    console.log('hlooppppppppppppppppppppppppp')
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const userDetails = await wishList.findOne({ userData: userId });
+    
+    console.log(req.body);
+    const { _id } = req.body;
+    console.log(_id);
+    let addWishList
+    if (userDetails) {
+      addWishList = await wishList.findOneAndUpdate(
+        {
+          userData: new mongoose.Types.ObjectId(userId),
+          "products.product_id": { $ne: _id },
+        },
+        { $addToSet: { products: { product_id: _id } } },
+        { new: true }
+        );
+      } else {
+        addWishList = await wishList.create({
+          products: [{ product_id: _id }],
+          userData: userId,
+        });
+      }
+      console.log(addWishList,"added to wishList")
+      res.json({success : true})
+    }catch(error){
+      res.json({ success: false, error: error.message });
+
+    }
 };
 
 const deleteWishListProduct = async (req, res) => {

@@ -24,7 +24,7 @@ const addAddressPost = async (req, res) => {
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
     console.log(userId, "djdfvkdjfvjdfvdkfjvkd");
-    // console.log(req.body)
+    console.log(req.body)
     const {
       firstName,
       secondName,
@@ -152,6 +152,7 @@ const deleteAddress = async (req,res)=>{
       { $pull: { addressData: { _id: new mongoose.Types.ObjectId(id.trim()) } } }
     );
     console.log(result,'hhhhhhhhhhhhhhhhhh')
+    res.json({success : true})
   }catch(error){
     res.status(400).json({ error: error.message });
 

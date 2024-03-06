@@ -2,6 +2,14 @@
 <%- include('../partial/header.ejs') %>
 <%- include('../partial/userNavbar.ejs') %>
 
+<%- include('../componentViews/snackbar.ejs') %>
+<!-- <div id="snackbar" class="icon-danger">you canceled your order</div> -->
+<div id="snackbar" class="icon-danger" style="background-color: red;">
+  <i class="fas fa-exclamation-circle" ></i> You canceled your order
+</div>
+
+
+
 <div class="container py-5 h-100">
     <!-- <div class="row">
         <div class="col-md-2">
@@ -20,6 +28,7 @@
                           <h5 class="mb-3"><a href="#!" class="text-body"><i class="fas fa-long-arrow-alt-left me-2"></i>Order details</a></h5>
                         </div>
                       </div>
+                      <input id="paymentMode" type="text" value="<%= details.paymentMode %>" style="display: none;">
                       <div class="col">
                         <% if(details.status == "canceled"){ %>
                         <div class="d-flex flex-row align-items-center justify-content-end">
@@ -212,20 +221,38 @@
       </div>
     </div>
   </div>
+  
   <!--  -->
   
 
+
   <script>
-    async function cancelOrder(_id){
+    async function cancelOrder(_id,paymentMode){
+      var modalElement = document.getElementById('exampleModal');
+    var modal = bootstrap.Modal.getInstance(modalElement);
+    modal.hide();
+      const method = document.getElementById('paymentMode').value
+
       console.log(_id)
+      console.log('lololol',method);
       const res = await fetch("/user/cancelOrder/",{
         method : "post",
-        body : JSON.stringify({_id}),
+        body : JSON.stringify({_id,method}),
         headers:{
           "Content-Type": "application/json",
         }
       })
       const data = await res.json()
+      if(data.succuss){
+        // window.location.reload()
+       
+       await myFunction()
+       setTimeout(()=>{
+    window.location.reload()
+  },3000)
+
+        
+      }
       
     }
   </script>

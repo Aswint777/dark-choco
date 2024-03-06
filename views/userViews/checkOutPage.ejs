@@ -1,6 +1,14 @@
 <%-include('../partial/header.ejs')%> 
 <%- include('../partial/userNavbar.ejs')%>
 
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar" >
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(255, 0, 0);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(255, 0, 0); border-radius: 5px;">
+       Your existing address is deleted
+    </div>
+</div>
+
 <section class="h-100 h-custom" style="background-color: #eee">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
@@ -280,6 +288,7 @@
       const _id = data.id
       console.log(_id,'jdgsfjdh')
       if(data.success == true){
+
         location.href = `/user/getSuccessPage?_id=${_id}`
       }else if(data.online == true){
         console.log('online is this',data);
@@ -321,13 +330,14 @@
     })
     .then(result => result.json())
     .then(data => {
+      console.log(data,'...................................')
         if (data.success) {
             console.log('Response received successfully');
-            window.location.href = '/ordersuccess'; 
-        } else {
+            const _id = data._id
+            console.log(_id,'iddddddddddd')
+            window.location.href = `/user/getSuccessPage?_id=${_id}`
           
             console.log('Response not received');
-            window.location.href = ''; 
         }
     })
     .catch(error => {

@@ -1,0 +1,222 @@
+<%-include('../partial/header.ejs')%> 
+
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar" >
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(255, 0, 0);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(255, 0, 0); border-radius: 5px;">
+       Your existing address is deleted
+    </div>
+</div>
+<div class="container">
+<div class="row">
+  <div class="col-md-2">
+      <%- include('../partial/adminSidebar.ejs') %>
+  </div>
+
+  <div class="col-md-10">
+
+<section class="h-100 h-custom" style="background-color: #eee">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card">
+          <div class="card-body p-4">
+            <h4 style="text-align: center;">Add Coupon</h4>
+            <form  id="couponForm">
+              <div style="text-align: right;">
+                <button type="submit" style=" background-color:rgb(21, 198, 21); border-radius: 5px;" >Create</button>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-7">
+                    <div class="text-black-50 rounded-3" style="background-color: #d8d3cee8">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4"></div>
+                            <p>Coupon Name</p>
+                            <input type="text" name="couponName" id="couponName"> <!-- Add the name attribute -->
+                            <p id="couponNameError" style="color: rgb(246, 4, 4);"></p>
+
+                            <p class="mb-2">Code</p>
+                            <input type="text" name="code" id="code"> <!-- Add the name attribute -->
+                            <p id="codeError" style="color: rgb(246, 4, 4);"></p>
+
+                            <p class="mb-2">description</p>
+                            <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                            <p id="descriptionError" style="color: rgb(246, 4, 4);"></p>
+
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div class="col-lg-5">
+                    <div>
+                        <div class="text-black rounded-3" style="background-color: #d8d3cee8">
+                            <div class="card-body ">
+            
+                                <p class="mb-2">Value</p>
+                                <input type="number" name="value" id="value"> <!-- Add the name attribute -->
+                                <p id="valueError" style="color: rgb(246, 4, 4);"></p>
+ 
+                                <p class="mb-2">Minimum Purchase Amount</p>
+                                <input type="number" name="minimumPurchaseAmount" id="minimumPurchaseAmount"> <!-- Add the name attribute -->
+                                <p id="minimumPurchaseAmountError" style="color: rgb(246, 4, 4);"></p>
+                                
+                                <p class="mb-2">Maximum Uses</p>
+                                <input type="number" name="maximumUses" id="maximumUses"> <!-- Add the name attribute -->
+                                <p id="maximumUsesError" style="color: rgb(246, 4, 4);"></p>
+            
+                                <p class="mb-2">Expiry Date </p>
+                                <input type="date" name="expiryDate" id="expiryDate"> <!-- Add the name attribute -->
+                                <p id="expiryDateError" style="color: rgb(246, 4, 4);"></p>
+            
+                            </div>
+                            <p id="addressMessage" style="color: rgb(246, 4, 4);"></p>
+            
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+            
+
+           </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+</div>
+<!-- ///snackbar -->
+
+
+
+<script>
+  const form = document.querySelector("form");
+  
+  const couponNameError = document.getElementById('emailError')
+  const codeError = document.getElementById('codeError')
+  const descriptionError = document.getElementById('descriptionError')
+  const valueError = document.getElementById('valueError')
+  const minimumPurchaseAmountError = document.getElementById('minimumPurchaseAmountError')
+  const maximumUsesError = document.getElementById('maximumUsesError')
+  const expiryDateError = document.getElementById('expiryDateError')
+
+  // const catchError = document.getElementById('catchError')
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    // alert('hai')
+
+    
+    const formData = new FormData(form);
+    const couponName = formData.get('couponName');
+    const code = formData.get('code');
+    const description = formData.get('description');
+    const value = formData.get('value');
+    const minimumPurchaseAmount = formData.get('minimumPurchaseAmount');
+    const maximumUses = formData.get('maximumUses');
+    const expiryDate = formData.get('expiryDate');
+   console.log(formData,'jshfnkjnckj')
+  const data={
+    couponName,
+    code,
+    description,
+    value,
+    minimumPurchaseAmount,
+    maximumUses,
+    expiryDate,
+  }
+
+    // const couponName = form.couponName.value;
+    // const code = form.code.value;
+    // const description = form.code.value;
+    // const minimumPurchaseAmount = form.minimumPurchaseAmount.value; 
+    // const maximumUses = form.maximumUses.value;
+    // console.log(couponName,code,description,minimumPurchaseAmount,maximumUses);
+    // const expiryDate = form.expiryDate.value;
+    console.log( couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate);
+    try {
+
+      if (couponName === ''){
+        couponNameError.innerHTML = 'Add coupon Name'
+        setTimeout(()=>{
+          couponNameError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (code === ''){
+        codeError.innerHTML = 'Add Coupon code '
+        setTimeout(()=>{
+          codeError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (description === ''){
+        console.log('hloooooozzz')
+        descriptionError.innerHTML = 'add description'
+        setTimeout(()=>{
+          descriptionError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (value === ''){
+        console.log('hloooooozzz')
+        valueError.innerHTML = 'add discount amount '
+        setTimeout(()=>{
+          valueError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (minimumPurchaseAmount === ''){
+        console.log('hloooooozzz')
+        minimumPurchaseAmountError.innerHTML = 'Add minimum purchase amount '
+        setTimeout(()=>{
+          minimumPurchaseAmountError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (maximumUses === ''){
+        console.log('hloooooozzz')
+        maximumUsesError.innerHTML = 'Add Maximum use of coupons'
+        setTimeout(()=>{
+          maximumUsesError.innerHTML = ''
+       },5000)
+        return 
+      }
+      if (expiryDate === ''){
+        console.log('hloooooozzz')
+        expiryDateError.innerHTML = 'Add the expiry date '
+        setTimeout(()=>{
+          expiryDateError.innerHTML = ''
+       },5000)
+        return 
+      }
+
+      const res = await fetch("/admin/addCoupon/", {
+        method: "POST",
+        // body : formData,
+        body: JSON.stringify({ couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if(data.error){
+        console.log( data?.error,'erroooooooooooooooooooooooooooooo');
+        catchError.innerHTML = data?.error
+        setTimeout(()=>{
+          catchError.innerHTML = ''
+        },5000)
+      }
+      if(data.success){
+        location.href = '/'
+    }
+    
+    } catch (err) {
+      console.log(err, "err");
+    }
+  });
+</script>
+

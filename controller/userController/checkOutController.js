@@ -11,6 +11,7 @@ const razorPay = require("../helperFunction/razorPay");
 require("dotenv").config();
 const crypto = require("crypto");
 const { log } = require("console");
+const wallet = require('../../model/walletModel')
 
 
 
@@ -120,7 +121,7 @@ const placeOrder = async (req, res) => {
     const totalQuantity = Quantity[0]?.total;
     // console.log(totalQuantity, 'totalQuantity');
 
-    // console.log(orderProductDetails, "kkkkkk");
+    console.log(orderProductDetails, "kkkkkk");
 
     if ( paymentMethod == "cod"){
     const orderData = await order.create({
@@ -165,7 +166,54 @@ const placeOrder = async (req, res) => {
                    })
 
       
+    }else if( paymentMethod == "myWallet"){
+      console.log('mlm');
+      const myWallet = await wallet.findOne({userData:userId})
+      if (myWallet){
+        if (myWallet.walletAmount < total){
+          throw Error("User doesn't have enough money")
+        }else{
+          const orderData = await order.create({
+            subTotal: subTotal,
+            tax: tax,
+            total: total,
+            paymentMode: paymentMethod,
+            quantity: totalQuantity,
+            userData: new mongoose.Types.ObjectId(userId),
+            address: orderAddress,
+            userDetails: userDetails,
+            products: orderProductDetails,
+          });
+          if(orderData){
+            const  newTransaction = {
+              amount : orderData.total,
+              type : 'debit',
+              orderData :new mongoose.Types.ObjectId(orderData._id),
+          }
+
+          const updateWalletData = await wallet.updateOne(
+            { userData: userId }, // Filter condition
+            { 
+              $push: { transactions: newTransaction }, // Push newTransaction into transactions array
+              $inc: { walletAmount: -total } // Decrement walletAmount by total
+            },
+            { new: true } // Set {new: true} to return the updated document
+          );
+          
+            const id = orderData._id;
+              const deleteCart = await cart.findOneAndDelete({userData:userId})
+              res.json({ success : true ,id: id });
+          }
+
+        }
+        console.log('wallet is here')
+      }else{
+        const createWallet = await wallet.create({userData: userId,})
+        throw Error('your Wallet is empty')
+      }
     }
+
+
     // console.log(id);
   } catch (error) {
     console.log(`error in place order ${error}`);
@@ -245,10 +293,10 @@ const razorPayHandler = async(req,res)=>{
     });
     if(orderData){
 
-      const id = orderData._id;
+      const _id = orderData._id;
         const deleteCart = await cart.findOneAndDelete({userData:userId})
         console.log('online payment success ...................................')
-        res.json({ success : true ,id: id });
+        res.json({ success : true ,_id: _id });
     }
 
     

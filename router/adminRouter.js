@@ -7,6 +7,7 @@ const { addProduct, adminProductList, manageProduct, addProductPost, editProduct
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
 const { getAdminOrderManagement, adminOrderDetails, updateStatus } = require('../controller/adminController/adminOrderManagementController')
+const { getAddCouponPage, addCoupon, couponList, editCoupon } = require('../controller/adminController/couponController')
 
 
 const router = express.Router()
@@ -64,5 +65,15 @@ router.get('/adminOrderManagement',getAdminOrderManagement)
 router.get('/adminOrderDetails',adminOrderDetails)
 
 router .post ('/updateStatus',updateStatus)
+
+// coupon management
+
+router.get('/getAddCouponPage',getAddCouponPage)
+
+router.post('/addCoupon',addCoupon)
+
+router.get('/couponList',couponList)
+
+router.get('/editCoupon/:id', editCoupon);
 
 module.exports= router

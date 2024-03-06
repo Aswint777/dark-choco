@@ -9,7 +9,13 @@
 <%}%>
 
 <!-- <%- include('../partial/userNavbar.ejs') %> -->
-
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar" >
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
+       product added to cart
+    </div>
+</div>
 
 
 <div class="container my-5">
@@ -55,10 +61,10 @@
 
               <div class="buttons d-flex my-5">
                   <div class="block">
-                      <button onclick="addToWishList('<%= data._id %>')" class="shadow btn custom-btn ">Wishlist</button>
+                      <button onclick="addToWishList('<%= data._id %>')" class="shadow btn custom-btn " style="border-radius: 5px;">Wishlist</button>
                   </div>
                   <div class="block">
-                      <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn">Add to cart</button>
+                      <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn" style="border-radius: 5px;">Add to cart</button>
                   </div>
                   <!-- <div class="block quantity">
                       <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
@@ -129,6 +135,10 @@
         },
       });
       const data = await res.json();
+      if(data._id){
+        myFunction()
+
+      }
         }catch(error){
             console.log(error,'ooooooooooooi')
         }
@@ -146,6 +156,7 @@
         },
       });
       const data = await res.json();
+     
         }catch(error){
             console.log(error,'ooooooooooooi')
         }

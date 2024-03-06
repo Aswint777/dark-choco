@@ -6,6 +6,15 @@
 />
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar" >
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
+       product added to cart
+    </div>
+</div>
+
+
 
 <div class="container" style="background-color: white;">
   <div class="row">
@@ -157,6 +166,10 @@
         },
       });
       const data = await res.json();
+      if(data._id){
+        myFunction()
+
+      }
         }catch(error){
             console.log(error,'ooooooooooooi')
         }
@@ -186,6 +199,7 @@
         icon: "success",
       }).then(() => {
         window.location.reload();
+
       });
     }
   } else {

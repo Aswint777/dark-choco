@@ -44,7 +44,13 @@ const userSchema = new mongoose.Schema({
   },
   pinNumber : {
     type : Number
-  }
+  },
+  allCoupon : [
+    {
+      type : mongoose.Schema.Types.ObjectId,
+      ref:"coupon",
+    }
+  ]
 });
 
 userSchema.pre("save", async function (next) {

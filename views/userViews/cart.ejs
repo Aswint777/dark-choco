@@ -80,13 +80,34 @@
                                 <h5 class="mb-0">₹<%= product.product_id.amount %></h5>
                               </div>
                               <div class="d-flex align-items-center justify-content-between">
-                                <button id="decriment" class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')">
-                                  <i class="fas fa-minus"></i>
-                                </button>
+                                <% if( product.product_id.quantity == 1){%>
+                                  <div disabled>
+                                    <button id="decriment" class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')" >
+                                      <i class="fas fa-minus"></i>
+                                    </button>
+                                  </div>
+                                <%}else{%>
+                                  <div>
+                                    <button id="decriment" class="btn btn-link px-2" onclick="decrementQuantity('<%= product.product_id._id %>')" >
+                                      <i class="fas fa-minus"></i>
+                                    </button>
+                                  </div>
+                                <%}%>
                                 <input id="quantityInput_<%= product.product_id._id %>" min="1" max="<%= product.product_id.quantity %>" name="quantity" value="<%= product.quantity %>" type="number" style="width: 50px;" class="form-control form-control-sm" onchange="sendData('<%= product.product_id._id %>')" disabled />
-                                <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
-                                  <i class="fas fa-plus"></i>
-                                </button>
+                                <% if( product.product_id.quantity == product.quantity){%>
+                                <div disabled>
+                                  <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
+                                    <i class="fas fa-plus"></i>
+                                  </button>
+                                </div>
+                                <%}else{%>
+                                  <div>
+                                    <button class="btn btn-link px-2" onclick="incrementQuantity('<%= product.product_id._id %>')">
+                                      <i class="fas fa-plus"></i>
+                                    </button>
+                                  </div>
+                                  <%}%>
+
                               </div>
                               <div style="width: 80px;">
                                 <!-- Assuming product has a 'price' property -->
@@ -153,7 +174,7 @@
                           </div>
                           <div class="d-flex justify-content-between">
                             <p class="mb-2">Discount</p>
-                            <p class="mb-2">0.00</p>
+                            <p class="mb-2"><%= cartData.couponOffer %>%</p>
                           </div>
                           <hr class="my-4">
                           <div class="d-flex justify-content-between mb-4">
@@ -183,17 +204,27 @@
                           <hr class="my-4">
                           <form class="mt-4">
                             <div class="form-outline form-white mb-4">
-                              <input type="text" id="typeName" class="form-control form-control-lg" siez="17" placeholder="" />
+                              <input type="text"  id="couponCode" class="form-control form-control-lg" siez="17" placeholder="" />
                             </div>
                           </form>
                           <div class="d-flex justify-content-between">
-                            <button type="button" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
-                              <div class="d-flex justify-content-between">
-                                <span class="text-primary">Apply Coupon <i class=""></i></span>
-                              </div>
-                            </button>
+                            <% if(!cartData.couponOffer){ %>
+
+                              <button type="button" onclick="applyCoupon('<%= total %>')" class=" btn-block btn-lg" style="border-radius:15px; background-color: #fff;">
+                                <div class="d-flex justify-content-between">
+                                  <span class="text-primary">Apply Coupon <i class=""></i></span>
+                                </div>
+                              </button>
+                            <%}else{%>
+                              <button type="button" onclick="cancelCoupon('<%= total %>')" class=" btn-block btn-lg" style="border-radius:15px; background-color: #ee2121;">
+                                <div class="d-flex justify-content-between">
+                                  <span style="color: #fff;">cancel Coupon <i class=""></i></span>
+                                </div>
+                              </button>
+
+                            <%}%>
                             <div class="d-flex justify-content-end">
-                              <a class="text-black" href=""> find <i class="fas fa-search text-black"></i></a>
+                              <a class="text-black" onclick="location.href='/user/couponPage'" style="cursor: pointer;"> find <i class="fas fa-search text-black"></i></a>
                             </div>
                           </div>
                         </div>
@@ -338,6 +369,19 @@
     }catch(error){
       console.log(error,'kdji')
     }
+  }
+
+  async function applyCoupon(total){
+    console.log('coupon ',total);
+    const couponCode  =  document.getElementById('couponCode').value
+    // alert(couponCode,'..................')
+    const res = await fetch('/user/applyCoupon/',{
+      method: "POST",
+      body: JSON.stringify({total,couponCode}),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
   }
   
 

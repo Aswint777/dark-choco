@@ -13,7 +13,7 @@
 <div id="snackbar" >
     <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
     <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
-       product added to cart
+       product added
     </div>
 </div>
 
@@ -58,14 +58,31 @@
                   <p class="new-price text-bold mb-1"> ₹<%= data.amount %></p>
                   <!-- <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p> -->
               </div>
+              <div>
+                <% if(data.quantity > 10 ){ %>
+                  <h6 style="color: rgb(15, 193, 15);">in stock</h6>
+                <% }else if(data.quantity == 0){ %>
+                    <h6 style="color: red;">Out of stock</h6>
+                <%}else{ %>
+                    <h6 style="color: red;">limited stock</h6>
+                <%}%>
+              </div>
 
               <div class="buttons d-flex my-5">
                   <div class="block">
                       <button onclick="addToWishList('<%= data._id %>')" class="shadow btn custom-btn " style="border-radius: 5px;">Wishlist</button>
                   </div>
+                  <% if(data.quantity > 0 ){ %>
+
                   <div class="block">
                       <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn" style="border-radius: 5px;">Add to cart</button>
                   </div>
+                  <%}else{ %>
+                    <div class="block">
+                        <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn" style="border-radius: 5px;" disabled>Add to cart</button >
+                    </div>
+                  <%}%>
+
                   <!-- <div class="block quantity">
                       <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
                   </div> -->
@@ -142,9 +159,7 @@
         }catch(error){
             console.log(error,'ooooooooooooi')
         }
-
     }
-
     async function addToWishList(_id){
         try{
             console.log(_id,'entered here')
@@ -156,6 +171,9 @@
         },
       });
       const data = await res.json();
+      if(data.success){
+        myFunction()
+      }
      
         }catch(error){
             console.log(error,'ooooooooooooi')

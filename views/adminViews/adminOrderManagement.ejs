@@ -1,5 +1,10 @@
 <%- include('../partial/header.ejs') %>
 
+<!-- <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
+  Popover on top
+</button> -->
+
+
 <div class="container">
   <div class="row">
     <div class="col-md-2">
@@ -12,6 +17,7 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">New customers</h5>
             <a href="#!" class="btn btn-light btn-sm">View All</a>
+            <button onclick="downloadExcel()">excel</button>
           </div>
           <div class="table-responsive">
             <table class="table mb-0">
@@ -122,7 +128,6 @@
 
 
 
-
 <script>
  async function viewDetails(_id){
 
@@ -149,6 +154,40 @@
     const data = await res.json()
     console.log({data})
   }
+
+  
+  async function downloadExcel() {
+    try {
+        const res = await fetch("/admin/downloadExcel");
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error('Failed to download Excel file');
+        }
+    } catch (error) {
+        console.error('Error downloading Excel file:', error);
+    }
+}
+
+
+  // async function downloadExcel(){
+  //   console.log('dvknkjsmc');
+  //   const res = await fetch("/admin/downloadExcel/", {
+  //       method: "POST",
+  //       body: JSON.stringify({success: true}),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //   });
+  //   const data = await res.json()
+  // }
 
 
 </script>

@@ -7,7 +7,8 @@ const { addProduct, adminProductList, manageProduct, addProductPost, editProduct
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
 const { getAdminOrderManagement, adminOrderDetails, updateStatus } = require('../controller/adminController/adminOrderManagementController')
-const { getAddCouponPage, addCoupon, couponList, editCoupon } = require('../controller/adminController/couponController')
+const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost } = require('../controller/adminController/couponController')
+const { downloadExcel } = require('../controller/adminController/download')
 
 
 const router = express.Router()
@@ -75,5 +76,10 @@ router.post('/addCoupon',addCoupon)
 router.get('/couponList',couponList)
 
 router.get('/editCoupon/:id', editCoupon);
+
+router.post('/editCouponPost',editCouponPost)
+
+// excel download 
+router.get('/downloadExcel',downloadExcel)
 
 module.exports= router

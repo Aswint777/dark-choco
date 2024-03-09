@@ -14,7 +14,7 @@
     </div>
 </div>
 
-
+ 
 
 <div class="container" style="background-color: white;">
   <div class="row">
@@ -24,14 +24,22 @@
       
       <h2 class="main-heading border-b">Coupons</h2>
       <!-- <div class="table-responsive"> -->
+        <% newCoupon.forEach((newCoupon,index) => { %>
+
       <div class="card mb-3">
         <div class="card-body">
-            <h5>bjjkl</h5>
-            <p>jgjkkkllkl</p>
+            <h5 style="text-align: center;"><%= newCoupon.couponName %></h5>
+            
+            <input type="text" value= "₹<%= newCoupon.minimumPurchaseAmount %>" style="color: rgb(29, 190, 29); background-color: rgb(237, 237, 238); border: none;" disabled>
+            <p><%= newCoupon.description %></p>
+            
+              <h5 class="justify-content-between" style="color: rgb(18, 190, 18);"><i style="color: black;">Coupon Code : </i><%= newCoupon.code %></h5>
           <p id="catchError" style="color: rgb(246, 4, 4)"></p>
-        </div>
-        <p id="quantityError" style="color: rgb(246, 4, 4)"></p>
+        </div> 
+          <p id="quantityError" style="color: rgb(246, 4, 4)"></p>
       </div>
+      <% }) %>
+
 
       <!-- </div> -->
     </div>

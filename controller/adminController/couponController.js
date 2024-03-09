@@ -35,8 +35,11 @@ const editCoupon = async(req,res)=>{
 }
 
 const editCouponPost = async (req,res)=>{
-    const {couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate,_id} = req.query
-    const editCoupon = await coupon.findOneAndUpdate({_id : _id},{$set:{couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate}},{new:true})
+    console.log('hloooooo');
+    const {couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate,_id} = req.body
+    const editCoupon = await coupon.findOneAndUpdate({_id : _id},{$set:{couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate:expiryDate}},{new:true})
+    console.log(editCoupon,'edited')
+    res.json({success : true})
 }
 
 
@@ -46,4 +49,5 @@ module.exports ={
     addCoupon,
     couponList,
     editCoupon,
+    editCouponPost
 }

@@ -2,9 +2,9 @@
 
 <%- include('../componentViews/snackbar.ejs') %>
 <div id="snackbar" >
-    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(255, 0, 0);" ></i>
-    <div  class="icon-Success" style="background-color: rgb(255, 0, 0); border-radius: 5px;">
-       Your existing address is deleted
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 72);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(0, 255, 13); border-radius: 5px;">
+       Coupon is Edited
     </div>
 </div>
 <div class="container">
@@ -68,8 +68,11 @@
                                 <p id="maximumUsesError" style="color: rgb(246, 4, 4);"></p>
             
                                 <p class="mb-2">Expiry Date </p>
-                                <input type="date" name="expiryDate" id="expiryDate" value="<%= currentCoupon.expiryDate %>"> <!-- Add the name attribute -->
+                                <input type="date" name="expiryDate" id="expiryDate" value="<%= currentCoupon.expiryDate %>">
+                                <!-- Add the name attribute -->
                                 <p id="expiryDateError" style="color: rgb(246, 4, 4);"></p>
+                                <!-- /// -->
+                                <!-- <input type="text" value="<%= currentCoupon.expiryDate %>" name="date" id="date"> -->
             
                             </div>
                             <p id="addressMessage" style="color: rgb(246, 4, 4);"></p>
@@ -119,7 +122,7 @@
     const value = formData.get('value');
     const minimumPurchaseAmount = formData.get('minimumPurchaseAmount');
     const maximumUses = formData.get('maximumUses');
-    const expiryDate = formData.get('expiryDate');
+    let expiryDate = formData.get('expiryDate');
     const _id = formData.get('_id');
 
    console.log(formData,'jshfnkjnckj')
@@ -190,16 +193,20 @@
        },5000)
         return 
       }
-      if (expiryDate === ''){
-        console.log('hloooooozzz')
-        expiryDateError.innerHTML = 'Add the expiry date '
-        setTimeout(()=>{
-          expiryDateError.innerHTML = ''
-       },5000)
-        return 
+      // if (expiryDate === ''){
+      //   console.log('hloooooozzz')
+      //   expiryDateError.innerHTML = 'Add the expiry date '
+      //   setTimeout(()=>{
+      //     expiryDateError.innerHTML = ''
+      //  },5000)
+      //   return 
+      // }
+
+      if(expiryDate == ""){
+        expiryDate = formData.get('date');
       }
 
-      const res = await fetch("/admin/EditCoupon/", {
+      const res = await fetch("/admin/editCouponPost/", {
         method: "POST",
         // body : formData,
         body: JSON.stringify({ couponName,code,description,value,minimumPurchaseAmount,maximumUses,expiryDate,_id }),
@@ -216,7 +223,10 @@
         },5000)
       }
       if(data.success){
-        location.href = '/'
+        myFunction()
+        setTimeout(()=>{
+          location.href = '/admin/couponList'
+        },2000)
     }
     
     } catch (err) {

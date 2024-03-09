@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
 const cartSchema = new mongoose.Schema({
@@ -20,7 +21,12 @@ const cartSchema = new mongoose.Schema({
             }
         }
     ],
-   
+    couponOffer : {
+        type : Number
+    },
+    couponId : {
+        type : ObjectId
+    },
     userData :{
         type : mongoose.Schema.Types.ObjectId,
         ref:"userData",

@@ -59,17 +59,43 @@
                 <h5 class="mb-0">₹<%= product.product_id.amount %></h5>
               </div>
               <div class="d-flex align-items-center justify-content-between">
+                <% if(product.product_id.quantity > 10 ){ %>
+
                 <div class="block">
                   <button
                     class=""
-                    style="background-color: #b95914; border-radius: 5px"
+                    style="background-color: #14b935; border-radius: 5px"
                   >
                     in stock
                   </button>
                 </div>
+                <% }else if(product.product_id.quantity == 0){ %>
+                  <div class="block">
+                    <button
+                      class=""
+                      style="background-color: #b91414; border-radius: 5px"
+                    >
+                      Out of Stock
+                    </button>
+                  </div>
+                  <%}else{ %>
+                    <div class="block">
+                      <button
+                        class=""
+                        style="background-color: #df240c; border-radius: 5px"
+                      >
+                        Limited Stock
+                      </button>
+                    </div>
+                    <%}%>
+
+
+
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div style="margin-right: 30%">
+                  <% if(product.product_id.quantity > 0 ){ %>
+
                   <div class="block">
                     <button
                       class="shadow btn custom-btn"
@@ -79,6 +105,19 @@
                       Add to cart
                     </button>
                   </div>
+                  <%}else{ %>
+                    <div class="block">
+                      <button
+                        class="shadow btn custom-btn"
+                        style="border-color: rgb(48, 189, 64)"
+              onclick="addToCart('<%=product.product_id._id %>')"
+                       disabled>
+                        Add to cart
+                      </button>
+                    </div>
+                    <%}%>
+
+
                 </div>
               </div>
               <button

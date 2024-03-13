@@ -10,7 +10,7 @@ const { productPage, addToCart } = require('../controller/userController/product
 const { getCheckOutPage, placeOrder, razorPayHandler } = require('../controller/userController/checkOutController')
 const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
 const { getSuccessPage } = require('../controller/userController/orderSuccessController')
-const { userOrderHistoryPage, userOrderDetails, cancelOrder } = require('../controller/userController/userOrderController')
+const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct } = require('../controller/userController/userOrderController')
 const { getWishList, addToWishList, deleteWishListProduct } = require('../controller/userController/wishListController')
 const { walletHistory } = require('../controller/userController/walletController')
 const { couponPage, applyCoupon } = require('../controller/userController/userCouponController')
@@ -58,12 +58,16 @@ router.post('/editAddress',editAddress)
 
 router.post('/deleteAddress',deleteAddress)
 
+//address page only
+
+router.get('/addresspage',addressOnlyPage)
+
 // order success page 
 
 router.get('/getSuccessPage',getSuccessPage)
 
 //user order History page
- 
+  
 router.get('/userOrderHistory',userOrderHistoryPage)
 
 // user order Details Page 
@@ -74,9 +78,7 @@ router.post('/cancelOrder',cancelOrder)
 
 router.post('/verify-payment',razorPayHandler)
 
-//address page only
-
-router.get('/addresspage',addressOnlyPage)
+router.post('/returnProduct',returnProduct)
 
 // wishList 
 router.get('/getWishList',getWishList)

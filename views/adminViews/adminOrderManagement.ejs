@@ -17,7 +17,13 @@
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">New customers</h5>
             <a href="#!" class="btn btn-light btn-sm">View All</a>
-            <button onclick="downloadExcel()">excel</button>
+            <button onclick="location.href = '/admin/returnProductList'">Return Request</button>
+          </div>
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">New customers</h5>
+            <a href="#!" class="btn btn-light btn-sm">View All</a>
+            <button>Export</button>
+            <button style="border-radius: 5px; background-color: black;" onclick="downloadExcel()">excel</button>
           </div>
           <div class="table-responsive">
             <table class="table mb-0">
@@ -29,7 +35,7 @@
                   <th>Email</th>
                   <th>Created Date</th>
                   <th>total</th>
-                  <th>Created Date</th>
+                  <th>Payment Method</th>
                   <th >Action</th>
                   <th >Details</th>
 
@@ -58,7 +64,8 @@
                     <td><%= list.userDetails.email %></td>
                     <td><span><%= list.date.toISOString().slice(0, 10).split('-').reverse().join('-') %></span></td>
                     <td><%= list.total %></td>
-                    <td><%= list.userDetails.email %></td>
+                    <td><%= list.paymentMode %></td>
+
 
                     <td class="text-end">
                       <div class="dropdown">
@@ -70,9 +77,9 @@
                           <!-- <label for="cars" class="col-sm-4 col-form-label">Category</label> -->
                           <div class="col-sm-8">
                               
-                              <select name="status" id="status" style="width: 130px; height: 35px; color: rgb(216, 30, 30);" 
-                              onchange="updateStatus('<%= list._id %>')">
-                              <option  value="<%=list.status %>"  style="color: rgb(49, 227, 46);"><%=list.status %></option>
+                            <select name="status" class="status-select" id="status" style="width: 130px; height: 35px; color: rgb(216, 30, 30);" 
+                              onchange="updateStatus('<%= list._id %>',event)">
+                            <option  value="<%=list.status %>"  style="color: rgb(49, 227, 46);"><%=list.status %></option>
                             <option value="pending" style="color: black;">pending</option>
                             <option value="processing" style="color: black;">processing</option>
                             <option value="shipped" style="color: black;">shipped</option>
@@ -83,6 +90,7 @@
                   </div>                    
                       </div>
                     </td>
+
                     <td><button onclick="viewDetails('<%=list._id %>')" style="background: none; color: blue;">view</button></td>
 
                   </tr>
@@ -141,7 +149,7 @@
         // var selectedStatus = selectedOption.text;
         // selectedOption.text =  selectedStatus;
         const statusElement = document.getElementById('status');
-        const status = statusElement.value 
+        const status = event.target.value 
     console.log(status,_id,'djdjfndj')
     
     const res = await fetch("/admin/updateStatus/", {

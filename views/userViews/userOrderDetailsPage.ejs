@@ -2,13 +2,6 @@
 <%- include('../partial/header.ejs') %>
 <%- include('../partial/userNavbar.ejs') %>
 
-<%- include('../componentViews/snackbar.ejs') %>
-<!-- <div id="snackbar" class="icon-danger">you canceled your order</div> -->
-<div id="snackbar" class="icon-danger" style="background-color: red;">
-  <i class="fas fa-exclamation-circle" ></i> You canceled your order
-</div>
-
-
 
 <div class="container py-5 h-100">
     <!-- <div class="row">
@@ -30,15 +23,16 @@
                       </div>
                       <input id="paymentMode" type="text" value="<%= details.paymentMode %>" style="display: none;">
                       <div class="col">
-                        <% if(details.status == "canceled"){ %>
+                        <% if(details.status == "canceled"|| details.status == "return request"|| details.status == "return approved" ||  details.status == "return rejected"|| details.status == "pickup completed"|| details.status == "returned"){ %>
                         <div class="d-flex flex-row align-items-center justify-content-end">
-                          <button style="background-color: red; border-radius: 5px; display: none;" 
-                          >order canceled</button>
+                          <input style="width: 30%; border: none; color: rgb(171, 20, 20);" type="text" value="<%= details.status %>" disabled>
                         </div>
                         <% }else if(details.status == "delivered"){%>
                           <div class="d-flex flex-row align-items-center justify-content-end">
-                            <button style="background-color: rgb(9, 121, 37); border-radius: 5px; " 
-                            >request to return</button>
+                            <!-- <button id="returnProductModal"  data-bs-toggle="modal" data-bs-target="#returnProductModal"  aria-labelledby="exampleModalLabel" style="background-color: rgb(9, 121, 37); border-radius: 5px; " 
+                            >request to return</button> -->
+                            <button id="returnProductModalTrigger" data-bs-toggle="modal" data-bs-target="#returnProductModal" style="background-color: rgb(9, 121, 37); border-radius: 5px; " >request to return</button>
+
                           </div>
                         
                         <% }else{%>
@@ -147,7 +141,7 @@
                 <p class="mb-2">free</p>
               </div>
 
-              <div class="d-flex justify-content-between">
+              <div class="d-flex justify-content-between"> 
                 <p class="mb-2">Tax</p>
                 <p class="mb-2">₹<%= details.tax %></p>
               </div>
@@ -223,6 +217,45 @@
   </div>
   
   <!--  -->
+  <div class="modal fade" id="returnProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Reason for request to return </p>
+          <textarea name="returnReason" id="returnReason" cols="30" rows="4" placeholder="reason for return"></textarea>
+          <!-- <h5>Do you really want to cancel your order </h5> -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" 
+          onclick="returnProduct('<%= details._id %>')">confirm Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- snackbar -->
+  
+  <%- include('../componentViews/snackbar.ejs') %>
+  
+  <!-- cancel order -->
+  
+  <div id="snackbar" class="icon-danger" style="background-color: red;">
+    <i class="fas fa-exclamation-circle" ></i> You canceled your order
+  </div>
+
+
+  <div id="returnRequest" class="icon-danger" style="background-color: red;">
+    <i class="fas fa-exclamation-circle"></i> Requested for Return the Product
+</div>
+
+
+<!-- snackbar -->
+
   
 
 
@@ -232,8 +265,6 @@
     var modal = bootstrap.Modal.getInstance(modalElement);
     modal.hide();
       const method = document.getElementById('paymentMode').value
-
-      console.log(_id)
       console.log('lololol',method);
       const res = await fetch("/user/cancelOrder/",{
         method : "post",
@@ -245,7 +276,7 @@
       const data = await res.json()
       if(data.succuss){
         // window.location.reload()
-       
+        
        await myFunction()
        setTimeout(()=>{
     window.location.reload()
@@ -254,5 +285,28 @@
         
       }
       
+    }
+
+    async function returnProduct(_id){
+      const method = document.getElementById('paymentMode').value
+      const returnReason = document.getElementById('returnReason').value
+
+console.log(returnReason)
+      console.log(_id,method);
+      console.log('lololol',method);
+      const res = await fetch("/user/returnProduct/",{
+        method : "post",
+        body : JSON.stringify({_id,method,returnReason}),
+        headers:{
+          "Content-Type": "application/json",
+        }
+      })
+      const data = await res.json()
+      if(data.succuss){
+        alert('hai')
+
+        await returnRequest()
+
+      }
     }
   </script>

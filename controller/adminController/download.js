@@ -5,19 +5,36 @@ const downloadExcel = async (req, res) => {
     try {
         // Fetch data from MongoDB
         const orderList = await order.find();
+        // console.log(orderList,'klkll');
 
         // Create a new workbook
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('orders');
 
         // Add headers
-        worksheet.addRow(['First Name', 'Last Name', 'Email']);
+        worksheet.addRow(['First Name', 'Last Name', 'Email','Order Date','Payment Mode','Product','status','Address','City','Sub Total','Tax','Total']);
 
-        // Add data from MongoDB
         orderList.forEach(allOrder => {
-            const { userDetails } = allOrder;
+            const { userDetails, products,address } = allOrder;
             if (userDetails) {
-                worksheet.addRow([userDetails.firstName, userDetails.lastName, userDetails.email]);
+                console.log("User Details:", userDetails);
+                products.forEach(product => {
+                    worksheet.addRow([
+                        userDetails.firstName,
+                        userDetails.secondName,
+                        userDetails.email,
+                        allOrder.date,
+                        allOrder.paymentMode,
+                        product.stock,
+                        allOrder.status,
+                        address.address,
+                        address.city,
+                        allOrder.subTotal,
+                        allOrder.tax,
+                        allOrder.total,
+
+                    ]);
+                });
             }
         });
 

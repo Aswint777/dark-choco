@@ -205,7 +205,7 @@ const orderSchema = new mongoose.Schema({
           "shipped",
           "delivered",
           "canceled",
-          "rejected",
+          "rejected",  
           "return request",
           "return approved",
           "return rejected",
@@ -300,6 +300,9 @@ const orderSchema = new mongoose.Schema({
         // required : true,
         // unique : true
     },
+    returnReason : {
+      type : String,
+    }
 });
 
 

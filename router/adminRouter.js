@@ -6,7 +6,7 @@ const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory
 const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
-const { getAdminOrderManagement, adminOrderDetails, updateStatus } = require('../controller/adminController/adminOrderManagementController')
+const { getAdminOrderManagement, adminOrderDetails, updateStatus, returnProductList, returnProductStatus } = require('../controller/adminController/adminOrderManagementController')
 const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost } = require('../controller/adminController/couponController')
 const { downloadExcel } = require('../controller/adminController/download')
 
@@ -60,6 +60,12 @@ router.post('/editProduct' , upload.fields([
 
 // get order management page
 router.get('/adminOrderManagement',getAdminOrderManagement)
+
+//Return product 
+
+router.get('/returnProductList',returnProductList)
+
+router.post('/returnProductStatus',returnProductStatus)
 
 // get order details page 
 

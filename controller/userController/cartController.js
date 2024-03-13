@@ -27,18 +27,20 @@ const GetCart = async (req, res) => {
     const tax = (subTotal * 3) / 100;
     let total = subTotal + tax;
     
-    const newCoupon = await coupon.findOne({_id: cartData.couponId})
-    
-    if( total < newCoupon?.minimumPurchaseAmount){
-      await user.findOneAndUpdate({_id:userId},{
-        $pull: {
-          allCoupon: cartData.couponId
-        }
-      })
-      await cart.findOneAndUpdate({ userData: userId },{$unset:{couponId :'',couponOffer : ''}})
-    }
-    if(cartData.couponOffer){
-      total = total - ((total*cartData.couponOffer)/100)
+    const newCoupon = await coupon.findOne({_id: cartData?.couponId})
+    if (newCoupon){
+
+      if( total < newCoupon?.minimumPurchaseAmount){
+        await user.findOneAndUpdate({_id:userId},{
+          $pull: {
+            allCoupon: cartData.couponId
+          }
+        })
+        await cart.findOneAndUpdate({ userData: userId },{$unset:{couponId :'',couponOffer : ''}})
+      }
+      if(cartData.couponOffer){
+        total = total - ((total*cartData.couponOffer)/100)
+      }
     }
 
     if (cartData) {

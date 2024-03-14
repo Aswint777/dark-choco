@@ -6,9 +6,9 @@ const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory
 const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
-const { getAdminOrderManagement, adminOrderDetails, updateStatus, returnProductList, returnProductStatus } = require('../controller/adminController/adminOrderManagementController')
+const { getAdminOrderManagement, adminOrderDetails, updateStatus, returnProductList, returnProductStatus, returnListFilter } = require('../controller/adminController/adminOrderManagementController')
 const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost } = require('../controller/adminController/couponController')
-const { downloadExcel } = require('../controller/adminController/download')
+const { downloadExcel, downloadPDF, downloadExcelByDate, downloadPDFByDate } = require('../controller/adminController/download')
 
 
 const router = express.Router()
@@ -67,6 +67,8 @@ router.get('/returnProductList',returnProductList)
 
 router.post('/returnProductStatus',returnProductStatus)
 
+// router.get('/returnListFilter',returnListFilter)
+
 // get order details page 
 
 router.get('/adminOrderDetails',adminOrderDetails)
@@ -85,7 +87,15 @@ router.get('/editCoupon/:id', editCoupon);
 
 router.post('/editCouponPost',editCouponPost)
 
-// excel download 
+//  download 
 router.get('/downloadExcel',downloadExcel)
+
+router.post('/downloadExcelByDate',downloadExcelByDate)
+
+router.get('/generatePDF',downloadPDF)
+
+router.post('/downloadPDFByDate',downloadPDFByDate)
+
+
 
 module.exports= router

@@ -5,7 +5,7 @@ const categoryList = async (req,res) => {
     console.log(query,'yeeeeeeeeeeeeeeeeees')
 
     var i = 0
-    const page = parseInt(req.query.page) || 1;
+    const page = parseInt(req.query.page) || 1; 
     const count = await Category.find().count();
     const pageSize = 3;
     const totalOrder = Math.ceil(count / pageSize);

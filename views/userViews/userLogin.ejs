@@ -128,7 +128,7 @@
           "Content-Type": "application/json",
         },
       });
-      const data = await res.json();
+      const data = await res.json(); 
       if(data.error){
         console.log( data?.error,'erroooooooooooooooooooooooooooooo');
         catchError.innerHTML = data?.error

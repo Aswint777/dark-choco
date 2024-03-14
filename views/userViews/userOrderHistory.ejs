@@ -12,7 +12,35 @@
       <div class="col-12 mb-3 mb-lg-5">
         <div class="overflow-hidden card table-nowrap table-card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">New customers</h5>
+            <div >
+              <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                filter
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item"  onclick="filter('-1')">latest</a></li>
+                <li><a class="dropdown-item"  onclick="filter('1')">oldest</a></li>
+                <!-- <li><a class="dropdown-item" href="#">Another action</a></li> -->
+                <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+                <!-- <li><hr class="dropdown-divider"></li> -->
+                <!-- <li><a class="dropdown-item" href="#">Separated link</a></li> -->
+              </ul>
+            </div>
+            <!-- <form action="" id="searchCategory">
+
+              <div class="input-group" style=" margin-left: 10%;">
+               <div class="form-outline" data-mdb-input-init>
+                   <input type="search" id="form1" placeholder="search" name="searchQuery" value="" class="form-control" />
+               </div>
+               <button onclick="searchCategory()" type="submit" class="btn btn-primary" data-mdb-ripple-init>
+                 <i class="fas fa-search"></i>
+               </button>
+               
+               
+             </div>
+           </form> -->
+            <!-- <h5 class="mb-0">Order List</h5>  -->
+             
+
             <a href="#!" class="btn btn-light btn-sm">View All</a>
           </div>
           <div class="table-responsive">
@@ -29,7 +57,7 @@
                   <th class="text-end">Action</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="tableBody">
             
                 <% orderHistory.forEach((list,index) => { %>
                   <tr class="align-middle">
@@ -72,21 +100,19 @@
               </tbody>
             </table>
 
-            <!-- <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
               <ul class="pagination">
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                   </a>
-                </li>
-            
-
+                </li> 
+                <% for (let i = 1; i <= totalOrder; i++) { %>
                   <li class="page-item">
-                    <a class="page-link" href=""></a>
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
                   </li>
-            
-                  
+                <% } %>
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
@@ -94,7 +120,7 @@
                   </a>
                 </li>
               </ul>
-            </nav> -->
+            </nav>
             
            
           </div>
@@ -107,6 +133,80 @@
 <script>
   async function viewDetails(_id){
     console.log(_id)
-    location.href = `/user/userOrderDetails?_id=${_id}`
+    location.href = `/user/userOrderDetails?_id=${_id}` 
   }
+
+  async function filter(arg){
+  
+  console.log('entered the fetch')
+  const res = await fetch(`/user/userOrderHistory?date=${arg}`,{
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },    
+  })
+  let data = await res.json()
+  console.log(data)
+  updateTable(data);
+}
+
+
+function searchCategory() {
+        // Get the search input value
+        var searchInput = document.getElementById("form1").value;
+
+        // Get the form element
+        var form = document.getElementById("searchCategory");
+
+        // Set the form action URL with the search query parameter
+        form.action = "/admin/returnProductList?searchQuery=" + encodeURIComponent(searchInput);
+
+        // Submit the form
+        form.submit();
+
+}
+function updateTable(data) {
+  console.log('haai');
+  const bodyOfTable = document.getElementById("tableBody");
+  // Clear existing table rows
+  let rows = [];
+  data.latest.forEach((list, index) => {
+    let productListHTML = '';
+    list.products.forEach(pro => {
+      productListHTML += `
+        <div class="d-flex align-items-center">
+          <div>
+            <div class="h6 mb-0 lh-1">${pro.stock}</div>
+          </div>
+        </div>
+      `;
+    });
+
+    let row = `
+      <tr class="align-middle">
+        <td><span class="d-inline-block align-middle">${index + 1}</span></td>
+        <td>${productListHTML}</td>
+        <td>${list.userDetails.email}</td>
+        <td><span>${list.date.slice(0, 10).split('-').reverse().join('-')}</span></td>
+        <td><span>${list.status}</span></td>
+        <td><span>${list.paymentMode}</span></td>
+        <td><span>${list.total}</span></td>
+        <td class="text-end">
+          <div class="dropdown">
+            <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
+              <i class="" aria-hidden="true"></i>
+            </a>
+            <button style="background: none; color: blue;" onclick="viewDetails('${list._id}')">View details</button>
+          </div>
+        </td>
+      </tr>
+    `;
+
+    rows.push(row);
+  });
+
+  bodyOfTable.innerHTML = rows.join("");
+}
+
+
 </script>

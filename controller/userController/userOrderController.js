@@ -5,14 +5,62 @@ const wallet = require("../../model/walletModel");
 const product = require('../../model/productModel')
 
 const userOrderHistoryPage = async (req, res) => {
-  const token = req.cookies.loginToken;
-  const data = jwt.verify(token, process.env.SECRET_KEY);
-  const { userId } = data;
-  console.log("dhfbvdkjfn");
-  const orderHistory = await order.find({ userData: userId });
-  console.log(orderHistory);
-  res.render("userViews/userOrderHistory", { orderHistory });
-};
+  try {
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    console.log(userId,"dhfbvdkjfn");
+    // 
+    
+    let query = req.query;
+    console.log(query, "yeeeeeeeeeeeeeeeeees");
+  
+    var i = 0;
+    const page = parseInt(req.query.page) || 1;
+    const count = await order.countDocuments({ userData: userId })
+    console.log('start',count,'count');
+    const pageSize = 3;
+    const totalOrder = Math.ceil(count / pageSize);
+    const skip = (page - 1) * pageSize;
+    let orderHistory
+
+    if (req.query.date) {
+      console.log(req.query,'query');
+      const latest = await order.find({  userData: userId }).sort({
+        date: Number(req.query.date),
+      }); //{} {another:true,chocolate:true}
+
+      console.log(latest,'largest');
+      res.json({ latest });
+    } else if (req.query.searchQuery) {
+      console.log(
+        req.query.searchQuery,
+        "lllllllllllllllllllllllllllllllllllllllll"
+      );
+       orderHistory = await order.find({userData:userId,
+        status: { $regex: req.query.searchQuery, $options: "i" },
+      });
+      const query = req.query.searchQuery;
+      res.render("adminViews/returnProductList", {
+        orderHistory,
+        query,
+        totalOrder,
+        pageSize,
+        page: page,
+      });
+    } else {
+    orderHistory = await order.find({ userData: userId }).skip(skip).limit(pageSize)
+    console.log(orderHistory);
+    res.render("userViews/userOrderHistory", { orderHistory,
+      query,
+      totalOrder,
+      pageSize,
+      page: page,});
+  }
+  } catch (error) {
+    console.log(error)
+  }
+ }
 
 const userOrderDetails = async (req, res) => {
   console.log('hai')

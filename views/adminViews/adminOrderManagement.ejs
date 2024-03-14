@@ -16,14 +16,15 @@
         <div class="overflow-hidden card table-nowrap table-card">
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">New customers</h5>
-            <a href="#!" class="btn btn-light btn-sm">View All</a>
-            <button onclick="location.href = '/admin/returnProductList'">Return Request</button>
+            <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
+            <button style="border-radius: 5px;" onclick="location.href = '/admin/returnProductList'">Return Orders</button>
           </div>
           <div class="card-header d-flex justify-content-between align-items-center">
             <h5 class="mb-0">New customers</h5>
-            <a href="#!" class="btn btn-light btn-sm">View All</a>
-            <button>Export</button>
-            <button style="border-radius: 5px; background-color: black;" onclick="downloadExcel()">excel</button>
+            <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
+            <button type="button" style="border-radius: 5px; background-color: black;" data-bs-toggle="modal" data-bs-target="#returnProductModal">Export</button>
+
+            <!-- <button style="border-radius: 5px; background-color: black;" onclick="downloadExcel()">excel</button> -->
           </div>
           <div class="table-responsive">
             <table class="table mb-0">
@@ -133,6 +134,42 @@
   </div>
 </div>
 
+ 
+  <!--  -->
+  <div class="modal fade" id="returnProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h5 style="text-align: center;">Export Orders</h5>
+          <div>
+            <h6>All Orders</h6>
+            <button style="border-radius: 5px;  color: rgb(59, 241, 13); background-color: aliceblue;" onclick="downloadExcel()">Download excel</button>
+            <button style="border-radius: 5px;  color: rgb(59, 241, 13); background-color: aliceblue;" onclick="downloadPDF()">Download PDF</button>
+          </div>
+          <br>
+          <h6>Choose Date</h6>
+          <div>
+            <p class="mb-0" style="color: gray;">Starting Date <input id="startingDate" type="date"></p>
+          </div>
+          <br>
+          <div>
+              <p style="color: gray;">Ending Date &nbsp; <input id="endingDate" type="date"> </p>
+          </div>
+          <button style="border-radius: 5px;  color: rgb(59, 241, 13); background-color: aliceblue;" onclick="downloadExcelByDate()">Download excel</button>
+          <button style="border-radius: 5px;  color: rgb(59, 241, 13); background-color: aliceblue;" onclick="downloadPDFByDate()">Download PDF</button>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 
 
 
@@ -184,18 +221,84 @@
     }
 }
 
+async function downloadPDF() {
+    try {
+        const res = await fetch("/admin/generatePDF"); // Change the endpoint to match your server route
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'example.pdf'; // Change the filename as needed
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error('Failed to download PDF file');
+        } 
+    } catch (error) {
+        console.error('Error downloading PDF file:', error);
+    }
+}
 
-  // async function downloadExcel(){
-  //   console.log('dvknkjsmc');
-  //   const res = await fetch("/admin/downloadExcel/", {
-  //       method: "POST",
-  //       body: JSON.stringify({success: true}),
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //   });
-  //   const data = await res.json()
-  // }
+async function downloadExcelByDate(){
+  try {
+    console.log('entered');
+    const startingDate = document.getElementById('startingDate').value;
+    const endingDate = document.getElementById('endingDate').value;
+    console.log(startingDate, endingDate);
+    const res = await fetch("/admin/downloadExcelByDate/", {
+        method: "POST",
+        body: JSON.stringify({ startingDate,endingDate }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'orders.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error('Failed to download Excel file');
+        }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+async function downloadPDFByDate() {
+    try {
+      const startingDate = document.getElementById('startingDate').value;
+    const endingDate = document.getElementById('endingDate').value;
+        const res = await fetch("/admin/downloadPDFByDate", {
+        method: "POST",
+        body: JSON.stringify({ startingDate,endingDate }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }); // Change the endpoint to match your server route
+        if (res.ok) {
+            const blob = await res.blob();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'example.pdf'; // Change the filename as needed
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } else {
+            console.error('Failed to download PDF file');
+        } 
+    } catch (error) {
+        console.error('Error downloading PDF file:', error);
+    }
+}
 
 
 </script>

@@ -226,13 +226,13 @@
         </div>
         <div class="modal-body">
           <p>Reason for request to return </p>
-          <textarea name="returnReason" id="returnReason" cols="30" rows="4" placeholder="reason for return"></textarea>
+          <textarea name="returnReason" id="returnReason" cols="30" rows="4" placeholder="reason for return" required></textarea>
           <!-- <h5>Do you really want to cancel your order </h5> -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button type="button" class="btn btn-danger" 
-          onclick="returnProduct('<%= details._id %>')">confirm Cancel</button>
+          onclick="returnProduct('<%= details._id %>')">confirm Return</button>
         </div>
       </div>
     </div>

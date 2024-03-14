@@ -13,7 +13,7 @@ const { getSuccessPage } = require('../controller/userController/orderSuccessCon
 const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct } = require('../controller/userController/userOrderController')
 const { getWishList, addToWishList, deleteWishListProduct } = require('../controller/userController/wishListController')
 const { walletHistory } = require('../controller/userController/walletController')
-const { couponPage, applyCoupon } = require('../controller/userController/userCouponController')
+const { couponPage, applyCoupon, cancelCoupon } = require('../controller/userController/userCouponController')
 
 
 const router = express.Router()
@@ -97,6 +97,8 @@ router.get('/walletHistory',walletHistory)
 router.get('/couponPage',couponPage)
 
 router.post('/applyCoupon',applyCoupon)
+
+router.post('/cancelCoupon',cancelCoupon)
 
 
 module.exports= router

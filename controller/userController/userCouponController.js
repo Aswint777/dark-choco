@@ -46,11 +46,31 @@ const applyCoupon = async (req, res) => {
     console.log(offerCart);
     res.json({success : true})
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    res.status(400).json({ error: error.message });
+
   }
 };
+
+const cancelCoupon = async(req,res)=>{
+  try {
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const { couponId } = req.body;
+    console.log(couponId);
+    const currentCoupon = await coupon.findOne({_id :  new mongoose.Types.ObjectId(couponId)})
+    const updateUserData = await user.findOneAndUpdate({ _id: userId },
+      { $pull: { allCoupon: couponId } })
+      await cart.findOneAndUpdate({ userData: userId },{$unset:{couponId :'',couponOffer : ''}})
+       res.json({success: true})
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 module.exports = {
   couponPage,
   applyCoupon,
+  cancelCoupon
 };

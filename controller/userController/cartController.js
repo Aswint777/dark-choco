@@ -24,7 +24,7 @@ const GetCart = async (req, res) => {
     // const maxQuantity = await product. findOne({})
     console.log(cartTotal);
     const subTotal = cartTotal[0]?.total;
-    const tax = (subTotal * 3) / 100;
+    const tax = (subTotal * 5) / 100;//here-----------------------------------------------------------
     let total = subTotal + tax;
     
     const newCoupon = await coupon.findOne({_id: cartData?.couponId})

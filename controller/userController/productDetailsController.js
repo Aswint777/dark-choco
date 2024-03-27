@@ -53,6 +53,7 @@ const addToCart =async (req,res)=>{
 
 
 
+
 module.exports = {
     productPage,
     addToCart

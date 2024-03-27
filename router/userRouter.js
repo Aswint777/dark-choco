@@ -10,7 +10,7 @@ const { productPage, addToCart } = require('../controller/userController/product
 const { getCheckOutPage, placeOrder, razorPayHandler } = require('../controller/userController/checkOutController')
 const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
 const { getSuccessPage } = require('../controller/userController/orderSuccessController')
-const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct } = require('../controller/userController/userOrderController')
+const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct, downloadInvoice } = require('../controller/userController/userOrderController')
 const { getWishList, addToWishList, deleteWishListProduct } = require('../controller/userController/wishListController')
 const { walletHistory } = require('../controller/userController/walletController')
 const { couponPage, applyCoupon, cancelCoupon } = require('../controller/userController/userCouponController')
@@ -79,6 +79,10 @@ router.post('/cancelOrder',cancelOrder)
 router.post('/verify-payment',razorPayHandler)
 
 router.post('/returnProduct',returnProduct)
+
+// download invoice 
+
+router.post ('/downloadInvoice',downloadInvoice)
 
 // wishList 
 router.get('/getWishList',getWishList)

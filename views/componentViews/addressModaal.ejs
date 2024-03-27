@@ -1,502 +1,662 @@
-
 <div>
-  <div class=" text-black-50 rounded-3" style=" background-color:  #d8d3cee8;">
-    <div class="card-body ">
+  <div class="text-black-50 rounded-3" style="background-color: #d8d3cee8">
+    <div class="card-body">
       <!-- <div class="d-flex justify-content-between align-items-center mb-4">
         
       </div> -->
-      
-      
+
       <div class="d-flex justify-content-between align-items-center mb-4">
-        <h5 class="mb-0"> Select Address</h5>
+        <h5 class="mb-0">Select Address</h5>
       </div>
 
-      
-      
-      <% addressList.forEach((user,index) => { %>
-        <% user.addressData.forEach(address => { %>
-          
-          <div class=" row">
-            <!-- <div class="col-11"> -->
-              <div class="card mb-3">
-                <div class="card-body">
-                  <div class="">
-                    <input id="addressId<%-index%>" onclick="billingAddress('<%= address._id %>')" type="radio" name="address" value="<%= address._id %>" />
-                  </div>
-                    <div class="d-flex justify-content-between">
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="ms-3">
-                              <!-- <h1><%= address._id %></h1> -->
-                                <h5><%= address.firstName %> <%= address.secondName %></h5>
-                                <p class="small mb-0"><%= address.address %></p>
-                                <p class="small mb-0"><%= address.country %>, <%= address.state %>, <%= address.city %>, <%= address.pinCode %></p>
-                                <p class="small mb-0"><%= address.email %>, <%= address.phoneNumber %></p>
-                               
-                            </div>
-                        </div>
-                        <div class="d-flex flex-row align-items-center">
-                            <div class="d-flex align-items-center justify-content-between">
-                              <button onclick="editAddress('<%= address.firstName %>','<%= address.secondName %>','<%= address.address %>','<%= address.country %>', '<%= address.state %>', '<%= address.city %>',' <%= address.pinCode %>','<%= address.email %>', '<%= address.phoneNumber %>',' <%= address._id %>')" 
-                              data-bs-toggle="modal" data-bs-target="#editAddress" style="background: none;"> 
-                                <i style='font-size:24px; color: rgba(0, 0, 0, 0.646);' class='far'>&#xf044;</i>
-                              </button>
-                              
-                            </div>
-                            <button onclick="deleteAddress(' <%= address._id %>')"
-                              style="background: none;"><i style='font-size:24px; color: rgba(0, 0, 0, 0.598);' class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </div>
-                </div>
+      <% addressList.forEach((user,index) => { %> <%
+      user.addressData.forEach(address => { %>
+
+      <div class="row">
+        <!-- <div class="col-11"> -->
+        <div class="card mb-3">
+          <div class="card-body">
+            <div class="">
+              <input
+                id="addressId<%-index%>"
+                onclick="billingAddress('<%= address._id %>')"
+                type="radio"
+                name="address"
+                value="<%= address._id %>"
+              />
             </div>
-            <!-- </div> -->
+            <div class="d-flex justify-content-between">
+              <div class="d-flex flex-row align-items-center">
+                <div class="ms-3">
+                  <!-- <h1><%= address._id %></h1> -->
+                  <h5><%= address.firstName %> <%= address.secondName %></h5>
+                  <p class="small mb-0"><%= address.address %></p>
+                  <p class="small mb-0">
+                    <%= address.country %>, <%= address.state %>, <%=
+                    address.city %>, <%= address.pinCode %>
+                  </p>
+                  <p class="small mb-0">
+                    <%= address.email %>, <%= address.phoneNumber %>
+                  </p>
+                </div>
+              </div>
+              <div class="d-flex flex-row align-items-center">  
+                <div class="d-flex align-items-center justify-content-between">
+                  <button
+                    onclick="editAddress('<%= address.firstName %>','<%= address.secondName %>','<%= address.address %>','<%= address.country %>', '<%= address.state %>', '<%= address.city %>',' <%= address.pinCode %>','<%= address.email %>', '<%= address.phoneNumber %>',' <%= address._id %>')"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editAddress"
+                    style="background: none"
+                  >
+                    <i
+                      style="font-size: 24px; color: rgba(0, 0, 0, 0.646)"
+                      class="far"
+                      >&#xf044;</i
+                    >
+                  </button>
+                </div>
+                <button
+                  onclick="deleteAddress(' <%= address._id %>')"
+                  style="background: none"
+                >
+                  <i
+                    style="font-size: 24px; color: rgba(0, 0, 0, 0.598)"
+                    class="fa-solid fa-trash"
+                  ></i>
+                </button>
+              </div>
+            </div>
           </div>
-          <% }); %>
-          <% }); %>  
         </div>
+        <!-- </div> -->
       </div>
+      <% }); %> <% }); %>
     </div>
-    
-    <div class="d-flex justify-content-between">
-      <button type="button" class="btn-block btn-lg" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-      style="border-radius:15px; background-color: #fff;">
-      <div  class="d-flex justify-content-between">
-        <span class="text-primary">Add New Address <i class=""></i></span>
-      </div>
-    </button>
- 
- <div  class="d-flex justify-content-end">
-   <a class=" text-black"></a>
- </div>
+  </div>
 </div>
 
+<div class="d-flex justify-content-between">
+  <button
+    type="button"
+    class="btn-block btn-lg"
+    data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"
+    style="border-radius: 15px; background-color: #fff"
+  >
+    <div class="d-flex justify-content-between">
+      <span class="text-primary">Add New Address <i class=""></i></span>
+    </div>
+  </button>
+
+  <div class="d-flex justify-content-end">
+    <a class="text-black"></a>
+  </div>
+</div>
 
 <!-- Add address modaal  -->
 
 <div
-class="modal fade"
-id="staticBackdrop"
-data-bs-backdrop="static"
-data-bs-keyboard="false"
-tabindex="-1"  
-aria-labelledby="staticBackdropLabel"
-aria-hidden="true"
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
 >
-
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="staticBackdropLabel">  
-        <h5>Address for Delivery</h5>
-      </h5>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-        ></button>
-    </div>
-    <form>
-    <div class="modal-body">
-
-        <div class="row">
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">First Name</label>
-            <input type="text" class="form-control" placeholder="Enter First Name" name="firstName" value="">
-            <p id="firstNameError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Last Name</label>
-            <input type="text" class="form-control" placeholder="Enter Last Name" name="secondName">
-            <p id="secondNameError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Address</label>
-          <!-- <input type="text" class="form-control" id="exampleInputEmail1"  name="address"> -->
-          <textarea class="form-control" id="address"  name="address"></textarea>
-          <p id="addressError" style="color: rgb(246, 4, 4);"></p>
-
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Country</label>
-            <input type="text" class="form-control" placeholder="Enter Country" name="country">
-            <p id="countryError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">State</label>
-            <input type="text" class="form-control" placeholder="Enter State" name="state">
-            <p id="stateError" style="color: rgb(246, 4, 4);"></p>
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">City</label>
-            <input type="text" class="form-control" placeholder="Enter City" name="city">
-            <p id="cityError" style="color: rgb(246, 4, 4);"></p>
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Pin Code</label>
-            <input type="text" class="form-control" placeholder="Enter Pin code" name="pinCode">
-            <p id="pinCodeError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" class="form-control" placeholder="Enter Email" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
-          <p id="emailError" style="color: rgb(246, 4, 4);"></p>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Phone Number</label>
-          <input type="number" placeholder="Enter Phone Number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="phoneNumber">
-          <p id="phoneNumberError" style="color: rgb(246, 4, 4);"></p>
-        </div>  
-      </div>
-      <div class="modal-footer">
-        <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          <h5>Address for Delivery</h5>
+        </h5>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn-close"
           data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >First Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter First Name"
+                name="firstName"
+                value=""
+              />
+              <p id="firstNameError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Last Name"
+                name="secondName"
+              />
+              <p id="secondNameError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Address</label>
+            <!-- <input type="text" class="form-control" id="exampleInputEmail1"  name="address"> -->
+            <textarea
+              class="form-control"
+              id="address"
+              name="address"
+            ></textarea>
+            <p id="addressError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">Country</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Country"
+                name="country"
+              />
+              <p id="countryError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">State</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter State"
+                name="state"
+              />
+              <p id="stateError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">City</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter City"
+                name="city"
+              />
+              <p id="cityError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Pin Code</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Enter Pin code"
+                name="pinCode"
+              />
+              <p id="pinCodeError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              placeholder="Enter Email"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="email"
+            />
+            <p id="emailError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Phone Number</label
+            >
+            <input
+              type="number"
+              placeholder="Enter Phone Number"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="phoneNumber"
+            />
+            <p id="phoneNumberError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
           >
-          Close
-        </button>
+            Close
+          </button>
 
-        <button
-        type="submit"
-        class="btn btn-primary">
-        Save
-      </button>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
     </div>
-  </form>
   </div>
 </div>
-</div>
-
 
 <!-- edit Address modaal -->
 <div
-class="modal fade"
-id="editAddress"
-data-bs-backdrop="static"
-data-bs-keyboard="false"
-tabindex="-1"
-aria-labelledby="staticBackdropLabel"
-aria-hidden="true"
-
+  class="modal fade"
+  id="editAddress"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
 >
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title" id="staticBackdropLabel">  
-        <h5>Address for Delivery</h5>
-      </h5>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="modal"
-        aria-label="Close"
-        ></button>
-    </div>
-    <form id="existAddressEdit" onsubmit="">
-    <div class="modal-body">
-   
-        <div class="row">
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">First Name</label>
-            <input type="text"  class="form-control" id="name" placeholder="Enter First Name" name="firstName" value="">
-            <p id="firstNameError" style="color: rgb(246, 4, 4);"></p>
-            
-
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Last Name</label>
-            <input type="text" id="sName" class="form-control" placeholder="Enter Last Name" name="secondName">
-            <p id="secondName" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Address</label>
-          <input type="text" class="form-control" id="addresses" name="address">
-          <p id="addressError" style="color: rgb(246, 4, 4);"></p>
-
-        </div>
-        <div class="row">
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Country</label>
-            <input type="text" id="countries" class="form-control" placeholder="Enter Country" name="country">
-            <p id="countryError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">State</label>
-            <input type="text" id="states" class="form-control" placeholder="Enter State" name="state">
-            <p id="stateError" style="color: rgb(246, 4, 4);"></p>
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">City</label>
-            <input type="text" id="cities" class="form-control" placeholder="Enter City" name="city">
-            <p id="cityError" style="color: rgb(246, 4, 4);"></p>
-          </div>
-          <div class="col">
-            <label for="exampleInputEmail1" class="form-label">Pin Code</label>
-            <input type="text" id="pinCodes" class="form-control" placeholder="Enter Pin code" name="pinCode">
-            <p id="pinCodeError" style="color: rgb(246, 4, 4);"></p>
-
-          </div>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" id="emails" class="form-control" placeholder="Enter Email" id="exampleInputEmail1" aria-describedby="emailHelp" name="email">
-          <p id="emailError" style="color: rgb(246, 4, 4);"></p>
-        </div>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Phone Number</label>
-          <input type="number"  placeholder="Enter Phone Number"  class="form-control" id="phoneNumbers" aria-describedby="emailHelp" name="phoneNumber">
-          <p id="phoneNumberError" style="color: rgb(246, 4, 4);"></p>
-        </div>  
-        <input type="text"  placeholder="Enter Phone Number"  class="form-control" id="address_id" aria-describedby="emailHelp" name="phoneNumber">
-
-      </div>
-      <div class="modal-footer">
-        <p id="catchError" style="color: rgb(246, 4, 4);"></p>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          <h5>Address for Delivery</h5>
+        </h5>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="btn-close"
           data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form id="existAddressEdit" onsubmit="">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >First Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                placeholder="Enter First Name"
+                name="firstName"
+                value=""
+              />
+              <p id="firstNameError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                id="sName"
+                class="form-control"
+                placeholder="Enter Last Name"
+                name="secondName"
+              />
+              <p id="secondName" style="color: rgb(246, 4, 4)"></p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addresses"
+              name="address"
+            />
+            <p id="addressError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">Country</label>
+              <input
+                type="text"
+                id="countries"
+                class="form-control"
+                placeholder="Enter Country"
+                name="country"
+              />
+              <p id="countryError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">State</label>
+              <input
+                type="text"
+                id="states"
+                class="form-control"
+                placeholder="Enter State"
+                name="state"
+              />
+              <p id="stateError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label">City</label>
+              <input
+                type="text"
+                id="cities"
+                class="form-control"
+                placeholder="Enter City"
+                name="city"
+              />
+              <p id="cityError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+            <div class="col">
+              <label for="exampleInputEmail1" class="form-label"
+                >Pin Code</label
+              >
+              <input
+                type="text"
+                id="pinCodes"
+                class="form-control"
+                placeholder="Enter Pin code"
+                name="pinCode"
+              />
+              <p id="pinCodeError" style="color: rgb(246, 4, 4)"></p>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Email address</label
+            >
+            <input
+              type="email"
+              id="emails"
+              class="form-control"
+              placeholder="Enter Email"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              name="email"
+            />
+            <p id="emailError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label"
+              >Phone Number</label
+            >
+            <input
+              type="number"
+              placeholder="Enter Phone Number"
+              class="form-control"
+              id="phoneNumbers"
+              aria-describedby="emailHelp"
+              name="phoneNumber"
+            />
+            <p id="phoneNumberError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <input
+            type="text"
+            placeholder="Enter Phone Number"
+            class="form-control"
+            id="address_id"
+            aria-describedby="emailHelp"
+            name="phoneNumber"
+          />
+        </div>
+        <div class="modal-footer">
+          <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
           >
-          Close
-        </button>
+            Close
+          </button>
 
-        <button onclick="existingAddressEdit()"
-        type="submit"
-        class="btn btn-primary">
-        Save
-      </button>
+          <button
+            onclick="existingAddressEdit()"
+            type="submit"
+            class="btn btn-primary"
+          >
+            Save
+          </button>
+        </div>
+      </form>
     </div>
-  </form>
   </div>
 </div>
-</div>
-
-
-
 
 <script>
   const form = document.querySelector("form");
 
-  const firstNameError = document.getElementById('firstNameError')
-  const secondNameError = document.getElementById('secondNameError')
-  const addressError = document.getElementById('addressError')
-  const countryError = document.getElementById('countryError')
-  const stateError = document.getElementById('stateError')
-  const cityError = document.getElementById('cityError')
-  const pinCodeError = document.getElementById('pinCodeError')
-  const emailError = document.getElementById('emailError')
-  const phoneNumberError = document.getElementById('phoneNumberError')
-  const catchError = document.getElementById('catchError')
+  const firstNameError = document.getElementById("firstNameError");
+  const secondNameError = document.getElementById("secondNameError");
+  const addressError = document.getElementById("addressError");
+  const countryError = document.getElementById("countryError");
+  const stateError = document.getElementById("stateError");
+  const cityError = document.getElementById("cityError");
+  const pinCodeError = document.getElementById("pinCodeError");
+  const emailError = document.getElementById("emailError");
+  const phoneNumberError = document.getElementById("phoneNumberError");
+  const catchError = document.getElementById("catchError");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-   
-    const firstName = form.firstName.value;
-    const secondName = form.secondName.value; 
-    // const address = form.address.value;  
-    const country = form.country.value;  
-    const state = form.state.value;  
-    const city = form.city.value;  
-    const pinCode = form.pinCode.value; 
-    const email = form.email.value;  
-    const phoneNumber = form.phoneNumber.value;  
-   const address = document.getElementById('address').value
-console.log(firstName,secondName,address,country,state,city,pinCode,email,phoneNumber,'add address')
-console.log(form)
-console.log(address)
 
+    const firstName = form.firstName.value;
+    const secondName = form.secondName.value;
+    // const address = form.address.value;
+    const country = form.country.value;
+    const state = form.state.value;
+    const city = form.city.value;
+    const pinCode = form.pinCode.value;
+    const email = form.email.value;
+    const phoneNumber = form.phoneNumber.value;
+    const address = document.getElementById("address").value;
+    console.log(
+      firstName,
+      secondName,
+      address,
+      country,
+      state,
+      city,
+      pinCode,
+      email,
+      phoneNumber,
+      "add address"
+    );
+    console.log(form);
+    console.log(address);
 
     try {
-      if (firstName === ''){
-      
-        firstNameError.innerHTML = 'Enter your First Name '
-        setTimeout(()=>{
-          firstNameError.innerHTML = ''
-        },5000)
-        return 
+      if (firstName === "") {
+        firstNameError.innerHTML = "Enter your First Name ";
+        setTimeout(() => {
+          firstNameError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (secondName === ''){
-        console.log('hloooooozzz')
-        secondNameError.innerHTML = 'Enter your Last Name'
-        setTimeout(()=>{
-          secondNameError.innerHTML = ''
-        },5000)
-        return 
+      if (secondName === "") {
+        console.log("hloooooozzz");
+        secondNameError.innerHTML = "Enter your Last Name";
+        setTimeout(() => {
+          secondNameError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (address == ''){
-        
-        addressError.innerHTML = 'Enter your Address'
-        setTimeout(()=>{
-          addressError.innerHTML = ''
-        },5000)
-        return 
+      if (address == "") {
+        addressError.innerHTML = "Enter your Address";
+        setTimeout(() => {
+          addressError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (country === ''){
-
-        countryError.innerHTML = 'Enter your country Name'
-        setTimeout(()=>{
-          countryError.innerHTML = ''
-        },5000)
-        return 
+      if (country === "") {
+        countryError.innerHTML = "Enter your country Name";
+        setTimeout(() => {
+          countryError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (state === ''){
-
-        stateError.innerHTML = 'Enter your state Name'
-        setTimeout(()=>{
-          stateError.innerHTML = ''
-        },5000)
-        return 
+      if (state === "") {
+        stateError.innerHTML = "Enter your state Name";
+        setTimeout(() => {
+          stateError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (city === ''){
-  
-        cityError.innerHTML = 'Enter your city Name'
-        setTimeout(()=>{
-          cityError.innerHTML = ''
-        },5000)
-        return 
+      if (city === "") {
+        cityError.innerHTML = "Enter your city Name";
+        setTimeout(() => {
+          cityError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (pinCode === '' ){
-      
-        pinCodeError.innerHTML = 'enter your pin Code'
-        setTimeout(()=>{
-          pinCodeErrorpinCodeError.innerHTML = ''
-        },5000)
-        return 
+      if (pinCode === "") {
+        pinCodeError.innerHTML = "enter your pin Code";
+        setTimeout(() => {
+          pinCodeErrorpinCodeError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (email === ''){
-        emailError.innerHTML = 'Enter your email'
-        setTimeout(()=>{
-          emailError.innerHTML = ''
-       },5000)
-        return 
+      if (email === "") {
+        emailError.innerHTML = "Enter your email";
+        setTimeout(() => {
+          emailError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (phoneNumber === '' || phoneNumber.length < 10){
-    
-        phoneNumberError.innerHTML = 'Enter your Contact Number'
-        setTimeout(()=>{
-          phoneNumberError.innerHTML = ''
-       },5000)
-        return 
+      if (phoneNumber === "" || phoneNumber.length < 10) {
+        phoneNumberError.innerHTML = "Enter your Contact Number";
+        setTimeout(() => {
+          phoneNumberError.innerHTML = "";
+        }, 5000);
+        return;
       }
 
       const res = await fetch("/user/addAddressPost", {
         method: "POST",
-        body: JSON.stringify({ firstName,secondName,address,country,state,city,pinCode,email,phoneNumber}),
+        body: JSON.stringify({
+          firstName,
+          secondName,
+          address,
+          country,
+          state,
+          city,
+          pinCode,
+          email,
+          phoneNumber,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if(data.error){
-        console.log( data?.error,'erroooooooooooooooooooooooooooooo');
-        catchError.innerHTML = data?.error
-        setTimeout(()=>{
-          catchError.innerHTML = ''
-        },5000)
+      if (data.error) {
+        console.log(data?.error, "erroooooooooooooooooooooooooooooo");
+        catchError.innerHTML = data?.error;
+        setTimeout(() => {
+          catchError.innerHTML = "";
+        }, 5000);
       }
-     
-      if(data.success){
-       window.location.reload()
-      // alert('asdadfs')
+
+      if (data.success) {
+        window.location.reload();
+        // alert('asdadfs')
         // location.href = '/'
-    }
+      }
     } catch (err) {
       console.log(err, "err");
     }
   });
 
+  async function editAddress(
+    firstName,
+    secondName,
+    address,
+    country,
+    state,
+    city,
+    pinCode,
+    email,
+    phoneNumber,
+    _id
+  ) {
+    const fName = document.getElementById("name");
+    const sName = document.getElementById("sName");
+    const addresses = document.getElementById("addresses");
+    const countries = document.getElementById("countries");
+    const states = document.getElementById("states");
+    const cities = document.getElementById("cities");
+    const pinCodes = document.getElementById("pinCodes");
+    const emails = document.getElementById("emails");
+    const phoneNumbers = document.getElementById("phoneNumbers");
+    const address_id = document.getElementById("address_id");
 
- async function editAddress(firstName,secondName,address,country ,state,city,pinCode,email,phoneNumber,_id){
-    const fName = document.getElementById('name')
-    const sName = document.getElementById('sName')
-    const addresses = document.getElementById('addresses')
-    const countries = document.getElementById('countries')
-    const states = document.getElementById('states')
-    const cities = document.getElementById('cities')
-    const pinCodes = document.getElementById('pinCodes')
-    const emails = document.getElementById('emails')
-    const phoneNumbers = document.getElementById('phoneNumbers')
-    const address_id = document.getElementById('address_id')
-
-    
-    
-    fName.value = firstName
-    sName.value = secondName
-    addresses.value = address
-    countries.value = country
-    states.value = state
-    cities.value = city
-    pinCodes.value = pinCode
-    emails.value = email
-    phoneNumbers.value = phoneNumber
-    address_id.value = _id
-
+    fName.value = firstName;
+    sName.value = secondName;
+    addresses.value = address;
+    countries.value = country;
+    states.value = state;
+    cities.value = city;
+    pinCodes.value = pinCode;
+    emails.value = email;
+    phoneNumbers.value = phoneNumber;
+    address_id.value = _id;
   }
 
-async function existingAddressEdit(){
-    console.log('sdbhvjdsvnkjd')
-  const editForm = document.getElementById('editAddress')
-  editForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    console.log('here it is')
-    const firstName = document.getElementById('name').value;
-    const secondName = document.getElementById('sName').value;
-    const address = document.getElementById('addresses').value;
-    const country = document.getElementById('countries').value;
-    const state = document.getElementById('states').value;
-    const city = document.getElementById('cities').value;
-    const pinCode = document.getElementById('pinCodes').value;
-    const email = document.getElementById('emails').value;
-    const phoneNumber = document.getElementById('phoneNumbers').value;
-    const address_id = document.getElementById('address_id').value
-    console.log(address_id,'id ggggggggggggg')
+  async function existingAddressEdit() {
+    console.log("sdbhvjdsvnkjd");
+    const editForm = document.getElementById("editAddress");
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      console.log("here it is");
+      const firstName = document.getElementById("name").value;
+      const secondName = document.getElementById("sName").value;
+      const address = document.getElementById("addresses").value;
+      const country = document.getElementById("countries").value;
+      const state = document.getElementById("states").value;
+      const city = document.getElementById("cities").value;
+      const pinCode = document.getElementById("pinCodes").value;
+      const email = document.getElementById("emails").value;
+      const phoneNumber = document.getElementById("phoneNumbers").value;
+      const address_id = document.getElementById("address_id").value;
+      console.log(address_id, "id ggggggggggggg");
 
-    const res = await fetch("/user/editAddress", {
+      const res = await fetch("/user/editAddress", {
         method: "POST",
-        body: JSON.stringify({ firstName,secondName,address,country,state,city,pinCode,email,phoneNumber,address_id}),
+        body: JSON.stringify({
+          firstName,
+          secondName,
+          address,
+          country,
+          state,
+          city,
+          pinCode,
+          email,
+          phoneNumber,
+          address_id,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if(data.success){
-       window.location.reload()
-      // alert('asdadfs')
+      if (data.success) {
+        window.location.reload();
+        // alert('asdadfs')
         // location.href = '/'
-    }
-
-  })
-}
-
-async function deleteAddress(id){
-  
-  const res = await fetch("/user/deleteAddress", {
-        method: "POST",
-        body: JSON.stringify({ id }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      if(data.success){
-        myFunction()
-        setTimeout(()=>{
-          window.location.reload()
-        },2000)
-
       }
-  
-}
+    });
+  }
 
+  async function deleteAddress(id) {
+    const res = await fetch("/user/deleteAddress", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.success) {
+      myFunction();
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    }
+  }
 </script>

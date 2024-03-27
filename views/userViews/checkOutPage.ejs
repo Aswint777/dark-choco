@@ -6,6 +6,7 @@
     <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(255, 0, 0);" ></i>
     <div  class="icon-Success" style="background-color: rgb(255, 0, 0); border-radius: 5px;">
        Your existing address is deleted
+       <p id="error-massage"></p>
     </div>
 </div>
 
@@ -222,7 +223,16 @@
     </div>
   </div>
 </section>
+
 <!-- ///snackbar -->
+<!-- <%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar" >
+    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
+    <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
+       product added
+      
+    </div>
+</div> -->
 
 <script>
   const addressMessage = document.getElementById('addressMessage')
@@ -261,7 +271,7 @@
       
       if(paymentMethod == null ){
         console.log('wait ')
-        paymentMessage.innerHTML="password doesn't match "
+        paymentMessage.innerHTML="choose the payment method "
         setTimeout(()=>{
          paymentMessage.innerHTML = ''
        },5000)
@@ -295,7 +305,12 @@
         razOrPay(data);
 
       }
+      if(data.error){
+        const error_massage = document.getElementById('error-massage')
+        error_massage.innerHTML = data?.error
+        myFunction()
 
+      }
 
       // }catch(error){
       //   console.log(error,'drthfdb')

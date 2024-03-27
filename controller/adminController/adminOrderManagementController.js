@@ -18,7 +18,30 @@ const getAdminOrderManagement = async (req, res) => {
     const orderList = await order.find({ status: { $in: statusesToFind } });
     console.log(orderList);
     console.log(orderList.status, "status");
-    res.render("adminViews/adminOrderManagement", { orderList });
+    const totalSum = await order.aggregate([
+      {
+        $group: {
+          _id: null,
+          totalSum: { $sum: "$total" }
+        }
+      }
+    ]);
+    const sum = totalSum[0].totalSum;
+    console.log(sum,'totalSum');
+
+    const sumOfCod = await order.aggregate([
+      {
+        $match: { paymentMode: "cod" } // Filter documents where paymentMode is "cod"
+      },
+      {
+        $group: {
+          _id: null, // Group all documents into a single group
+          totalSum: { $sum: "$total" } // Calculate the sum of the "total" field
+        }
+      }
+    ]);
+    const codsum  = sumOfCod[0].sumOfCod
+    res.render("adminViews/adminOrderManagement", { orderList,sum ,codsum});
   } catch (error) {
     console.log(error);
   }
@@ -46,7 +69,7 @@ const updateStatus = async (req, res) => {
       { new: true }
     );
     console.log(status, "llklklkkk");
-    res.json({ status });
+    res.json({ status,success:true });
   } catch (error) {
     res.json({ success: false, error: error.message });
   }

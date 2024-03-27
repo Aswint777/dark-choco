@@ -2,7 +2,8 @@ const order = require("../../model/orderModel");
 const { default: mongoose } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const wallet = require("../../model/walletModel");
-const product = require('../../model/productModel')
+const product = require('../../model/productModel');
+const { generateInvoice } = require("../helperFunction/easyInvoice");
 
 const userOrderHistoryPage = async (req, res) => {
   try {
@@ -175,9 +176,29 @@ const returnProduct = async (req, res) => {
   }
 };
 
+const downloadInvoice = async(req,res)=>{
+  try {
+    console.log(req.body);
+    const {_id} = req.body
+    const orderDetails = await order.findOne({_id:_id})
+    if(orderDetails.status !== 'delivered'){
+      throw Error('status is not delivered')
+    }
+    const invoicePath = await generateInvoice(orderDetails)
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', `attachment; filename=invoice_${_id}.pdf`);
+    res.send(invoicePath);
+    console.log(_id);
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   userOrderHistoryPage,
   userOrderDetails,
   cancelOrder,
   returnProduct,
+  downloadInvoice
+
 };

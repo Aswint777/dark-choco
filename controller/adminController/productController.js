@@ -66,6 +66,7 @@ const adminProductList = async (req, res) => {
         const skip = (page - 1) * pageSize;
      
   // console.log('admin product list page is here')
+  
   const productList = await product.find().populate("category").skip(skip).limit(pageSize);
 
   res.render("adminViews/adminProductList", { productList , totalOrder,

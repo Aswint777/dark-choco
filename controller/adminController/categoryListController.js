@@ -1,5 +1,7 @@
+const { Error } = require('mongoose')
 const Category = require('../../model/categoryModel')
-
+const offerCategory = require('../../model/categoryOfferModel')
+const product = require('../../model/productModel')
 const categoryList = async (req,res) => {
     let query = req.query
     console.log(query,'yeeeeeeeeeeeeeeeeees')
@@ -124,11 +126,97 @@ const editCategoryPost = async(req,res)=>{
     
 }
 
+const categoryOffer = async(req,res)=>{
+    try {
+        const categoryList = await Category.find({})
+        console.log(categoryList);
+        const categoryOfferList = await offerCategory.find()
+        res.render('adminViews/categoryOffer',{categoryList,categoryOfferList})
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const createCategoryOffer = async(req,res)=>{
+    try {
+        console.log(req.body)
+        const {categoryId,offerRate,startDate,expiryDate }= req.body
+        const categoryDetails = await Category.findOne({_id : categoryId})
+        if(!categoryDetails){
+            throw Error('The category is not Exist')
+        }
+        const duplicate = await offerCategory.findOne({categoryId : categoryId})
+        if(duplicate){
+            throw Error('this category Offer Exist ')
+        }
+        const newOffer = await offerCategory.create({categoryId,offerRate,startDate,expiryDate,categoryName:categoryDetails.category})
+        await Category.findOneAndUpdate({_id:categoryId },{$set:{offerRate:offerRate}})
+        
+        const productUpdate = await product.find({category:categoryId})
+        if(productUpdate){
+
+            productUpdate.forEach(async (pro) => {
+                // Assuming you have the categoryOfferRate and originalPrice available
+                const categoryOfferRate = offerRate
+                const originalPrice = pro.amount;
+                
+                // Calculate categoryOfferPrice based on categoryOfferRate and originalPrice
+                console.log(originalPrice,categoryOfferRate);
+                const categoryOfferPrice = originalPrice - (originalPrice * (categoryOfferRate / 100));
+                console.log(categoryOfferPrice,'categoryOfferPrice');
+                // Update product with the calculated categoryOfferPrice
+                await product.findOneAndUpdate(
+                    { _id: pro._id },
+                    { $set: { categoryOfferPrice: categoryOfferPrice,categoryOfferRate : categoryOfferRate } },
+                    { new: true }
+                );
+            });
+            console.log(productUpdate,'success the task')
+        }
+
+        res.json({success : true})
+        
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const deleteCategoryOffer = async(req,res)=>{
+    try {
+        const {_id}= req.body
+        const offerDetails = await offerCategory.findOne({_id:_id})
+        const productUpdate = await product.find({category:offerDetails.categoryId})
+        productUpdate.forEach(async (pro) => {
+            await product.findOneAndUpdate(
+                { _id: pro._id },
+                { $unset: { categoryOfferPrice: "",categoryOfferRate:"" } },
+                { new: true }
+            );
+        });
+        await Category.findOneAndUpdate(
+            { _id:offerDetails.categoryId },
+            { $unset: { offerRate: "" } },
+            { new: true }
+        );
+        await offerCategory.findOneAndDelete({_id :_id})
+        res.json({success : true})
+    } catch (error) {
+        console.log(error)
+    }
+
+
+}
+
+
+
 module.exports = {
     categoryList,
     addCategory,
     addCategoryPost,
     editCategory,
     manageCategory,
-    editCategoryPost
+    editCategoryPost,
+    categoryOffer,
+    createCategoryOffer,
+    deleteCategoryOffer
 }

@@ -68,7 +68,7 @@
                                 <p id="maximumUsesError" style="color: rgb(246, 4, 4);"></p>
             
                                 <p class="mb-2">Expiry Date </p>
-                                <input type="date" name="expiryDate" id="expiryDate" value="<%= currentCoupon.expiryDate %>">
+                                <input type="date" name="expiryDate" id="expiryDate" value="<%= new Date(currentCoupon.expiryDate).toISOString().split('T')[0] %>">
                                 <!-- Add the name attribute -->
                                 <p id="expiryDateError" style="color: rgb(246, 4, 4);"></p>
                                 <!-- /// -->

@@ -42,7 +42,12 @@ const applyCoupon = async (req, res) => {
         await user.findByIdAndUpdate({_id:userId}, { $addToSet: { allCoupon: couponData._id } });
     }
     const offerCart = await cart.findOneAndUpdate({userData:userId},{$set:{couponOffer:couponData.value,couponId: couponData._id}})
-    console.log('success')
+    const couponvalue = await coupon.findOneAndUpdate(
+      { code: couponData.couponCode },
+      { $inc: { maximumUses: -1 } }
+    );
+    
+     console.log(couponvalue,'success')
     console.log(offerCart);
     res.json({success : true})
   } catch (error) {
@@ -63,6 +68,11 @@ const cancelCoupon = async(req,res)=>{
     const updateUserData = await user.findOneAndUpdate({ _id: userId },
       { $pull: { allCoupon: couponId } })
       await cart.findOneAndUpdate({ userData: userId },{$unset:{couponId :'',couponOffer : ''}})
+      const couponvalue = await coupon.findOneAndUpdate(
+        { _id:couponId },
+        { $inc: { maximumUses: 1 } }
+      );
+
        res.json({success: true})
   } catch (error) {
     console.log(error);

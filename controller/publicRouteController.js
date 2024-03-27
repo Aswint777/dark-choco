@@ -162,6 +162,12 @@ const about = (req,res)=>{
   res.render('userViews/about', { userAuth: true })
 }
 
+// 404 page 
+
+const get404Page = (req,res)=>{
+  res.render('partial/404Page')
+} 
+
 module.exports = {
   home,
   userLogin,
@@ -173,5 +179,6 @@ module.exports = {
   adminLoginPost,
   userLogOut,
   adminLogOut,
-  about
+  about,
+  get404Page
 };

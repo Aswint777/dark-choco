@@ -13,14 +13,22 @@
     <div class="col-md-10 col-12">
       <h2 style="text-align: center; color: black;">Order Management</h2>
       <div class="col-12 mb-3 mb-lg-5">
+        <div class="d-flex justify-content-between">
+          <div>Total Generated Amount: <h3><%= sum %></h3></div>
+          <!-- <div>Total Generated Amount: <h3><%= codsum %></h3></div> -->
+        </div>
+        
+        
+
+
         <div class="overflow-hidden card table-nowrap table-card">
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">New customers</h5>
+            <h5 class="mb-0"></h5>
             <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
             <button style="border-radius: 5px;" onclick="location.href = '/admin/returnProductList'">Return Orders</button>
           </div>
           <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0">New customers</h5>
+            <h5 class="mb-0"></h5>
             <!-- <a href="#!" class="btn btn-light btn-sm">View All</a> -->
             <button type="button" style="border-radius: 5px; background-color: black;" data-bs-toggle="modal" data-bs-target="#returnProductModal">Export</button>
 
@@ -169,6 +177,12 @@
     </div>
   </div>
 
+   
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar"  class="icon-Success " style="width:20%; height: 20%; color: rgb(7, 211, 7);" >
+       Product Status Updated
+    <!-- </div> -->
+</div>
 
 
 
@@ -197,6 +211,13 @@
         },
     });
     const data = await res.json()
+    if(data.success){
+      myFunction()
+      couponError.innerHTML = 'success'
+      setTimeout(()=>{
+        window.location.reload()
+      },2000)
+    }
     console.log({data})
   }
 

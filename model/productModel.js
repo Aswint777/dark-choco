@@ -67,6 +67,12 @@ const productSchema = new mongoose.Schema({
     type:Number,
     required : true,
     min: 1,
+  },
+  categoryOfferPrice : {
+    type : Number
+  },
+  categoryOfferRate : {
+    type : Number
   }
   // image4 :[
   //   {

@@ -2,7 +2,7 @@ const express = require('express')
 
 const { customer, manageUser, SearchCustomer } = require('../controller/adminController/customerController')
 const category = require('../model/categoryModel')
-const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory, editCategoryPost } = require('../controller/adminController/categoryListController')
+const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory, editCategoryPost, categoryOffer, createCategoryOffer, deleteCategoryOffer } = require('../controller/adminController/categoryListController')
 const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
@@ -97,5 +97,12 @@ router.get('/generatePDF',downloadPDF)
 router.post('/downloadPDFByDate',downloadPDFByDate)
 
 
+// Category offer 
+
+router.get('/categoryOffer',categoryOffer)
+
+router.post('/createCategoryOffer',createCategoryOffer)
+
+router.post('/deleteCategoryOffer',deleteCategoryOffer)
 
 module.exports= router

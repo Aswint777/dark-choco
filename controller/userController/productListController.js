@@ -17,7 +17,6 @@ const productListPage = async (req,res)=>{
 
     // }else{
         console.log('okkokkookokokokokok')
-
         const productList = await product.find({status:true}).populate('category')
          const categoryList = await Category.find()
          res.render('userViews/productListPage',{productList,categoryList,userAuth:true})

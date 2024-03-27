@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const cart = require("../../model/cartModel");
 const products = require("../../model/productModel");
 const order = require("../../model/orderModel");
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Error } = require("mongoose");
 const user = require("../../model/userModel");
 const product = require("../../model/productModel");
 const Razorpay = require('razorpay');
@@ -122,6 +122,11 @@ const placeOrder = async (req, res) => {
     // console.log(totalQuantity, 'totalQuantity');
 
     console.log(orderProductDetails, "kkkkkk");
+    console.log(total,typeof(total),'total');         
+    // if(paymentMethod == "cod" && total > 1000 ){
+    //   console.log('cod cant reach')
+    //   throw Error('Sorry, cash on delivery is not available for orders exceeding $1000. Please choose an alternative payment method during checkout.')
+    // }
 
     if ( paymentMethod == "cod"){
     const orderData = await order.create({
@@ -216,7 +221,9 @@ const placeOrder = async (req, res) => {
 
     // console.log(id);
   } catch (error) {
-    console.log(`error in place order ${error}`);
+    console.log(`error in place order ${error.message}`);
+    res.json({success:false , error:error.message});
+
   }
 };
 

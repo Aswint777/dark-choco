@@ -73,7 +73,11 @@ const productSchema = new mongoose.Schema({
   },
   categoryOfferRate : {
     type : Number
-  }
+  },
+  count : {
+    type : Number,
+    default : 0
+}
   // image4 :[
   //   {
   //     type:String

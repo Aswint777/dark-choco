@@ -42,6 +42,16 @@ const editCouponPost = async (req,res)=>{
     res.json({success : true})
 }
 
+const deleteCoupon = async (req,res)=> {
+    try {
+        const {_id} = req.body
+        const currentCoupon = await coupon.findOneAndDelete({_id : _id})
+        res.json({success : true })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 
 
 module.exports ={
@@ -49,5 +59,6 @@ module.exports ={
     addCoupon,
     couponList,
     editCoupon,
-    editCouponPost
+    editCouponPost,
+    deleteCoupon
 }

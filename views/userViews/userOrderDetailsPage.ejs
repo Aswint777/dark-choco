@@ -11,9 +11,11 @@
         <div class="col-md-12 col-12 ">
         <div class="row d-flex justify-content-center align-items-center h-100">
           <div class="col">
+           <% if(details.status =='delivered' ){%>
             <div class="justify-content-end d-flex" >
               <button onclick="downloadInvoice('<%= details._id %>')" style="background-color: black; border-radius: 5px;">download invoice</button>
             </div>
+            <%}%>
             <div class="card">
               <div class="card-body p-4">
                 <div class="row">

@@ -11,7 +11,8 @@ const razorPay = require("../helperFunction/razorPay");
 require("dotenv").config();
 const crypto = require("crypto");
 const { log } = require("console");
-const wallet = require('../../model/walletModel')
+const wallet = require('../../model/walletModel');
+const Category = require("../../model/categoryModel");
 
 
 
@@ -143,7 +144,25 @@ const placeOrder = async (req, res) => {
     if(orderData){
 
       const id = orderData._id;
-        const deleteCart = await cart.findOneAndDelete({userData:userId})
+////////////////////////////////////////////////////////////////////////////////////////////////////
+     const products = cartData.products;
+
+      for (const cartProduct of products) {
+        const productId = cartProduct.product_id;
+        const productQuantity = cartProduct.quantity;
+
+        await product.updateOne({ _id: productId }, { $inc: { count: productQuantity } });
+
+        // Get the categories for the product
+        const categoryProduct = await product.findById(productId);
+        const productCategories = categoryProduct.category;
+
+        // Iterate through each category of the product
+            // Update count for the category
+            await Category.updateOne({ _id: productCategories }, { $inc: { count: productQuantity } });
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+        await cart.findOneAndDelete({userData:userId})
         res.json({ success : true ,id: id });
     }
 
@@ -205,6 +224,23 @@ const placeOrder = async (req, res) => {
             { new: true } // Set {new: true} to return the updated document
           );
           
+
+          const products = cartData.products;
+
+      for (const cartProduct of products) {
+        const productId = cartProduct.product_id;
+        const productQuantity = cartProduct.quantity;
+
+        await product.updateOne({ _id: productId }, { $inc: { count: productQuantity } });
+
+        // Get the categories for the product
+        const categoryProduct = await product.findById(productId);
+        const productCategories = categoryProduct.category;
+
+        // Iterate through each category of the product
+            // Update count for the category
+            await Category.updateOne({ _id: productCategories }, { $inc: { count: productQuantity } });
+    }
             const id = orderData._id;
               const deleteCart = await cart.findOneAndDelete({userData:userId})
               res.json({ success : true ,id: id });
@@ -217,7 +253,6 @@ const placeOrder = async (req, res) => {
         throw Error('your Wallet is empty')
       }
     }
-
 
     // console.log(id);
   } catch (error) {
@@ -299,6 +334,23 @@ const razorPayHandler = async(req,res)=>{
       products: orderProductDetails,
     });
     if(orderData){
+
+      const products = cartData.products;
+
+      for (const cartProduct of products) {
+        const productId = cartProduct.product_id;
+        const productQuantity = cartProduct.quantity;
+
+        await product.updateOne({ _id: productId }, { $inc: { count: productQuantity } });
+
+        // Get the categories for the product
+        const categoryProduct = await product.findById(productId);
+        const productCategories = categoryProduct.category;
+
+        // Iterate through each category of the product
+            // Update count for the category
+            await Category.updateOne({ _id: productCategories }, { $inc: { count: productQuantity } });
+    }
 
       const _id = orderData._id;
         const deleteCart = await cart.findOneAndDelete({userData:userId})

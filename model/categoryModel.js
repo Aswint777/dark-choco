@@ -22,6 +22,10 @@ const categorySchema = new mongoose.Schema({
     },
     offerRate :{
         type : Number,
+    },
+    count : {
+        type : Number,
+        default : 0
     }
 })
 

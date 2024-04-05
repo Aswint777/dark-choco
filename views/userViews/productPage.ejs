@@ -20,44 +20,44 @@
 
 <div class="container my-5" style="background-color:rgb(241, 226, 208); ">
   <div class="row">
-      <div class="col-md-5">
-          <div class="main-img">
+    <div class="col-md-5">
+        <div class="main-img">
             <div id="img-container">
-
-                <img class="img-fluid" src="/products/<%= data.image1 %>" alt="ProductS" id="main">
+                <img class="img-fluid" src="/products/<%= data.image1 %>" alt="Product" id="main">
             </div>
-              <div class="row my-3 previews">
-                  <div class="col-md-4" onclick="showImage('main','image1')">
-                      <img class="w-100" src="/products/<%= data.image1 %>" alt="Sale" id="image1">
-                  </div>
-                  <div class="col-md-4" onclick="showImage('main','image2')">
-                      <img class="w-100" src="/products/<%= data.image2 %>" alt="Sale" id="image2">
-                  </div>
-                  <div class="col-md-4" onclick="showImage('main','image3')">
-                      <img class="w-100" src="/products/<%= data.image3 %>" alt="Sale" id="image3">
-                  </div>
-                 
-              </div>
-          </div>
-      </div>
+            <div class="row my-3 previews">
+                <div class="col-4" onclick="showImage('main','image1')">
+                    <img class="w-100" src="/products/<%= data.image1 %>" alt="Sale" id="image1">
+                </div>
+                <div class="col-4" onclick="showImage('main','image2')">
+                    <img class="w-100" src="/products/<%= data.image2 %>" alt="Sale" id="image2">
+                </div>
+                <div class="col-4" onclick="showImage('main','image3')">
+                    <img class="w-100" src="/products/<%= data.image3 %>" alt="Sale" id="image3">
+                </div>
+            </div>
+        </div>
+    </div>
+    
       <div class="col-md-7">
           <div class="main-description px-2">
-              <div class="category text-bold">
+              <!-- <div class="category text-bold">
                 Category: <%= data.category.category %>
-                <!-- <h2 > <%= data.category %></h2> -->
-              </div>
+              </div> -->
               <div class="product-title text-bold my-3">
                 <%= data.stock %>
-                  <!-- <h5 class="card-title"> <%= data.stock %></h5> -->
               </div>
 
-              <div class="price-area my-4">
-                  <h4 class="old-price mb-1" style="color: red;"><del> ₹<%= data.markup %></del> 
-                    <!-- <span class="old-price-discount text-danger">(20% off)</span> -->
-                  </h4>
-                  <p class="new-price text-bold mb-1"> ₹<%= data.amount %></p>
-                  <!-- <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p> -->
-              </div>
+              <% if(data.categoryOfferPrice){ %>
+                <div class="row d-flex" style="align-items: baseline;">
+                    <span>
+                        <h4 class="old-price mb-1" style="color: rgb(161, 159, 159); margin-right: 10px; display: inline; vertical-align: middle;"><del>₹<%= data.amount %></del></h4>
+                        <h2 class="mb-3" style="display: inline; vertical-align: middle; margin-bottom: 0; color:rgb(1,58,166);">₹<%= data.categoryOfferPrice %></h2>
+                    </span>
+                </div>       
+            <%}else{%>
+                <h2 class="mb-3" style="display: inline; vertical-align: middle; margin-bottom: 0; color:rgb(1,58,166);">₹<%=data.amount %></h2>
+                <%}%>
               <div>
                 <% if(data.quantity > 10 ){ %>
                   <h6 style="color: rgb(15, 193, 15);">in stock</h6>

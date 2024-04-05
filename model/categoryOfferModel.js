@@ -10,18 +10,18 @@ const categoryOfferSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
-  categoryName : {
-    type : String,
+  categoryName: {
+    type: String,
   },
   startDate: {
     type: Date,
   },
-  expiryDate :{
+  expiryDate: {
     type: Date,
   },
-  offerRate : {
-    type: Number
-  }
+  offerRate: {
+    type: Number,
+  },
 });
 
 const offerCategory = mongoose.model("categoryOffer", categoryOfferSchema);

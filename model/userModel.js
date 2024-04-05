@@ -26,31 +26,34 @@ const userSchema = new mongoose.Schema({
     required: [true, "please enter the password"],
     minLength: [6, "minimum password length is 6"],
   },
-  date :{
-    type : Date,
-    default : new Date()
+  date: {
+    type: Date,
+    default: new Date(),
   },
-  status :{
-    type:Boolean,
-    default:true
+  status: {
+    type: Boolean,
+    default: true,
   },
-  phoneNumber :{
-    type : Number,
-    min : 10,
-    max : 15
+  phoneNumber: {
+    type: Number,
+    min: 10,
+    max: 15,
   },
-  address :{
-    type:String
+  address: {
+    type: String,
   },
-  pinNumber : {
-    type : Number
+  pinNumber: {
+    type: Number,
   },
-  allCoupon : [
+  allCoupon: [
     {
-      type : mongoose.Schema.Types.ObjectId,
-      ref:"coupon",
-    }
-  ]
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "coupon",
+    },
+  ],
+  userReferralCode :{
+    type : String
+  }
 });
 
 userSchema.pre("save", async function (next) {
@@ -58,7 +61,6 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
-
 
 const user = mongoose.model("userData", userSchema);
 

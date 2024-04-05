@@ -1,55 +1,102 @@
+<style>
+
+</style>
+
 <div class="homeBody">
+    <%-include('../partial/header.ejs')%> 
+    <%if(!userAuth){%>
+        <%-include('../partial/navbar.ejs')%>
+   <%}else{%>
+        <%-include('../partial/userNavbar.ejs')%> 
+    <%}%>
 
-<%-include('../partial/header.ejs')%>
-
-<%if(!userAuth){%>
-    <%-include('../partial/navbar.ejs')%>
-<%}else{%>
-    <%-include('../partial/userNavbar.ejs')%>
-<%}%>
-
-<div class="container-fluid " style="background: url('assets/istockphoto-1316983928-170667a.webp');background-size:cover;height: 100vh;background-position: center;background-repeat: no-repeat;">
-
+  <div
+    class="container-fluid"
+    style="
+      background: url('assets/istockphoto-1316983928-170667a.webp');
+      background-size: cover;
+      height: 100vh;
+      background-position: center;
+      background-repeat: no-repeat;
+    "
+  >
     <!-- Image container with Bootstrap's responsive class -->
     <div class="image-container">
-        <!-- Image -->
-        <!-- <img src="/assets/pexels-eva-bronzini-6261691.png" alt="Your Image" class="img-fluid" style="height: 100%;width: 100%;object-fit: cover;"> -->
+      <!-- Image -->
+      <!-- <img src="/assets/pexels-eva-bronzini-6261691.png" alt="Your Image" class="img-fluid" style="height: 100%;width: 100%;object-fit: cover;"> -->
 
-        <!-- Overlay Box with Text -->
-        <div style="padding-top: 10%; padding-left: 3%;" class="">
-            <!-- Add your text content here -->
-            <h1 style="color: aliceblue;">Dark Choco</h1>
-            <a href="" class="btn btn-danger" style="text-decoration: none;border: none; background-color: rgb(50, 30, 5) !important;">shop now</a>
+      <!-- Overlay Box with Text -->
+      <div style="padding-top: 10%; padding-left: 3%" class="">
+        <!-- Add your text content here -->
+        <h1 style="color: aliceblue">Dark Choco</h1>
+        <a
+          href=""
+          class="btn btn-danger"
+          style="
+            text-decoration: none;
+            border: none;
+            background-color: rgb(50, 30, 5) !important;
+          "
+          >shop now</a
+        >
 
-            <!-- <p>Additional details or description</p> -->
-        </div>
+        <!-- <p>Additional details or description</p> -->
+      </div>
     </div>
-</div>
+  </div>
 
-
-<section style="background-color: #b34646;">
-    <div class="text-center container py-5" style="background-color:rgb(242, 211, 173)">
-        <div class="row">
-            <% productList.forEach((products, index) => { %>
-                <div class="col-lg-3 col-md-6 mb-4" style="background-color: rgb(242, 211, 173#b34646)">
-                    <div onclick="getProduct('<%= products._id %>')" class="card">
-                        <div class="bg-image hover-zoom ripple ripple-surface ripple-surface-light" data-mdb-ripple-color="light" style="background-color: rgb(242, 200, 149);">
-                            <!-- <h5><span class="badge bg-primary ms-2">New</span></h5> -->
-                            <div class="d-flex justify-content-center align-items-center" style="width: 250px; height: 250px; overflow: hidden; margin-left: 20px; margin-top: 10px; margin-bottom: 10px; background-color: #b34646 ;">
-                                <img src="/products/<%= products.image1 %>" class="w-100 h-100" />
-                            </div>
-                            <a href="#!">
-                                <div class="mask">
-                                    <div class="d-flex justify-content-start align-items-end h-100">
-                                        <!-- <h5><span class="badge bg-primary ms-2"><%= products.stock %></span></h5> -->
-                                    </div>
-                                </div>
-                                <div class="hover-overlay">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                                </div>
-                            </a>
-                        </div>
-                        <!-- <div class="card-body">
+  <section style="background-color: #f6efef">
+    <div
+      class="text-center container py-5"
+      style="background-color: rgb(241, 239, 238)"
+    >
+      <div class="row">
+        <% productList.forEach((products, index) => { %>
+        <div
+          class="col-lg-3 col-md-6 mb-4"
+          style="background-color: rgb(242, 211, 173#b34646)"
+        >
+          <div onclick="getProduct('<%= products._id %>')" class="card">
+            <div
+              class="bg-image hover-zoom ripple ripple-surface ripple-surface-light"
+              data-mdb-ripple-color="light"
+              style="background-color: rgb(242, 200, 149)"
+            >
+              <!-- <h5><span class="badge bg-primary ms-2">New</span></h5> -->
+              <div
+                class="d-flex justify-content-center align-items-center product-image"
+                style="
+                  width: 250px;
+                  height: 250px;
+                  overflow: hidden;
+                  margin-left: 20px;
+                  margin-top: 10px;
+                  margin-bottom: 10px;
+                  background-color: #fcf8f8;
+                  border-radius: 5px;
+                "
+              >
+                <img
+                  src="/products/<%= products.image1 %>"
+                  class="w-100 h-100"
+                />
+              </div>
+              <a href="#!">
+                <div class="mask">
+                  <div
+                    class="d-flex justify-content-start align-items-end h-100"
+                  >
+                  </div>
+                </div>
+                <div class="hover-overlay">
+                  <div
+                    class="mask"
+                    style="background-color: rgba(251, 251, 251, 0.15)"
+                  ></div>
+                </div>
+              </a>
+            </div>
+            <!-- <div class="card-body">
                             <a href="" class="text-reset">
                                 <h5 class="card-title mb-3"><%= products.stock %></h5>
                             </a>
@@ -59,34 +106,26 @@
                             <h4 class="old-price mb-1" style="color: red;"><del> ₹<%= products.markup %></del></h4>
                             <h2 class="mb-3">₹<%= products.amount %></h2>
                         </div> -->
-                    </div>
-                </div>
-            <% }) %>
+          </div>
         </div>
+        <% }) %>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- Example split danger button -->
+  <!-- Example split danger button -->
 
-<%-include('../partial/footer.ejs')-%>
-
-            
-   
+  <%-include('../partial/footer.ejs')-%>
 </div>
 
-
 <script>
-    
-    async function getProduct(id){
-        console.log(id,"helloooooooooooooooooooooooooooooooooooooooooooooooo")
-        try{
-
-            const singleProduct = await axios.get(`/user/productPage/${id}`)
-            window.location.href = `/user/productPage/${id}`
-            
-        }catch(err){
-            console.log(err.message)
-        }
+  async function getProduct(id) {
+    console.log(id, "helloooooooooooooooooooooooooooooooooooooooooooooooo");
+    try {
+      const singleProduct = await axios.get(`/user/productPage/${id}`);
+      window.location.href = `/user/productPage/${id}`;
+    } catch (err) {
+      console.log(err.message);
     }
-
+  }
 </script>

@@ -4,9 +4,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { main } = require("./helperFunction/otp");
 require("dotenv").config();
-const otp = require('../model/otpModel')
-const product = require('../model/productModel')
-
+const otp = require("../model/otpModel");
+const product = require("../model/productModel");
 
 // handle errors
 handleErrors = (err) => {
@@ -35,9 +34,13 @@ const createToken = (id) => {
 };
 // get for home
 const home = async (req, res) => {
-  const productList = await product.find({status:true}).populate('category').sort({date:-1}).limit(4)
-  console.log(productList)
-  res.render("userViews/home", { userAuth: true ,productList});
+  const productList = await product
+    .find({ status: true })
+    .populate("category")
+    .sort({ date: -1 })
+    .limit(4);
+  console.log(productList);
+  res.render("userViews/home", { userAuth: true, productList });
 };
 
 // get for userLogin
@@ -52,28 +55,26 @@ const userSignIn = (req, res) => {
 
 // post for loginPost
 const userLoginPost = async (req, res) => {
-
   const { email, password } = req.body;
 
   try {
     const user = await User.findOne({ email });
     // const user = await User.login(email, password);
-    if(!user){
-      throw Error("Enter the valid email")
-    }
-    else if (user.status === false) {
-      throw Error("Your account is blocked")
-    }else{
+    if (!user) {
+      throw Error("Enter the valid email");
+    } else if (user.status === false) {
+      throw Error("Your account is blocked");
+    } else {
       const auth = await bcrypt.compare(password, user.password);
       if (!auth) {
-        throw Error("Check Your Password")
-      }else{
+        throw Error("Check Your Password");
+      } else {
         console.log("password checked");
         const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);
         res.cookie("loginToken", token, {
           httpOnly: true,
         });
-        res.json({success:true})
+        res.json({ success: true });
       }
     }
   } catch (error) {
@@ -84,31 +85,31 @@ const userLoginPost = async (req, res) => {
 
 // post for new user
 const newUser = async function (req, res) {
-  const { firstName, secondName, email, password } = req.body;
+  const { firstName, secondName, email, password,referralCode } = req.body;
 
   try {
-    const data = await otp.findOne({email:email})
-    if(password.length < 6 ){
-      throw Error('password is not strong')
-    }else if (data){
-      await otp.deleteOne({email:email})
+    const data = await otp.findOne({ email: email });
+    if (password.length < 6) {
+      throw Error("password is not strong");
+    } else if (data) {
+      await otp.deleteOne({ email: email });
     }
 
-    await main(email,firstName,secondName,password)
-    res.json({ success : true  });
+    await main(email, firstName, secondName, password,referralCode);
+    res.json({ success: true });
   } catch (error) {
     // const errors = handleErrors(errors)
     console.log(error, "error in singIn");
     // res.status(400).send("error, user not created ");
-    res.json({success:false , error:error.message});
+    res.json({ success: false, error: error.message });
   }
   console.log("reached");
 };
 
 // fet for otp page
 const getOtp = (req, res) => {
-  const {email} = req.query;
-  res.render("userViews/otp",{ email});
+  const { email } = req.query;
+  res.render("userViews/otp", { email });
 };
 
 // get for admin login
@@ -122,7 +123,7 @@ const adminLoginPost = async (req, res) => {
   const { email, password } = req.body;
   console.log(email, password);
   try {
-    const admin = await Admin.findOne({ email:email });
+    const admin = await Admin.findOne({ email: email });
     // await new Admin({
     //   email:'aswinspot007@gmail.com',
     //   password:'Aswin@123'
@@ -132,7 +133,7 @@ const adminLoginPost = async (req, res) => {
       if (auth) {
         console.log("password checked");
         const token = jwt.sign({ adminId: admin._id }, process.env.SECRET_KEY);
-        
+
         res.cookie("adminLoginToken", token, {
           httpOnly: true,
         });
@@ -148,25 +149,25 @@ const adminLoginPost = async (req, res) => {
 //user log Out
 const userLogOut = (req, res) => {
   console.log("logout");
-  res.clearCookie('loginToken')
+  res.clearCookie("loginToken");
   res.redirect("/");
 };
 const adminLogOut = (req, res) => {
   console.log("logout");
-  res.clearCookie('adminLoginToken')
+  res.clearCookie("adminLoginToken");
   res.redirect("/");
 };
 
-//about page 
-const about = (req,res)=>{
-  res.render('userViews/about', { userAuth: true })
-}
+//about page
+const about = (req, res) => {
+  res.render("userViews/about", { userAuth: true });
+};
 
-// 404 page 
+// 404 page
 
-const get404Page = (req,res)=>{
-  res.render('partial/404Page')
-} 
+const get404Page = (req, res) => {
+  res.render("partial/404Page");
+};
 
 module.exports = {
   home,
@@ -180,5 +181,5 @@ module.exports = {
   userLogOut,
   adminLogOut,
   about,
-  get404Page
+  get404Page,
 };

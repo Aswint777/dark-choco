@@ -2,7 +2,7 @@ const order = require("../../model/orderModel");
 const { default: mongoose } = require("mongoose");
 const jwt = require("jsonwebtoken");
 const wallet = require("../../model/walletModel");
-const product = require('../../model/productModel');
+const product = require("../../model/productModel");
 const { generateInvoice } = require("../helperFunction/easyInvoice");
 
 const userOrderHistoryPage = async (req, res) => {
@@ -10,35 +10,36 @@ const userOrderHistoryPage = async (req, res) => {
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
-    console.log(userId,"dhfbvdkjfn");
-    // 
-    
+    console.log(userId, "dhfbvdkjfn");
+    //
+
     let query = req.query;
     console.log(query, "yeeeeeeeeeeeeeeeeees");
-  
+
     var i = 0;
     const page = parseInt(req.query.page) || 1;
-    const count = await order.countDocuments({ userData: userId })
-    console.log('start',count,'count');
+    const count = await order.countDocuments({ userData: userId });
+    console.log("start", count, "count");
     const pageSize = 3;
     const totalOrder = Math.ceil(count / pageSize);
     const skip = (page - 1) * pageSize;
-    let orderHistory
+    let orderHistory;
 
     if (req.query.date) {
-      console.log(req.query,'query');
-      const latest = await order.find({  userData: userId }).sort({
+      console.log(req.query, "query");
+      const latest = await order.find({ userData: userId }).sort({
         date: Number(req.query.date),
       }); //{} {another:true,chocolate:true}
 
-      console.log(latest,'largest');
+      console.log(latest, "largest");
       res.json({ latest });
     } else if (req.query.searchQuery) {
       console.log(
         req.query.searchQuery,
         "lllllllllllllllllllllllllllllllllllllllll"
       );
-       orderHistory = await order.find({userData:userId,
+      orderHistory = await order.find({
+        userData: userId,
         status: { $regex: req.query.searchQuery, $options: "i" },
       });
       const query = req.query.searchQuery;
@@ -50,25 +51,30 @@ const userOrderHistoryPage = async (req, res) => {
         page: page,
       });
     } else {
-    orderHistory = await order.find({ userData: userId }).skip(skip).limit(pageSize)
-    console.log(orderHistory);
-    res.render("userViews/userOrderHistory", { orderHistory,
-      query,
-      totalOrder,
-      pageSize,
-      page: page,});
-  }
+      orderHistory = await order
+        .find({ userData: userId })
+        .skip(skip)
+        .limit(pageSize);
+      console.log(orderHistory);
+      res.render("userViews/userOrderHistory", {
+        orderHistory,
+        query,
+        totalOrder,
+        pageSize,
+        page: page,
+      });
+    }
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
- }
+};
 
 const userOrderDetails = async (req, res) => {
-  console.log('hai')
+  console.log("hai");
   const { _id } = req.query;
-  console.log(_id)
+  console.log(_id);
   const details = await order.findOne({ _id: _id });
-  console.log(details)
+  console.log(details);
   res.render("userViews/userOrderDetailsPage", { details });
 };
 
@@ -99,12 +105,13 @@ const cancelOrder = async (req, res) => {
         if (myWallet) {
           myWallet = await wallet.findOneAndUpdate(
             { userData: userId },
-            { $inc: { walletAmount: orderDetails.total },$push: { transactions: newTransaction }, },
+            {
+              $inc: { walletAmount: orderDetails.total },
+              $push: { transactions: newTransaction },
+            },
             { new: true }
           );
         } else {
-          
-
           myWallet = await wallet.create({
             userData: userId,
             walletAmount: orderDetails.total,
@@ -118,11 +125,10 @@ const cancelOrder = async (req, res) => {
         { $set: { status: "canceled" } },
         { new: true }
       );
-      if(cancel.status == "canceled" ){
-         console.log(cancel,'canceled');
+      if (cancel.status == "canceled") {
+        console.log(cancel, "canceled");
 
-
-         const mapQuantity = cancel.products.map(async (pro) => {
+        const mapQuantity = cancel.products.map(async (pro) => {
           console.log(pro, "before updation");
           if (Array.isArray(pro)) {
             // Assuming 'pro' is an array of objects
@@ -132,7 +138,10 @@ const cancelOrder = async (req, res) => {
                 { $inc: { quantity: item.quantity } },
                 { new: true }
               );
-              console.log(decrimentProductQuantity, 'quantity decrement is here');
+              console.log(
+                decrimentProductQuantity,
+                "quantity decrement is here"
+              );
             });
             await Promise.all(updatePromises); // Wait for all updates to complete
           } else {
@@ -142,11 +151,9 @@ const cancelOrder = async (req, res) => {
               { $inc: { quantity: pro.quantity } },
               { new: true }
             );
-            console.log(decrimentProductQuantity, 'quantity decrement is here');
+            console.log(decrimentProductQuantity, "quantity decrement is here");
           }
         });
-        
-
       }
       console.log("haaaaaaaaaaaai");
       // console.log(cancel,'canceled')
@@ -170,35 +177,37 @@ const returnProduct = async (req, res) => {
     if (!orderDetails) {
       throw Error("your order is not find");
     }
-    res.json({succuss : true})
+    res.json({ succuss: true });
   } catch (error) {
     console.log(error);
   }
 };
 
-const downloadInvoice = async(req,res)=>{
+const downloadInvoice = async (req, res) => {
   try {
     console.log(req.body);
-    const {_id} = req.body
-    const orderDetails = await order.findOne({_id:_id})
-    if(orderDetails.status !== 'delivered'){
-      throw Error('status is not delivered')
+    const { _id } = req.body;
+    const orderDetails = await order.findOne({ _id: _id });
+    if (orderDetails.status !== "delivered") {
+      throw Error("status is not delivered");
     }
-    const invoicePath = await generateInvoice(orderDetails)
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename=invoice_${_id}.pdf`);
+    const invoicePath = await generateInvoice(orderDetails);
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=invoice_${_id}.pdf`
+    );
     res.send(invoicePath);
     console.log(_id);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 module.exports = {
   userOrderHistoryPage,
   userOrderDetails,
   cancelOrder,
   returnProduct,
-  downloadInvoice
-
+  downloadInvoice,
 };

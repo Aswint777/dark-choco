@@ -57,21 +57,27 @@ const addProductPost = async (req, res) => {
 //product list
 
 const adminProductList = async (req, res) => {
+  var i = 0;
+  const page = parseInt(req.query.page) || 1;
+  const count = await product.find().count();
+  const pageSize = 3;
+  const totalOrder = Math.ceil(count / pageSize);
+  const skip = (page - 1) * pageSize;
 
-  var i = 0
-        const page = parseInt(req.query.page) || 1;
-        const count = await product.find().count();
-        const pageSize = 3;
-        const totalOrder = Math.ceil(count / pageSize);
-        const skip = (page - 1) * pageSize;
-     
   // console.log('admin product list page is here')
-  
-  const productList = await product.find().populate("category").skip(skip).limit(pageSize);
 
-  res.render("adminViews/adminProductList", { productList , totalOrder,
+  const productList = await product
+    .find()
+    .populate("category")
+    .skip(skip)
+    .limit(pageSize);
+
+  res.render("adminViews/adminProductList", {
+    productList,
+    totalOrder,
     pageSize,
-   page: page});
+    page: page,
+  });
 };
 
 const manageProduct = async (req, res) => {
@@ -96,7 +102,7 @@ const manageProduct = async (req, res) => {
 
 const editProduct = async (req, res) => {
   const { id } = req.params;
- 
+
   const pro = await product.findOne({ _id: id }).populate("category");
   const cat = await Category.find({});
 
@@ -104,7 +110,7 @@ const editProduct = async (req, res) => {
 };
 
 const editProductPost = async (req, res) => {
-  try{
+  try {
     console.log("editting now");
     console.log(req.body, "body");
     const {
@@ -119,11 +125,11 @@ const editProductPost = async (req, res) => {
     const image1 = req.files["image1"]; // Contains the uploaded file information for 'image1'
     const image2 = req.files["image2"]; // Contains the uploaded file information for 'image2'
     const image3 = req.files["image3"]; // Contains the uploaded file information for 'image3'
-  
-    console.log(req.body,'body')
+
+    console.log(req.body, "body");
     const editProduct = await product.find({ _id: yourId });
-    console.log(editProduct,'keyyyyyyyyyyyy')
-  
+    console.log(editProduct, "keyyyyyyyyyyyy");
+
     let obj = {
       stock: productName,
       productDescription: productDescription,
@@ -131,9 +137,8 @@ const editProductPost = async (req, res) => {
       amount: amount,
       markup: Markup,
       category: category,
-     
     };
-  
+
     if (image1) {
       obj.image1 = image1[0].filename;
     }
@@ -143,19 +148,19 @@ const editProductPost = async (req, res) => {
     if (image3) {
       obj.image3 = image3[0].filename;
     }
-    const obj2 = {...obj}
-  console.log(yourId)
-  console.log(obj,'obj2 is this')
-    let data=await product.findOneAndUpdate({_id:yourId},{$set:{...obj2}},{new:true})
-    console.log(data,'fllllllllllllll') 
-    res.json({'success' : true})
-  
-
-  }catch(error){
-    console.log(error)
+    const obj2 = { ...obj };
+    console.log(yourId);
+    console.log(obj, "obj2 is this");
+    let data = await product.findOneAndUpdate(
+      { _id: yourId },
+      { $set: { ...obj2 } },
+      { new: true }
+    );
+    console.log(data, "fllllllllllllll");
+    res.json({ success: true });
+  } catch (error) {
+    console.log(error);
   }
- 
-
 };
 
 module.exports = {

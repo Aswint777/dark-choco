@@ -22,26 +22,26 @@ const getAdminOrderManagement = async (req, res) => {
       {
         $group: {
           _id: null,
-          totalSum: { $sum: "$total" }
-        }
-      }
+          totalSum: { $sum: "$total" },
+        },
+      },
     ]);
     const sum = totalSum[0].totalSum;
-    console.log(sum,'totalSum');
+    console.log(sum, "totalSum");
 
     const sumOfCod = await order.aggregate([
       {
-        $match: { paymentMode: "cod" } // Filter documents where paymentMode is "cod"
+        $match: { paymentMode: "cod" }, // Filter documents where paymentMode is "cod"
       },
       {
         $group: {
           _id: null, // Group all documents into a single group
-          totalSum: { $sum: "$total" } // Calculate the sum of the "total" field
-        }
-      }
+          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+        },
+      },
     ]);
-    const codsum  = sumOfCod[0].sumOfCod
-    res.render("adminViews/adminOrderManagement", { orderList,sum ,codsum});
+    const codsum = sumOfCod[0].sumOfCod;
+    res.render("adminViews/adminOrderManagement", { orderList, sum, codsum });
   } catch (error) {
     console.log(error);
   }
@@ -69,7 +69,7 @@ const updateStatus = async (req, res) => {
       { new: true }
     );
     console.log(status, "llklklkkk");
-    res.json({ status,success:true });
+    res.json({ status, success: true });
   } catch (error) {
     res.json({ success: false, error: error.message });
   }
@@ -94,12 +94,14 @@ const returnProductList = async (req, res) => {
     const pageSize = 3;
     const totalOrder = Math.ceil(count / pageSize);
     const skip = (page - 1) * pageSize;
-    let returnList
+    let returnList;
     if (req.query.date) {
       console.log(req.query);
-      const latest = await order.find({ status: { $in: statusesToFind } }).sort({
-        date: Number(req.query.date),
-      }); //{} {another:true,chocolate:true}
+      const latest = await order
+        .find({ status: { $in: statusesToFind } })
+        .sort({
+          date: Number(req.query.date),
+        }); //{} {another:true,chocolate:true}
 
       console.log(latest);
       res.json({ latest });
@@ -108,7 +110,7 @@ const returnProductList = async (req, res) => {
         req.query.searchQuery,
         "lllllllllllllllllllllllllllllllllllllllll"
       );
-       returnList = await order.find({
+      returnList = await order.find({
         status: { $regex: req.query.searchQuery, $options: "i" },
       });
       const query = req.query.searchQuery;
@@ -120,13 +122,18 @@ const returnProductList = async (req, res) => {
         page: page,
       });
     } else {
-       returnList = await order.find({ status: { $in: statusesToFind } }).skip(skip).limit(pageSize);
+      returnList = await order
+        .find({ status: { $in: statusesToFind } })
+        .skip(skip)
+        .limit(pageSize);
       console.log(returnList);
-      res.render("adminViews/returnProductList", { returnList,
+      res.render("adminViews/returnProductList", {
+        returnList,
         query,
         totalOrder,
         pageSize,
-        page: page, });
+        page: page,
+      });
     }
   } catch (error) {
     console.log(error);
@@ -142,7 +149,7 @@ const returnProductStatus = async (req, res) => {
       { _id: _id },
       { $set: { status: status } },
       { new: true }
-    );  
+    );
     console.log(statusUpdate, "status update");
     let myWallet;
     if (statusUpdate.status == "returned") {
@@ -169,7 +176,7 @@ const returnProductStatus = async (req, res) => {
         });
       }
     }
-    res.json({success: true})
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
   }
@@ -194,7 +201,7 @@ const returnListFilter = async (req, res) => {
     // }
     if (req.query.date) {
       console.log(req.query);
-      const latest = await order.find().sort({ date: Number(req.query.date) }); //{} {another:true,chocolate:true}
+      const latest = await order.find().sort({ date: Number(req.query.date) }); 
 
       console.log(latest);
       res.json({ latest });

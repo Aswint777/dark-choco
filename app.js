@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser')
 const path = require('path')
 const morgan=require('morgan')
 const adminLoginToken = require('./middleware/adminMiddleware')
+const cronjob = require('./controller/helperFunction/croneJob')
 
 const app = express()
 app.use(express.urlencoded({extended:true}))
@@ -16,6 +17,9 @@ app.use(express.json())
 app.use(express.static('public'))
 app.use(cookieParser())
 // app.use('/admin',adminRouter)
+
+//cron job
+cronjob()
 
 // setting view engine 
 app.set('view engine','ejs')
@@ -32,7 +36,7 @@ app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store"); 
     next();
 });
-  
+
 
 //importing routers
 const publicRouter = require('./router/publicRouter')

@@ -125,7 +125,7 @@
     console.log(_id);
     const willDelete = await swal({
     title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this product!",
+    text: "Once deleted, you will not be able to recover this Coupon!",
     icon: "warning",
     buttons: true,
     dangerMode: true,
@@ -142,7 +142,7 @@
     });
     const data = await res.json();
     if (data.success == true) {
-      swal("Poof! The product has been deleted!", {
+      swal("Poof! The Coupon has been deleted!", {
         icon: "success",
       }).then(() => {
         window.location.reload();
@@ -150,7 +150,7 @@
       });
     }
   } else {
-    swal("The product is safe!");
+    swal("The Coupon is safe!");
   }
 
   }

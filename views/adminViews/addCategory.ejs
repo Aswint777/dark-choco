@@ -1,117 +1,117 @@
 <%-include('../partial/header.ejs')%>
 <div class="container">
-<div class="row">
-      
-    <div class="col-md-2">
-  
-      <%- include('../partial/adminSidebar.ejs') %>
-    </div>
+  <div class="row">
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
 
-
-
-  <div class="col-md-10">
-    <h2 class="mb-4">Add Category</h2>
-    <div class="row">
-
+    <div class="col-md-10">
+      <h2 class="mb-4">Add Category</h2>
+      <div class="row">
         <div class="col-md-10">
-            <form id="add-category">
-                <div class="mb-3">
-                  <p id="catchError" style="color: rgb(246, 4, 4);"></p>
-                    <label for="categoryName" class="form-label">Category Name:</label>
-                    <input type="text" class="form-control" id="categoryName" name="categoryName" >
-                </div>
-                <p id="categoryError" style="color: rgb(246, 4, 4);"></p>
+          <form id="add-category">
+            <div class="mb-3">
+              <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+              <label for="categoryName" class="form-label"
+                >Category Name:</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="categoryName"
+                name="categoryName"
+              />
+            </div>
+            <p id="categoryError" style="color: rgb(246, 4, 4)"></p>
 
-                <div class="mb-3">
-                    <label for="categoryDescription" class="form-label">Short Description:</label>
-                    <textarea class="form-control" id="categoryDescription" name="categoryDescription" rows="4" ></textarea>
-                </div>
-                <p id="categoryDescriptionError" style="color: rgb(246, 4, 4);"></p>
+            <div class="mb-3">
+              <label for="categoryDescription" class="form-label"
+                >Short Description:</label
+              >
+              <textarea
+                class="form-control"
+                id="categoryDescription"
+                name="categoryDescription"
+                rows="4"
+              ></textarea>
+            </div>
+            <p id="categoryDescriptionError" style="color: rgb(246, 4, 4)"></p>
 
-                <!-- Add more input fields or form elements as needed -->
+            <!-- Add more input fields or form elements as needed -->
 
-                <button type="submit" class="btn btn-primary">Add Category</button>
-            </form>
+            <button type="submit" class="btn btn-primary">Add Category</button>
+          </form>
         </div>
+      </div>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const form = document.querySelector("#add-category");
+        const categoryError = document.getElementById("categoryError");
+        const categoryDescriptionError = document.getElementById(
+          "categoryDescriptionError"
+        );
+        const catchError = document.getElementById("catchError");
+
+        console.log(form, ",,,,,,");
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          console.log("running");
+
+          const categoryName = form.categoryName.value;
+          const categoryDescription = form.categoryDescription.value;
+
+          console.log(categoryName);
+          console.log(typeof categoryName);
+
+          try {
+            if (categoryName === "") {
+              console.log("first name required");
+              categoryError.innerHTML = " Category name is required";
+              setTimeout(() => {
+                categoryError.innerHTML = "";
+              }, 5000);
+              return;
+            }
+            if (categoryDescription === "") {
+              console.log("first name required");
+              categoryDescriptionError.innerHTML = "Description is required";
+              setTimeout(() => {
+                categoryDescriptionError.innerHTML = "";
+              }, 5000);
+              return;
+            }
+
+            const res = await fetch("/admin/addCategory", {
+              method: "POST",
+              body: JSON.stringify({ categoryName, categoryDescription }),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+            const data = await res.json();
+            console.log("llllllllllllll===========", data?.error);
+            if (data.error) {
+              catchError.innerHTML = data?.error;
+              setTimeout(() => {
+                catchError.innerHTML = "";
+              }, 5000);
+              console.log(error, "err");
+            }
+            //   if (res.success === false) {
+            //   // throw new Error(`HTTP error! Status: ${res.data}`);
+            // }
+
+            if (data.success) {
+              // alert('asdadfs')
+              location.href = "categoryList";
+            }
+          } catch (error) {
+            console.log(error, "err");
+            // alert(err.message)
+          }
+        });
+      });
+    </script>
+  </div>
 </div>
-
-
-
-
-<script>
- 
-   document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("#add-category");
-    const  categoryError = document.getElementById('categoryError')
-    const  categoryDescriptionError = document.getElementById('categoryDescriptionError')
-    const catchError = document.getElementById('catchError')
-
-console.log(form,',,,,,,');
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        console.log('running')
-     
-     
-  const categoryName = form.categoryName.value;
-  const categoryDescription = form.categoryDescription.value;
-
-  
-
-  console.log(categoryName);
-  console.log(typeof(categoryName))
-
-  try {
-    if(categoryName==="" ){
-        console.log('first name required')
-        categoryError.innerHTML = ' Category name is required'
-        setTimeout(()=>{
-          categoryError.innerHTML = ''
-        },5000)
-        return
-      }
-      if(categoryDescription===""){
-        console.log('first name required')
-        categoryDescriptionError.innerHTML = 'Description is required'
-        setTimeout(()=>{
-          categoryDescriptionError.innerHTML = ''
-        },5000)
-        return
-      }
-  
-    const res = await fetch("/admin/addCategory", {
-      method: "POST",
-      body: JSON.stringify({categoryName,categoryDescription }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    
-    const data = await res.json()
-    console.log('llllllllllllll===========',data?.error)
-    if(data.error){
-      catchError.innerHTML = data?.error
-          setTimeout(()=>{
-            catchError.innerHTML = ''
-          },5000)
-      console.log(error,'err');
-    }
-  //   if (res.success === false) {
-  //   // throw new Error(`HTTP error! Status: ${res.data}`);
-  // }
-          
-
-    if(data.success){
-      // alert('asdadfs')
-        location.href = 'categoryList'
-    }
-    
-   
-  } catch (error) {
-    
-    console.log(error,'err');
-    // alert(err.message)
-  }
-});
-   })
-</script>

@@ -2,8 +2,7 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
-<div class="container" style="background-color: #f5f7f8 !important ">
+<div class="container" style="background-color: #f5f7f8 !important">
   <div class="row">
     <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
 
@@ -35,7 +34,7 @@
                     <%= list.offerRate %>% off
                   </h3>
                 </a>
-                <h5 class="old-price mb-1">
+                <h5 class="old-price mb-1" id="biginDate">
                   From :<%= list.startDate.toISOString().slice(0,
                   10).split('-').reverse().join('-') %>
                 </h5>
@@ -46,7 +45,7 @@
               </div>
               <div style="display: flex; justify-content: flex-end">
                 <button
-                  onclick="storeEditModalData('<%= list.categoryName %>','<%= list.offerRate %>','<%= list.startDate.toISOString().slice(0,10).split('-').reverse().join('-') %>','<%= list.expiryDate.toISOString().slice(0,10).split('-').reverse().join('-') %>')"
+                  onclick="storeEditModalData('<%= list._id %>','<%= list.categoryName %>','<%= list.offerRate %>','<%= list.startDate.toISOString().split('T')[0] %>','<%= list.expiryDate.toISOString().split('T')[0]  %>')"
                   id="editCategoryOffer"
                   data-bs-toggle="modal"
                   data-bs-target="#editCategoryOfferModal"
@@ -87,7 +86,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          <h5>Address for Delivery</h5>
+          <h5>Create Category Offer</h5>
         </h5>
         <button
           type="button"
@@ -186,7 +185,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">
-          <h5>Address for Delivery</h5>
+          <h5>Edit Category Offer</h5>
         </h5>
         <button
           type="button"
@@ -199,17 +198,23 @@
       <div class="modal-body">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label"
-            >Category Name </label
-          >
+            >Category Name
+          </label>
           <select name="categoryId" id="categoryNameEdit" class="form-control">
             <%categoryList.forEach((list,index)=>{ %>
-            <option value="<%= list._id %>" id="categoryNameEdit" style="color: black">
+            <!-- <option id="categoryNameEdit" value="hjbhkjj"></option> -->
+            <option
+              value="<%= list._id %>"
+              id="categoryNameEdit"
+              style="color: black"
+            >
               <%= list.category %>
             </option>
             <%})%>
           </select>
           <p id="emailError" style="color: rgb(246, 4, 4)"></p>
         </div>
+        <div><input id="id" type="text" style="display: none;"></div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">offer</label>
           <input
@@ -262,7 +267,7 @@
         <button
           type="submit"
           class="btn btn-primary"
-          onclick="createCategoryOffer()"
+          onclick="editCategoryOffer()"
         >
           Save
         </button>
@@ -281,7 +286,7 @@
     class="icon-Success"
     style="background-color: rgb(0, 255, 26); border-radius: 5px"
   >
-    product added to cart
+    <p id="massage"></p>
   </div>
 </div>
 
@@ -312,58 +317,105 @@
         document.getElementById("staticBackdrop")
       );
       myModal.hide();
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.massage
       myFunction();
-      setTimeout(()=>{
+      setTimeout(() => {
         window.location.reload();
-      },3000)
+      }, 3000);
     }
   }
 
   async function deleteCategoryOffer(_id) {
     const willDelete = await swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this product!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  });
-  if (willDelete) {
-    
-    console.log(_id);
-    const res = await fetch("/admin/deleteCategoryOffer/", {
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this product!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    });
+    if (willDelete) {
+      console.log(_id);
+      const res = await fetch("/admin/deleteCategoryOffer/", {
+        method: "POST",
+        body: JSON.stringify({ _id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success == true) {
+        swal("Poof! The product has been deleted!", {
+          icon: "success",
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    } else {
+      swal("The product is safe!");
+    }
+  }
+
+  async function storeEditModalData(
+    _id,
+    categoryName,
+    offerRate,
+    startDate,
+    expiryDate
+  ) {
+    console.log(_id,categoryName, offerRate, startDate, expiryDate);
+    const id = document.getElementById("id");
+    const categoryNameEdit = document.getElementById("categoryNameEdit");
+    const offerRateEdit = document.getElementById("offerRateEdit");
+    const startDateEdit = document.getElementById("startDateEdit");
+    const expiryDateEdit = document.getElementById("expiryDateEdit");
+    id.value = _id
+    categoryNameEdit.value = categoryName;
+    offerRateEdit.value = offerRate;
+    startDateEdit.value = startDate;
+    expiryDateEdit.value = expiryDate;
+
+    console.log(startDateEdit.value);
+  }
+
+  async function editCategoryOffer(){
+    const id = document.getElementById("id").value;
+    const categoryId = document.getElementById("categoryNameEdit").value;
+    const offerRate = document.getElementById("offerRateEdit").value;
+    const startDate = document.getElementById("startDateEdit").value;
+    const expiryDate = document.getElementById("expiryDateEdit").value;
+    console.log(
+      id,
+      categoryId,
+      offerRate,
+      startDate,
+      expiryDate,
+      "edit offer data"
+    );
+
+    const res = await fetch("/admin/editCategoryOffer/", {
       method: "POST",
-      body: JSON.stringify({ _id }),
+      body: JSON.stringify({ id,categoryId, offerRate, startDate, expiryDate }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = await res.json();
-    if (data.success == true) {
-      swal("Poof! The product has been deleted!", {
-        icon: "success",
-      }).then(() => {
+    if(data.success){
+      var myModal = bootstrap.Modal.getInstance(
+        document.getElementById("editCategoryOfferModal")
+      );
+      myModal.hide();
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.massage
+      myFunction();
+      setTimeout(() => {
         window.location.reload();
-
-      });
+      }, 3000);
     }
-  }else{
-    swal("The product is safe!");
+    if(data.error){
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.error.message 
+    }
   }
-  }
-
-  async function storeEditModalData( categoryName,offerRate,startDate,expiryDate){
-    console.log(categoryName,offerRate,startDate,expiryDate)
-    const categoryNameEdit = document.getElementById('categoryNameEdit')
-    const offerRateEdit = document.getElementById('offerRateEdit')
-    const startDateEdit = document.getElementById('startDateEdit')
-    const expiryDateEdit = document.getElementById('expiryDateEdit')
-    categoryNameEdit.value = categoryName
-    offerRateEdit.value = offerRate
-    startDateEdit.value = startDate
-    expiryDateEdit.value = expiryDate
-    
-    console.log(startDateEdit.value);
-  }
-
-
 </script>

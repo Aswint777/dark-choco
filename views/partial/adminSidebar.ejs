@@ -11,11 +11,15 @@
                             <i class=""></i> <span class="ms-1 d-none d-sm-inline" style=" color:gray;">Dashboard</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/admin/adminProductList" class="nav-link px-0 align-middle">
-                            <i class=""></i> <span class="ms-1 d-none d-sm-inline "  style=" color: gray;">Products</span> </a>
-                      
-                    </li>
+                    <!-- Add a CSS class 'active' to the button when clicked -->
+<!-- Add an ID to each button to identify them -->
+<li>
+    <a id="productButton" href="/admin/adminProductList" class="nav-link px-0 align-middle" onclick="highlightButton('productButton')">
+        <i class=""></i> <span class="ms-1 d-none d-sm-inline" style="color: gray;">Products</span>
+    </a>
+</li>
+
+
                     <li>
                         <a href="/admin/categoryList" class="nav-link px-0 align-middle">
                             <i class=""></i> <span class="ms-1 d-none d-sm-inline" style=" color: gray;">Category</span></a>
@@ -38,7 +42,7 @@
                             <i class=""></i> <span class="ms-1 d-none d-sm-inline" style=" color: gray;">Payment</span> </a>
                     </li>
                     <li>
-                        <a onclick="location.href = '/admin/categoryOffer'" class="nav-link px-0 align-middle">
+                        <a onclick="location.href = '/admin/offer'" class="nav-link px-0 align-middle">
                             <i class=""></i> <span class="ms-1 d-none d-sm-inline" style=" color: gray; cursor: pointer;"> Offer</span> </a>
                     </li>
                     
@@ -67,3 +71,23 @@
 
     </div>
 </div>
+
+<script>
+function highlightButton(buttonId) {
+    // Remove 'active' class from all buttons
+    const buttons = document.querySelectorAll('.nav-link');
+    buttons.forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    // Add 'active' class to the clicked button
+    const button = document.getElementById(buttonId);
+    if(button) {
+        button.classList.add('active');
+        // Store the ID of the highlighted button in session storage
+        sessionStorage.setItem('highlightedButton', buttonId);
+    }
+}
+
+</script>
+

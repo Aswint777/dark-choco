@@ -1,8 +1,6 @@
-
-
 const Address = require("../../model/addressModel");
 const jwt = require("jsonwebtoken");
-const { default: mongoose } = require('mongoose');
+const { default: mongoose } = require("mongoose");
 
 // getAddAddressModal = async (req,res)=>{
 //   try{
@@ -24,7 +22,7 @@ const addAddressPost = async (req, res) => {
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
     console.log(userId, "djdfvkdjfvjdfvdkfjvkd");
-    console.log(req.body)
+    console.log(req.body);
     const {
       firstName,
       secondName,
@@ -42,7 +40,7 @@ const addAddressPost = async (req, res) => {
 
     if (createAddress) {
       createAddress.addressData.forEach((addressEntry) => {
-        console.log(addressEntry.address,'gggggggggg')
+        console.log(addressEntry.address, "gggggggggg");
         if (addressEntry.address == address) {
           console.log("hallow world");
           throw Error("the address already exist");
@@ -92,92 +90,104 @@ const addAddressPost = async (req, res) => {
           },
         ],
       });
-      console.log(createAddress,'kkkkk');
+      console.log(createAddress, "kkkkk");
     }
     res.json({ success: true });
-} catch (error) {
-      res.status(400).json({ error: error.message });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 };
 
-const editAddress = async (req,res)=>{
-
-    console.log(req.body,'entered')
-    try{
-      const token = req.cookies.loginToken;
-      const data = jwt.verify(token, process.env.SECRET_KEY);
-      const { userId } = data;
-      const {firstName,secondName,address,country,state,city,pinCode,email,phoneNumber,address_id} = req.body
-      console.log('ugiogjoisgj')
-      // const existingAddress = await Address.findOneAndUpdate({userData:userId,address},{$set:{firstName,secondName,address,country,state,city,pinCode,email,phoneNumber}})
-      const existingAddress = await Address.findOneAndUpdate(
-        { userData: userId ,'addressData._id':new mongoose.Types.ObjectId(address_id.trim())},
-        {
-          $set: {
-            "addressData.$[elem].firstName": firstName,
-      "addressData.$[elem].secondName": secondName,
-      "addressData.$[elem].address": address,
-      "addressData.$[elem].country": country,
-      "addressData.$[elem].state": state,
-      "addressData.$[elem].city": city,
-      "addressData.$[elem].pinCode": pinCode,
-      "addressData.$[elem].email": email,
-      "addressData.$[elem].phoneNumber": phoneNumber,
-
-          },
-        },
-        {
-          arrayFilters: [{ "elem._id": new mongoose.Types.ObjectId(address_id.trim()) }],
-          new: true,
-        }
-      );
-      
-     console.log(existingAddress,'address updated')
-     res.json({success:true})
-    }catch(error){
-      res.status(400).json({ error: error.message });
-    }
-}
-
-const deleteAddress = async (req,res)=>{
-  try{
-    console.log('delete one')
+const editAddress = async (req, res) => {
+  console.log(req.body, "entered");
+  try {
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
-    const {id} = req.body 
-    console.log(id,'ooooooooo')
+    const {
+      firstName,
+      secondName,
+      address,
+      country,
+      state,
+      city,
+      pinCode,
+      email,
+      phoneNumber,
+      address_id,
+    } = req.body;
+    console.log("ugiogjoisgj");
+    // const existingAddress = await Address.findOneAndUpdate({userData:userId,address},{$set:{firstName,secondName,address,country,state,city,pinCode,email,phoneNumber}})
+    const existingAddress = await Address.findOneAndUpdate(
+      {
+        userData: userId,
+        "addressData._id": new mongoose.Types.ObjectId(address_id.trim()),
+      },
+      {
+        $set: {
+          "addressData.$[elem].firstName": firstName,
+          "addressData.$[elem].secondName": secondName,
+          "addressData.$[elem].address": address,
+          "addressData.$[elem].country": country,
+          "addressData.$[elem].state": state,
+          "addressData.$[elem].city": city,
+          "addressData.$[elem].pinCode": pinCode,
+          "addressData.$[elem].email": email,
+          "addressData.$[elem].phoneNumber": phoneNumber,
+        },
+      },
+      {
+        arrayFilters: [
+          { "elem._id": new mongoose.Types.ObjectId(address_id.trim()) },
+        ],
+        new: true,
+      }
+    );
+
+    console.log(existingAddress, "address updated");
+    res.json({ success: true });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+const deleteAddress = async (req, res) => {
+  try {
+    console.log("delete one");
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const { id } = req.body;
+    console.log(id, "ooooooooo");
     const result = await Address.updateOne(
       { userData: userId },
-      { $pull: { addressData: { _id: new mongoose.Types.ObjectId(id.trim()) } } }
+      {
+        $pull: { addressData: { _id: new mongoose.Types.ObjectId(id.trim()) } },
+      }
     );
-    console.log(result,'hhhhhhhhhhhhhhhhhh')
-    res.json({success : true})
-  }catch(error){
+    console.log(result, "hhhhhhhhhhhhhhhhhh");
+    res.json({ success: true });
+  } catch (error) {
     res.status(400).json({ error: error.message });
-
   }
-}
+};
 
-
-const addressOnlyPage = async(req,res)=>{
-
-  try{
+const addressOnlyPage = async (req, res) => {
+  try {
     const token = req.cookies.loginToken;
-        const data = jwt.verify(token, process.env.SECRET_KEY);
-        const { userId } = data;
-        const addressList = await Address.find({userData:userId})
-       
-    res.render('userviews/addressPage',{addressList}) 
-}catch(error){
-    console.log(error)
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const addressList = await Address.find({ userData: userId });
 
-}}
+    res.render("userviews/addressPage", { addressList });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
   addAddressPost,
   editAddress,
   deleteAddress,
-  addressOnlyPage
-
+  addressOnlyPage,
 };

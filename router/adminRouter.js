@@ -2,7 +2,7 @@ const express = require('express')
 
 const { customer, manageUser, SearchCustomer } = require('../controller/adminController/customerController')
 const category = require('../model/categoryModel')
-const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory, editCategoryPost, categoryOffer, createCategoryOffer, deleteCategoryOffer } = require('../controller/adminController/categoryListController')
+const { categoryList, addCategory, addCategoryPost, editCategory, manageCategory, editCategoryPost, categoryOffer, createCategoryOffer, deleteCategoryOffer, editCategoryOffer } = require('../controller/adminController/categoryListController')
 const { addProduct, adminProductList, manageProduct, addProductPost, editProduct, editProductPost } = require('../controller/adminController/productController')
 const upload = require("../middleware/multer")
 const adminLoginToken = require('../middleware/adminMiddleware')
@@ -10,6 +10,7 @@ const { getAdminOrderManagement, adminOrderDetails, updateStatus, returnProductL
 const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost, deleteCoupon } = require('../controller/adminController/couponController')
 const { downloadExcel, downloadPDF, downloadExcelByDate, downloadPDFByDate } = require('../controller/adminController/download')
 const { adminDashboard } = require('../controller/adminController/adminDashboardController')
+const { productOffer, createProductOffer, deleteProductOffer, editProductOffer, offer, createReferralOffer, updateReferralOffer } = require('../controller/adminController/offerController')
 
 
 const router = express.Router()
@@ -107,6 +108,26 @@ router.get('/categoryOffer',categoryOffer)
 router.post('/createCategoryOffer',createCategoryOffer)
 
 router.post('/deleteCategoryOffer',deleteCategoryOffer)
+
+router.post('/editCategoryOffer',editCategoryOffer)
+
+// product Offer
+
+router.get('/ProductOffer',productOffer)
+
+router.post('/createProductOffer',createProductOffer)
+
+router.post('/deleteProductOffer',deleteProductOffer)
+
+router.post('/editProductOffer',editProductOffer)
+
+//referral offer
+
+router.post('/updateReferralOffer',updateReferralOffer)
+
+// offer page 
+
+router.get('/offer',offer)
 
 // admin Dashboard
 

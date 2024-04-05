@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { default: mongoose } = require("mongoose");
 const { trim } = require("validator");
 const coupon = require("../../model/couponModel");
-const user = require('../../model/userModel')
+const user = require("../../model/userModel");
 
 const GetCart = async (req, res) => {
   try {
@@ -14,7 +14,7 @@ const GetCart = async (req, res) => {
     const cartData = await cart
       .findOne({ userData: userId })
       .populate("products.product_id");
-      console.log(cartData);
+    console.log(cartData);
     const cartTotal = await cart.aggregate([
       { $match: { userData: new mongoose.Types.ObjectId(userId) } },
       { $unwind: "$products" },
@@ -24,27 +24,32 @@ const GetCart = async (req, res) => {
     // const maxQuantity = await product. findOne({})
     console.log(cartTotal);
     const subTotal = cartTotal[0]?.total;
-    const tax = (subTotal * 5) / 100;//here-----------------------------------------------------------
+    const tax = (subTotal * 5) / 100; //here-----------------------------------------------------------
     let total = subTotal + tax;
-    
-    const newCoupon = await coupon.findOne({_id: cartData?.couponId})
-    if (newCoupon){
 
-      if( total < newCoupon?.minimumPurchaseAmount){
-        await user.findOneAndUpdate({_id:userId},{
-          $pull: {
-            allCoupon: cartData.couponId
+    const newCoupon = await coupon.findOne({ _id: cartData?.couponId });
+    if (newCoupon) {
+      if (total < newCoupon?.minimumPurchaseAmount) {
+        await user.findOneAndUpdate(
+          { _id: userId },
+          {
+            $pull: {
+              allCoupon: cartData.couponId,
+            },
           }
-        })
-        await cart.findOneAndUpdate({ userData: userId },{$unset:{couponId :'',couponOffer : ''}})
+        );
+        await cart.findOneAndUpdate(
+          { userData: userId },
+          { $unset: { couponId: "", couponOffer: "" } }
+        );
       }
-      if(cartData.couponOffer){
-        total = total - ((total*cartData.couponOffer)/100)
+      if (cartData.couponOffer) {
+        total = total - (total * cartData.couponOffer) / 100;
       }
     }
 
     if (cartData) {
-      console.log(cartData)
+      console.log(cartData);
       res.render("userViews/cart", {
         cartData,
         subTotal,
@@ -65,7 +70,7 @@ const GetCart = async (req, res) => {
     console.log(error);
   }
 };
- 
+
 const cartUpdateQuantity = async (req, res) => {
   try {
     console.log("tttettttttttttt");
@@ -114,11 +119,12 @@ const deleteCartProduct = async (req, res) => {
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
-    const { id} = req.body;
-    console.log(id)
+    const { id } = req.body;
+    console.log(id);
     const result = await cart.updateOne(
       { userData: userId },
-      { $pull: { products: { _id: new mongoose.Types.ObjectId(id) }} },{new:true}
+      { $pull: { products: { _id: new mongoose.Types.ObjectId(id) } } },
+      { new: true }
     );
     console.log(result, "result");
     res.json({ success: true });

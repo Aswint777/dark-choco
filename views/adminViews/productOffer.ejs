@@ -1,0 +1,420 @@
+<%- include('../partial/header.ejs') %>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<div class="container" style="background-color: #f5f7f8 !important">
+  <div class="row">
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
+
+    <div class="col-md-10">
+      <!-- <section style="background-color: rgb(242, 200, 149);"> -->
+      <div class="text-center container py-5">
+        <button
+          class="btn bsb-btn-5xl btn-dark rounded-pill px-5 fs-6 m-0"
+          href="#!"
+          role="button"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          Add Product Offer
+        </button>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4" id="filterList">
+          <% offerProductList.forEach((list, index) => { %>
+          <div class="col mb-4">
+            <div class="card" style="background-color: rgb(214, 214, 147)">
+              <div class="card-body">
+                <a class="text-reset">
+                  <h2 class="card-title mb-3"><%= list.productName %></h2> 
+                </a>
+                <a class="text-reset">
+                  <h3 style="color: rgb(16, 165, 16)">
+                    <%= list.offerRate %>% off
+                  </h3>
+                </a>
+                <h5 class="old-price mb-1" id="biginDate">
+                  From :<%= list.startDate.toISOString().slice(0,
+                  10).split('-').reverse().join('-') %>
+                </h5>
+                <h5 class="mb-3">
+                  To :<%= list.expiryDate.toISOString().slice(0,
+                  10).split('-').reverse().join('-') %>
+                </h5>
+              </div>
+              <div style="display: flex; justify-content: flex-end">
+                <button
+                  onclick="storeEditModalData('<%= list._id %>','<%= list.categoryName %>','<%= list.offerRate %>','<%= list.startDate.toISOString().split('T')[0] %>','<%= list.expiryDate.toISOString().split('T')[0]  %>')"
+                  id="editCategoryOffer"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editCategoryOfferModal"
+                  style="background: none; color: black"
+                >
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button
+                  style="background: none"
+                  onclick="deleteProductOffer('<%= list._id %>')"
+                >
+                  <a href="#!" style="color: #0a0909"
+                    ><i class="fas fa-trash-alt"></i
+                  ></a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <%})%>
+        </div>
+      </div>
+      <!-- </section> -->
+    </div>
+  </div>
+</div>
+
+<!-- create category offer -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          <h5>Create Product Offer</h5>
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Product Name</label
+          >
+          <select name="productId" id="productId" class="form-control">
+            <%productList.forEach((list,index)=>{ %>
+            <option value="<%= list._id %>" style="color: black">
+              <%= list.stock %>
+            </option>
+            <%})%>
+          </select>
+          <p id="emailError" style="color: rgb(246, 4, 4)"></p>
+        </div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">offer</label>
+          <input
+            type="number"
+            placeholder="offer Rate"
+            class="form-control"
+            id="offerRate"
+            aria-describedby="emailHelp"
+            name="offerRate"
+          />
+          <p id="phoneNumberError" style="color: rgb(246, 4, 4)"></p>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="exampleInputEmail1" class="form-label"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="startDate"
+              placeholder="Enter First Name"
+              name="startDate"
+              value=""
+            />
+            <p id="firstNameError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="col">
+            <label for="exampleInputEmail1" class="form-label"
+              >Expiry Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="expiryDate"
+              placeholder="Enter Last Name"
+              name="expiryDate"
+            />
+            <p id="secondNameError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onclick="createProductOffer()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- edit Product offer -->
+<div
+  class="modal fade"
+  id="editCategoryOfferModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">
+          <h5>Edit Product Offer</h5>
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label"
+            >Product Name
+          </label>
+          <select name="categoryId" id="categoryNameEdit" class="form-control">
+            <%productList.forEach((list,index)=>{ %>
+            <!-- <option id="categoryNameEdit" value="hjbhkjj"></option> -->
+            <option
+              value="<%= list._id %>"
+              id="productNameEdit"
+              style="color: black"
+            >
+              <%= list.stock %>
+            </option>
+            <%})%>
+          </select>
+          <p id="emailError" style="color: rgb(246, 4, 4)"></p>
+        </div>
+        <div><input id="id" type="text" style="display: none;"></div>
+        <div class="mb-3">
+          <label for="exampleInputEmail1" class="form-label">offer</label>
+          <input
+            type="number"
+            placeholder="offer Rate"
+            class="form-control"
+            id="offerRateEdit"
+            aria-describedby="emailHelp"
+            name="offerRate"
+          />
+          <p id="phoneNumberError" style="color: rgb(246, 4, 4)"></p>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <label for="exampleInputEmail1" class="form-label"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="startDateEdit"
+              placeholder="Enter First Name"
+              name="startDate"
+              value=""
+            />
+            <p id="firstNameError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+          <div class="col">
+            <label for="exampleInputEmail1" class="form-label"
+              >Expiry Date</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="expiryDateEdit"
+              placeholder="Enter Last Name"
+              name="expiryDate"
+            />
+            <p id="secondNameError" style="color: rgb(246, 4, 4)"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onclick="editProductOffer()"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar">
+  <i
+    class="fas fa-exclamation-circle"
+    style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
+  ></i>
+  <div
+    class="icon-Success"
+    style="background-color: rgb(0, 255, 26); border-radius: 5px"
+  >
+    <p id="massage"></p>
+  </div>
+</div>
+
+<script>
+  async function createProductOffer() {
+    const productId = document.getElementById("productId").value;
+    const offerRate = document.getElementById("offerRate").value;
+    const startDate = document.getElementById("startDate").value;
+    const expiryDate = document.getElementById("expiryDate").value;
+    console.log(
+      productId,
+      offerRate,
+      startDate,
+      expiryDate,
+      "create offer data"
+    );
+
+    const res = await fetch("/admin/createProductOffer/", {
+      method: "POST",
+      body: JSON.stringify({ productId, offerRate, startDate, expiryDate }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.success) {
+      var myModal = bootstrap.Modal.getInstance(
+        document.getElementById("staticBackdrop")
+      );
+      myModal.hide();
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.massage
+      myFunction();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+  }
+
+  async function deleteProductOffer(_id) {
+    const willDelete = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this product!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    });
+    if (willDelete) {
+      console.log(_id);
+      const res = await fetch("/admin/deleteProductOffer/", {
+        method: "POST",
+        body: JSON.stringify({ _id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success == true) {
+        swal("Poof! The product has been deleted!", {
+          icon: "success",
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    } else {
+      swal("The product is safe!");
+    }
+  }
+
+  async function storeEditModalData(
+    _id,
+    categoryName,
+    offerRate,
+    startDate,
+    expiryDate
+  ) {
+    console.log(_id,categoryName, offerRate, startDate, expiryDate);
+    const id = document.getElementById("id");
+    const productNameEdit = document.getElementById("productNameEdit");
+    const offerRateEdit = document.getElementById("offerRateEdit");
+    const startDateEdit = document.getElementById("startDateEdit");
+    const expiryDateEdit = document.getElementById("expiryDateEdit");
+    id.value = _id
+    productNameEdit.value = categoryName;
+    offerRateEdit.value = offerRate;
+    startDateEdit.value = startDate;
+    expiryDateEdit.value = expiryDate;
+
+    console.log(startDateEdit.value);
+  }
+
+  async function editProductOffer(){
+    const id = document.getElementById("id").value;
+    const productId = document.getElementById("productNameEdit").value;
+    const offerRate = document.getElementById("offerRateEdit").value;
+    const startDate = document.getElementById("startDateEdit").value;
+    const expiryDate = document.getElementById("expiryDateEdit").value;
+    console.log(
+      id,
+      productId,
+      offerRate,
+      startDate,
+      expiryDate,
+      "edit offer data"
+    );
+
+    const res = await fetch("/admin/editProductOffer/", {
+      method: "POST",
+      body: JSON.stringify({ id,productId, offerRate, startDate, expiryDate }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if(data.success){
+      var myModal = bootstrap.Modal.getInstance(
+        document.getElementById("editCategoryOfferModal")
+      );
+      myModal.hide();
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.massage
+      myFunction();
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+    }
+    if(data.error){
+      const massage = document.getElementById('massage')
+      massage.innerHTML = data?.error.message 
+    }
+  }
+</script>

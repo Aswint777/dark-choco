@@ -110,6 +110,19 @@
                       />
                     </div>
                     <p id="confirmPasswordError" style="color: rgb(246, 4, 4);"></p>
+                    <div class="form-outline mb-4">
+                      <!-- <p id="error-message" style="color: rgb(246, 4, 4);"></p> -->
+                      <label class="form-label" for="form2Example27"
+                      >Referral Code</label
+                      >
+                      <input
+                      type="string"
+                      id="referralCode"
+                      name="ReferralCode"
+                      class="form-control form-control-lg"
+                      placeholder="referral Code(optional)"
+                      />
+                    </div>
                     
                     <div class="pt-1 mb-4">
                       <p id="catchError" style="color: rgb(246, 4, 4);"></p>
@@ -158,6 +171,7 @@
     const firstName = form.firstName.value;
     const secondName = form.secondName.value;
     const conformPassword = form.ConfirmPassword.value
+    const referralCode = form.referralCode.value
     
     // const phoneNumber = form.phoneNumber.value;
 
@@ -219,7 +233,7 @@
       }
       const res = await fetch("/userSignIn/", {
         method: "POST",
-        body: JSON.stringify({firstName,secondName, email, password }),
+        body: JSON.stringify({firstName,secondName, email, password,referralCode }),
         headers: {
           "Content-Type": "application/json",
         },

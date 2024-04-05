@@ -4,35 +4,33 @@ const product = require("../../model/productModel");
 const user = require("../../model/userModel");
 const { default: mongoose } = require("mongoose");
 
-
 const getWishList = async (req, res) => {
-    try{
-        const token = req.cookies.loginToken;
-        const data = jwt.verify(token, process.env.SECRET_KEY);
-        const { userId } = data;
-        const list = await wishList
-        .findOne({ userData: userId })
-        .populate("products.product_id");
-        console.log(list)
-        res.render("userViews/wishList",{list});
-    }catch(error){
-        console.log(error)
-    }
+  try {
+    const token = req.cookies.loginToken;
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = data;
+    const list = await wishList
+      .findOne({ userData: userId })
+      .populate("products.product_id");
+    console.log(list);
+    res.render("userViews/wishList", { list });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const addToWishList = async (req, res) => {
-  try{
-
-    console.log('hlooppppppppppppppppppppppppp')
+  try {
+    console.log("hlooppppppppppppppppppppppppp");
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
     const userDetails = await wishList.findOne({ userData: userId });
-    
+
     console.log(req.body);
     const { _id } = req.body;
     console.log(_id);
-    let addWishList
+    let addWishList;
     if (userDetails) {
       addWishList = await wishList.findOneAndUpdate(
         {
@@ -41,19 +39,18 @@ const addToWishList = async (req, res) => {
         },
         { $addToSet: { products: { product_id: _id } } },
         { new: true }
-        );
-      } else {
-        addWishList = await wishList.create({
-          products: [{ product_id: _id }],
-          userData: userId,
-        });
-      }
-      console.log(addWishList,"added to wishList")
-      res.json({success : true})
-    }catch(error){
-      res.json({ success: false, error: error.message });
-
+      );
+    } else {
+      addWishList = await wishList.create({
+        products: [{ product_id: _id }],
+        userData: userId,
+      });
     }
+    console.log(addWishList, "added to wishList");
+    res.json({ success: true });
+  } catch (error) {
+    res.json({ success: false, error: error.message });
+  }
 };
 
 const deleteWishListProduct = async (req, res) => {
@@ -77,5 +74,5 @@ const deleteWishListProduct = async (req, res) => {
 module.exports = {
   getWishList,
   addToWishList,
-  deleteWishListProduct
+  deleteWishListProduct,
 };

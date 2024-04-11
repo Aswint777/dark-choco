@@ -20,17 +20,14 @@ const walletSchema = new mongoose.Schema({
       //   },
       amount: {
         type: Number,
-        // required: true,
       },
       type: {
         type: String,
         enum: ["credit", "debit"],
-        // required: true,
       },
-      //   description: {
-      //     type: String,
-      //     required: true,
-      //   },
+        description: {
+          type: String,
+        },
       orderData: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "order",

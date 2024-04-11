@@ -1,52 +1,54 @@
 <%- include('../partial/header.ejs') %>
-<div class="container-fluid">
+<div class="container-fluid " >
     <div class="row">
       <!-- Sidebar -->
       <div class="col-lg-2 bg-light">
         <%- include('../partial/adminSidebar.ejs') %>
       </div>
       <!-- Main content -->
-      <div class="col-lg-10 d-flex justify-content-between mt-5 " >
+      <div class="col-lg-10 d-flex justify-content-between mt-5 py-5" >
         <div class="row">
           <!-- First image and button -->
-          <div class="col-md-4">
+          <div class="col-md-6">
             <div class="text-center p-3 p-md-5 bg-white">
               <div class="mb-4">            
                 <!-- <img src="images/person_1.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
               </div>
-              <div class="">
+              <div class="row">
                 <h3 class="font-weight-light h5">Product Offer</h3>
                 <button onclick="location.href='/admin/ProductOffer'" class="btn btn-primary" style="background-color: black;">open</button>
               </div>
             </div>
           </div>
           <!-- Second image and button -->
-          <div class="col-md-4">
+          <div class="col-md-6 " >
             <div class="text-center p-3 p-md-5 bg-white">
               <div class="mb-4">            
                 <!-- <img src="images/person_2.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
               </div>
-              <div class="">
+              <div class="row">
                 <h3 class="font-weight-light h5">Category Offer</h3>
                 <button onclick="location.href='/admin/categoryOffer'" style="cursor: pointer; background-color: black;" class="btn btn-primary">open</button>
               </div>
             </div>
           </div>
           <!-- Third image and button -->
-          <div class="col-md-4">
+          <div class="col-md-6 ">
             <div class="text-center p-3 p-md-5 bg-white">
               <div class="mb-4">            
                 <!-- <img src="images/person_3.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
               </div>
-              <div class="">
+              <div class="row">
                 <h3 class="font-weight-light h5">Referral Offer</h3>
                 <button class="btn btn-primary" style="background-color: black;" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 >open</button>
               </div>
             </div>
           </div>
+          
         </div>
         <div class="row">
+          
           <!-- Add more rows with images and buttons here if needed -->
         </div>
       </div>
@@ -62,7 +64,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <label for="exampleInputEmail1" class="form-label"
+            <label for="exampleInputEmail1" class="form-label" 
             >Offer </label
           >
           <input
@@ -72,6 +74,7 @@
             id="referralAmount"
             aria-describedby="emailHelp"
             name="referralAmount"
+            value="<%= referralOffer.offerAmount %>"
           />
         </div>
         <div class="modal-footer">

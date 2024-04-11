@@ -3,7 +3,7 @@ const User = require("../model/userModel");
 const product = require("../model/productModel");
 
 // Middleware function to verify JWT token
-async function authenticateToken(req, res, next) {
+async function userAuthToken(req, res, next) {
   const token = req.cookies.loginToken;
 
   console.log(token, "   9898-. ,");
@@ -14,7 +14,9 @@ async function authenticateToken(req, res, next) {
     .sort({ date: -1 })
     .limit(4);
   if (!token) {
-    res.render("userViews/home", { userAuth: false, productList });
+    console.log('middile heerered');
+    // res.render("userViews/home", { userAuth: false, productList });
+    res.redirect('/userLogin')
     return;
     // res.status(401).json({ message: 'Unauthorized - Missing token' });
   }
@@ -39,4 +41,4 @@ async function authenticateToken(req, res, next) {
   });
 }
 
-module.exports = authenticateToken;
+module.exports = userAuthToken;

@@ -100,6 +100,7 @@ const cancelOrder = async (req, res) => {
           amount: orderDetails.total,
           type: "credit",
           orderData: new mongoose.Types.ObjectId(orderDetails._id),
+          description:'Money credited to yor account for Cancel order'
         };
 
         if (myWallet) {
@@ -177,6 +178,37 @@ const returnProduct = async (req, res) => {
     if (!orderDetails) {
       throw Error("your order is not find");
     }
+
+          if (method == "razorPay" || method == "myWallet") {
+        console.log("razorPay console");
+        myWallet = await wallet.findOne({ userData: userId });
+        console.log(myWallet, "mywallet");
+        console.log(orderDetails.total);
+
+        const newTransaction = {
+          amount: orderDetails.total,
+          type: "credit",
+          orderData: new mongoose.Types.ObjectId(orderDetails._id),
+          description:'Money credited to yor account for Return order'
+        };
+
+        if (myWallet) {
+          myWallet = await wallet.findOneAndUpdate(
+            { userData: userId },
+            {
+              $inc: { walletAmount: orderDetails.total },
+              $push: { transactions: newTransaction },
+            },
+            { new: true }
+          );
+        } else {
+          myWallet = await wallet.create({
+            userData: userId,
+            walletAmount: orderDetails.total,
+            transactions: newTransaction,
+          });
+        }
+      }
     res.json({ succuss: true });
   } catch (error) {
     console.log(error);

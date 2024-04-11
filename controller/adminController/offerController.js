@@ -4,7 +4,9 @@ const { default: mongoose, Error } = require("mongoose");
 const referral = require('../../model/referralOffer')
 
 const offer = async(req,res)=>{
-  res.render('adminViews/offer')
+  const referralOffer = await referral.findOne()
+  console.log(referralOffer,'referral offer');
+  res.render('adminViews/offer',{referralOffer})
 }
 
 const productOffer = async (req,res)=>{

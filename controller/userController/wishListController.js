@@ -18,7 +18,7 @@ const getWishList = async (req, res) => {
     console.log(error);
   }
 };
-
+  
 const addToWishList = async (req, res) => {
   try {
     console.log("hlooppppppppppppppppppppppppp");
@@ -59,6 +59,7 @@ const deleteWishListProduct = async (req, res) => {
     const token = req.cookies.loginToken;
     const data = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = data;
+    console.log(userId,'userId');
     const { id } = req.body;
     const result = await wishList.updateOne(
       { userData: userId },

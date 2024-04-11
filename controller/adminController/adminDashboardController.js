@@ -36,6 +36,11 @@ const adminDashboard = async (req, res) => {
       .sort({ count: -1 })
       .limit(10)
       .populate("category");
+      const bestCategory = await category
+      .find()
+      .sort({ count: -1 })
+      .limit(10)
+
     const orderCount = await order.find().count();
     res.render("adminViews/adminDashboard", {
       sum,
@@ -45,6 +50,7 @@ const adminDashboard = async (req, res) => {
       categoryCount,
       bestProduct,
       orderCount,
+      bestCategory
     });
   } catch (error) {
     console.log(error);

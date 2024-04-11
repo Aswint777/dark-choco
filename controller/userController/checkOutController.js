@@ -216,6 +216,7 @@ const placeOrder = async (req, res) => {
               amount: orderData.total,
               type: "debit",
               orderData: new mongoose.Types.ObjectId(orderData._id),
+              description :'Used Wallet For Buy a product'
             };
 
             const updateWalletData = await wallet.updateOne(

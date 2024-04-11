@@ -29,7 +29,7 @@ router.get('/adminLogin',adminLoginAuth,adminLogin)
 router.post('/adminLogin',adminLoginPost)
 
 // otp page 
-router.get('/otp',signUpMiddleWare,getOtp)
+router.get('/otp',getOtp)
 
 router.post('/otp',otpPagePost)
 

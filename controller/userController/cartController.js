@@ -57,7 +57,7 @@ const GetCart = async (req, res) => {
         total,
         status: true,
       });
-    } else {
+    } else { 
       res.render("userViews/cart", {
         cartData,
         subTotal,

@@ -40,8 +40,35 @@ const getAdminOrderManagement = async (req, res) => {
         },
       },
     ]);
-    const codsum = sumOfCod[0].sumOfCod;
-    res.render("adminViews/adminOrderManagement", { orderList, sum, codsum });
+    const sumOfOnlinePayment = await order.aggregate([
+      {
+        $match: { paymentMode: "razorPay" }, // Filter documents where paymentMode is "cod"
+      },
+      {
+        $group: {
+          _id: null, // Group all documents into a single group
+          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+        },
+      },
+    ]);
+    const sumOfWallet = await order.aggregate([
+      {
+        $match: { paymentMode: "myWallet" }, // Filter documents where paymentMode is "cod"
+      },
+      {
+        $group: {
+          _id: null, // Group all documents into a single group
+          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+        },
+      },
+    ]);
+    
+    console.log(sumOfWallet,'lllll');
+    const codSum = sumOfCod[0]?.totalSum;
+    const online = sumOfOnlinePayment[0].totalSum
+    const walletPay = sumOfWallet[0].totalSum
+
+    res.render("adminViews/adminOrderManagement", { orderList, sum, codSum,online,walletPay });
   } catch (error) {
     console.log(error);
   }

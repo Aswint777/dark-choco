@@ -11,7 +11,7 @@ const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost, del
 const { downloadExcel, downloadPDF, downloadExcelByDate, downloadPDFByDate } = require('../controller/adminController/download')
 const { adminDashboard } = require('../controller/adminController/adminDashboardController')
 const { productOffer, createProductOffer, deleteProductOffer, editProductOffer, offer, createReferralOffer, updateReferralOffer } = require('../controller/adminController/offerController')
-
+ 
 
 const router = express.Router()
 
@@ -61,11 +61,11 @@ router.post('/editProduct' , upload.fields([
 
 
 // get order management page
-router.get('/adminOrderManagement',getAdminOrderManagement)
+router.get('/adminOrderManagement',adminLoginToken,getAdminOrderManagement)
 
 //Return product 
 
-router.get('/returnProductList',returnProductList)
+router.get('/returnProductList',adminLoginToken,returnProductList)
 
 router.post('/returnProductStatus',returnProductStatus)
 
@@ -73,26 +73,26 @@ router.post('/returnProductStatus',returnProductStatus)
 
 // get order details page 
 
-router.get('/adminOrderDetails',adminOrderDetails)
+router.get('/adminOrderDetails',adminLoginToken,adminOrderDetails)
 
 router .post ('/updateStatus',updateStatus)
 
 // coupon management
 
-router.get('/getAddCouponPage',getAddCouponPage)
+router.get('/getAddCouponPage',adminLoginToken,getAddCouponPage)
 
 router.post('/addCoupon',addCoupon)
 
-router.get('/couponList',couponList)
+router.get('/couponList',adminLoginToken,couponList)
 
-router.get('/editCoupon/:id', editCoupon);
+router.get('/editCoupon/:id',adminLoginToken, editCoupon);
 
 router.post('/editCouponPost',editCouponPost)
 
 router.post('/deleteCoupon',deleteCoupon)
 
 //  download 
-router.get('/downloadExcel',downloadExcel)
+router.get('/downloadExcel',adminLoginToken,downloadExcel)
 
 router.post('/downloadExcelByDate',downloadExcelByDate)
 
@@ -103,7 +103,7 @@ router.post('/downloadPDFByDate',downloadPDFByDate)
 
 // Category offer 
 
-router.get('/categoryOffer',categoryOffer)
+router.get('/categoryOffer',adminLoginToken,categoryOffer)
 
 router.post('/createCategoryOffer',createCategoryOffer)
 
@@ -113,7 +113,7 @@ router.post('/editCategoryOffer',editCategoryOffer)
 
 // product Offer
 
-router.get('/ProductOffer',productOffer)
+router.get('/ProductOffer',adminLoginToken,productOffer)
 
 router.post('/createProductOffer',createProductOffer)
 
@@ -127,10 +127,10 @@ router.post('/updateReferralOffer',updateReferralOffer)
 
 // offer page 
 
-router.get('/offer',offer)
+router.get('/offer',adminLoginToken,offer)
 
 // admin Dashboard
 
-router.get('/adminDashboard',adminDashboard)
+router.get('/adminDashboard',adminLoginToken,adminDashboard)
 
 module.exports= router

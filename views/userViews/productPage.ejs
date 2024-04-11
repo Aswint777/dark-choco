@@ -1,101 +1,265 @@
-
-<%- include('../partial/header.ejs') %>
-
-
-<%if(!userAuth){%>
-    <%-include('../partial/navbar.ejs')%>
-<%}else{%>
-    <%-include('../partial/userNavbar.ejs')%>
-<%}%>
+<%- include('../partial/header.ejs') %> <%if(!userAuth){%>
+<%-include('../partial/navbar.ejs')%> <%}else{%>
+<%-include('../partial/userNavbar.ejs')%> <%}%>
 
 <!-- <%- include('../partial/userNavbar.ejs') %> -->
 <%- include('../componentViews/snackbar.ejs') %>
-<div id="snackbar" >
-    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
-    <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
-       product added
-    </div>
+<div id="snackbar">
+  <i
+    class="fas fa-exclamation-circle"
+    style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
+  ></i>
+  <div
+    class="icon-Success"
+    style="background-color: rgb(0, 255, 26); border-radius: 5px"
+  >
+    product added
+  </div>
 </div>
 
-
-<div class="container my-5" style="background-color:rgb(241, 226, 208); ">
+<div class="container my-5" style="background-color: rgb(241, 226, 208)">
   <div class="row">
     <div class="col-md-5">
-        <div class="main-img">
-            <div id="img-container">
-                <img class="img-fluid" src="/products/<%= data.image1 %>" alt="Product" id="main">
-            </div>
-            <div class="row my-3 previews">
-                <div class="col-4" onclick="showImage('main','image1')">
-                    <img class="w-100" src="/products/<%= data.image1 %>" alt="Sale" id="image1">
-                </div>
-                <div class="col-4" onclick="showImage('main','image2')">
-                    <img class="w-100" src="/products/<%= data.image2 %>" alt="Sale" id="image2">
-                </div>
-                <div class="col-4" onclick="showImage('main','image3')">
-                    <img class="w-100" src="/products/<%= data.image3 %>" alt="Sale" id="image3">
-                </div>
-            </div>
+      <div class="main-img">
+        <div id="img-container" style="padding-top:10%;">
+          <img
+            class="img-fluid"
+            src="/products/<%= data.image1 %>"
+            alt="Product"
+            id="main"
+          />
         </div>
+        <div class="row my-3 previews">
+          <div class="col-4" onclick="showImage('main','image1')">
+            <img
+              class="w-100"
+              src="/products/<%= data.image1 %>"
+              alt="Sale"
+              id="image1"
+            />
+          </div>
+          <div class="col-4" onclick="showImage('main','image2')">
+            <img
+              class="w-100"
+              src="/products/<%= data.image2 %>"
+              alt="Sale"
+              id="image2"
+            />
+          </div>
+          <div class="col-4" onclick="showImage('main','image3')">
+            <img
+              class="w-100"
+              src="/products/<%= data.image3 %>"
+              alt="Sale"
+              id="image3"
+            />
+          </div>
+        </div>
+      </div>
     </div>
-    
-      <div class="col-md-7">
-          <div class="main-description px-2">
-              <!-- <div class="category text-bold">
+
+    <div class="col-md-7">
+      <div class="main-description px-2">
+        <!-- <div class="category text-bold">
                 Category: <%= data.category.category %>
               </div> -->
-              <div class="product-title text-bold my-3">
-                <%= data.stock %>
-              </div>
+        <div class="product-title text-bold my-3"><%= data.stock %></div>
 
-              <% if(data.categoryOfferPrice){ %>
-                <div class="row d-flex" style="align-items: baseline;">
-                    <span>
-                        <h4 class="old-price mb-1" style="color: rgb(161, 159, 159); margin-right: 10px; display: inline; vertical-align: middle;"><del>₹<%= data.amount %></del></h4>
-                        <h2 class="mb-3" style="display: inline; vertical-align: middle; margin-bottom: 0; color:rgb(1,58,166);">₹<%= data.categoryOfferPrice %></h2>
-                    </span>
-                </div>       
-            <%}else{%>
-                <h2 class="mb-3" style="display: inline; vertical-align: middle; margin-bottom: 0; color:rgb(1,58,166);">₹<%=data.amount %></h2>
-                <%}%>
-              <div>
-                <% if(data.quantity > 10 ){ %>
-                  <h6 style="color: rgb(15, 193, 15);">in stock</h6>
-                <% }else if(data.quantity == 0){ %>
-                    <h6 style="color: red;">Out of stock</h6>
-                <%}else{ %>
-                    <h6 style="color: red;">limited stock</h6>
-                <%}%>
+        <% if(data.offerPrice){ %>
+        <div class="row d-flex" style="align-items: baseline">
+          <span>
+            <h4
+              class="old-price mb-1"
+              style="
+                color: rgb(161, 159, 159);
+                margin-right: 10px;
+                display: inline;
+                vertical-align: middle;
+              "
+            >
+              <del>₹<%= data.amount %></del>
+            </h4>
+            <h2
+              class="mb-3"
+              style="
+                display: inline;
+                vertical-align: middle;
+                margin-bottom: 0;
+                color: rgb(1, 58, 166);
+              "
+            >
+              ₹<%= data.offerPrice %>
+            </h2>
+          </span>
+        </div>
+        <%}else{%>
+        <h2
+          class="mb-3"
+          style="
+            display: inline;
+            vertical-align: middle;
+            margin-bottom: 0;
+            color: rgb(1, 58, 166);
+          "
+        >
+          ₹<%=data.amount %>
+        </h2>
+        <%}%>
+        <div>
+          <% if(data.quantity > 10 ){ %>
+          <h6 style="color: rgb(15, 193, 15)">in stock</h6>
+          <% }else if(data.quantity == 0){ %>
+          <h6 style="color: red">Out of stock</h6>
+          <%}else{ %>
+          <h6 style="color: red">limited stock</h6>
+          <%}%>
+        </div>
+        <% if (productInUserWishlist){%>
+            <button  onclick="deleteProduct('<%= data._id %>')" style="background: none;">
+                <i class="fa-solid fa-heart h3" style="color: red"></i>
+            </button>
+        <%}else{%>
+            <button  style="background: none;">
+        <i class="fa-solid fa-heart h3"></i>
+    </button>
+        <%}%>
+        <div class="buttons d-flex my-2">
+          <% if (productInUserWishlist){%>
+          <div class="block">
+            <button
+            class="shadow btn custom-btn"
+              style="border-radius: 5px; "
+              disabled
+            >
+             WishList
+            </button>
+          </div>
+          <%}else{%>
+          <div class="block">
+            <button
+              onclick="addToWishList('<%= data._id %>')"
+              class="shadow btn custom-btn"
+              style="border-radius: 5px"
+            >
+            Wishlist
+            </button>
+          </div>
+          <%}%> 
+
+          <% if(data.quantity > 0 ){ %>
+
+          <div class="block">
+            <button
+              onclick="addToCart('<%= data._id %>')"
+              class="shadow btn custom-btn"
+              style="border-radius: 5px"
+            >
+              Add to cart
+            </button>
+          </div>
+          <%}else{ %>
+          <div class="block">
+            <button
+              onclick="addToCart('<%= data._id %>')"
+              class="shadow btn custom-btn"
+              style="border-radius: 5px"
+              disabled
+            >
+              Add to cart
+            </button>
+          </div>
+          <%}%>
+          <!--  -->
+          <div class="d-flex flex-row align-items-center">
+            <div
+              class="d-flex align-items-center justify-content-between"
+            >
+              <div disabled>
+                <button
+                  id="decriment"
+                  class="btn btn-link px-2"
+                  onclick="decrementQuantity()"
+                >
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+             
+              <input
+                id="quantityInput"
+                min="1"
+                max=""
+                name="quantity"
+                value=""
+                type="number"
+                style="width: 50px"
+                class="form-control form-control-sm"
+                onchange="sendData()"
+                disabled
+              />
+
+              <div disabled>
+                <button
+                  class="btn btn-link px-2"
+                  onclick="incrementQuantity()"
+                >
+                  <i class="fas fa-plus"></i>
+                </button>
               </div>
               
+            </div>
+          </div>
 
-              <div class="buttons d-flex my-5">
-                  <div class="block">
-                      <button onclick="addToWishList('<%= data._id %>')" class="shadow btn custom-btn " style="border-radius: 5px;">Wishlist</button>
-                  </div>
-                  <% if(data.quantity > 0 ){ %>
+          <!--  -->
 
-                  <div class="block">
-                      <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn" style="border-radius: 5px;">Add to cart</button>
-                  </div>
-                  <%}else{ %>
-                    <div class="block">
-                        <button onclick="addToCart('<%= data._id %>')" class="shadow btn custom-btn" style="border-radius: 5px;" disabled>Add to cart</button >
-                    </div>
-                  <%}%>
-
-                  <!-- <div class="block quantity">
+          <!-- <div class="block quantity">
                       <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
                   </div> -->
-              </div>
-          </div>
+        </div>
+      </div>
 
-          <div class="product-details my-4">
-              <p class="details-title text-color mb-1">Product Details</p>
-              <p class="description"><%= data.productDescription %> </p>
+      <!--  -->
+      <div class="row col-md-6">
+        <% if(data.categoryOfferRate){%>
+        <div class="col-md-6">
+          <div
+            class="box"
+            style="
+              border-radius: 6px;
+              padding: 20px;
+              background-color: #fff;
+              border: 1px solid #4de480;
+              margin-bottom: 20px;
+            "
+          >
+            <h6 style="color: rgb(60, 228, 60)">Category Offer</h6>
+            <p>Up to <%= data.categoryOfferRate %>% offer for this product</p>
           </div>
+        </div>
+        <%}%> <% if(data.productOfferRate){%>
+        <div class="col-md-6">
+          <div
+            class="box"
+            style="
+              border-radius: 6px;
+              padding: 20px;
+              background-color: #fff;
+              border: 1px solid #4de480;
+              margin-bottom: 20px;
+            "
+          >
+            <h6 style="color: rgb(60, 228, 60)">Product Offer</h6>
+            <p>Up to <%= data.productOfferRate %>% off for this product</p>
+          </div>
+        </div>
+        <%}%>
+      </div>
+      <!--  -->
+      <div class="product-details my-4">
+        <p class="details-title text-color mb-1">Product Details</p>
+        <p class="description"><%= data.productDescription %></p> 
+      </div>
 
-          <!-- <div class="row questions bg-light p-3">
+      <!-- <div class="row questions bg-light p-3">
               <div class="col-md-1 icon">
                   <i class="fa-brands fa-rocketchat questions-icon"></i>
               </div>
@@ -104,94 +268,102 @@
               </div>
           </div> -->
 
-          <div class="delivery my-4">
-              <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-truck"></i></span> <b>Delivery done in 3 days from date of purchase</b> </p>
-              <p class="text-secondary">Order now to get this product delivery</p>
-          </div>
-          
-          <div class="delivery-options my-4">
-              <p class="font-weight-bold mb-0"><span><i class="fa-solid fa-filter"></i></span> <b>Delivery options</b> </p>
-              <p class="text-secondary">View delivery options here</p>
-          </div>
+      <div class="delivery my-4">
+        <p class="font-weight-bold mb-0">
+          <span><i class="fa-solid fa-truck"></i></span>
+          <b>Delivery done in 3 days from date of purchase</b>
+        </p>
+        <p class="text-secondary">Order now to get this product delivery</p>
       </div>
+
+      <div class="delivery-options my-4">
+        <p class="font-weight-bold mb-0">
+          <span><i class="fa-solid fa-filter"></i></span>
+          <b>Delivery options</b>
+        </p>
+        <p class="text-secondary">View delivery options here</p>
+      </div>
+    </div>
   </div>
 </div>
 
-
-
-
 <script>
+  var options = {
+    width: 400,
+    zoomWidth: 400,
+    offset: { vertical: 0, horizontal: 10 },
+  };
+  new ImageZoom(document.getElementById("img-container"), options);
+
+  function showImage(main, changeImg) {
+    let mainImg = document.getElementById(main);
+    let changeImage = document.getElementById(changeImg);
+
+    let temp = mainImg.src;
+    mainImg.src = changeImage.src;
+    changeImage.src = temp;
     var options = {
-        width: 400,
-        zoomWidth: 400,
-        offset: {vertical: 0, horizontal: 10}
+      width: 400,
+      zoomWidth: 400,
+      offset: { vertical: 0, horizontal: 10 },
     };
     new ImageZoom(document.getElementById("img-container"), options);
-    
-    function showImage(main,changeImg){
-        let mainImg=document.getElementById(main)
-        let changeImage=document.getElementById(changeImg)
-        
-        let temp=mainImg.src
-        mainImg.src=changeImage.src
-        changeImage.src=temp
-        var options = {
-            width: 400,
-            zoomWidth: 400,
-            offset: {vertical: 0, horizontal: 10}
-        };
-        new ImageZoom(document.getElementById("img-container"), options);
-    }
+  }
 
-    async function  addToCart(_id){
-        try{
-        const res = await fetch("/user/addToCart/", {
+  async function addToCart(_id) {
+    try {
+      const res = await fetch("/user/addToCart/", {
         method: "POST",
-        body: JSON.stringify({ _id:_id }),
+        body: JSON.stringify({ _id: _id }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if(data._id){
-        myFunction()
-
+      if (data._id) {
+        myFunction();
       }
-        }catch(error){
-            console.log(error,'ooooooooooooi')
-        }
+    } catch (error) {
+      console.log(error, "ooooooooooooi");
     }
-    async function addToWishList(_id){
-        try{
-            console.log(_id,'entered here')
-        const res = await fetch("/user/addToWishList/", {
+  }
+  async function addToWishList(_id) {
+    try {
+      console.log(_id, "entered here");
+      const res = await fetch("/user/addToWishList/", {
         method: "POST",
-        body: JSON.stringify({ _id}),
+        body: JSON.stringify({ _id }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if(data.success){
-        myFunction()
+      if (data.success) {
+        myFunction();
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       }
-     
-        }catch(error){
-            console.log(error,'ooooooooooooi')
-        }
-
+    } catch (error) {
+      console.log(error, "ooooooooooooi");
     }
+  }
 
-    </script>
+  async function deleteProduct(id) {
+   console.log(id);
+      const res = await fetch("/user/deleteWishListProduct/", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success == true) {
+        alert(got)
+          window.location.reload();
+    }
+  }
+</script>
 
 <%- include('../partial/footer.ejs') %>
-
-
-
-
-
-
-
-
-
-

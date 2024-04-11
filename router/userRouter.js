@@ -1,6 +1,6 @@
 const express = require('express')
 const authenticateToken= require('../middleware/middleware')
-
+const userAuthToken = require('../middleware/usersideMidilware')
 const { productListPage, productFilter } = require('../controller/userController/productListController')
 const { userProfile, userProfilePost } = require('../controller/userController/userProfileController')
 const checkUserAuthenticationBeforeAction = require('../middleware/authCheckingforProductList')
@@ -14,6 +14,7 @@ const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct, down
 const { getWishList, addToWishList, deleteWishListProduct } = require('../controller/userController/wishListController')
 const { walletHistory } = require('../controller/userController/walletController')
 const { couponPage, applyCoupon, cancelCoupon } = require('../controller/userController/userCouponController')
+const userTokenMiddleware = require('../middleware/usersideMidilware')
 
 
 const router = express.Router()
@@ -24,7 +25,7 @@ router.get('/productListPage',checkUserAuthenticationBeforeAction,productListPag
 //product details page
 router.get('/productPage/:id',checkUserBeforeProductDetail,productPage)
 
-router.post('/addToCart',addToCart)
+router.post('/addToCart',userTokenMiddleware,addToCart)
 
 
 // User profile Page 
@@ -35,8 +36,8 @@ router.post('/userProfilePage',authenticateToken,userProfilePost)
 router.post('/productFilter/category/:id',productFilter)
 
 //cart
-
-router.get('/cart',GetCart)
+ 
+router.get('/cart',userAuthToken,GetCart)
 
 router.post('/updateQuantity',cartUpdateQuantity)
 
@@ -46,7 +47,7 @@ router.post('/proceedToCheckout',proceedToCheckout)
 
 // check Out page
 
-router.get('/checkOutPage',getCheckOutPage)
+router.get('/checkOutPage',userAuthToken,getCheckOutPage)
 
 router.post ('/placeOrder',placeOrder)
 
@@ -60,19 +61,19 @@ router.post('/deleteAddress',deleteAddress)
 
 //address page only
 
-router.get('/addresspage',addressOnlyPage)
+router.get('/addresspage',userAuthToken,addressOnlyPage)
 
 // order success page 
 
-router.get('/getSuccessPage',getSuccessPage)
+router.get('/getSuccessPage',userAuthToken,getSuccessPage)
 
 //user order History page
   
-router.get('/userOrderHistory',userOrderHistoryPage)
+router.get('/userOrderHistory',userAuthToken,userOrderHistoryPage)
 
 // user order Details Page 
 
-router.get( '/userOrderDetails',userOrderDetails)
+router.get( '/userOrderDetails',userAuthToken,userOrderDetails)
 
 router.post('/cancelOrder',cancelOrder)
 
@@ -85,7 +86,7 @@ router.post('/returnProduct',returnProduct)
 router.post ('/downloadInvoice',downloadInvoice)
 
 // wishList 
-router.get('/getWishList',getWishList)
+router.get('/getWishList',userAuthToken,getWishList)
 
 router.post('/addToWishList',addToWishList)
 
@@ -94,11 +95,11 @@ router.post('/deleteWishListProduct',deleteWishListProduct)
 
 //wallet History page 
 
-router.get('/walletHistory',walletHistory)
+router.get('/walletHistory',userAuthToken,walletHistory)
     
 // coupon 
 
-router.get('/couponPage',couponPage)
+router.get('/couponPage',userAuthToken,couponPage)
 
 router.post('/applyCoupon',applyCoupon)
 

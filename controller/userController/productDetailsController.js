@@ -3,13 +3,19 @@ const jwt = require("jsonwebtoken");
 const cart = require("../../model/cartModel");
 const user = require("../../model/userModel");
 const { default: mongoose } = require("mongoose");
+const wishlist = require('../../model/wishListModel')
 
 const productPage = async (req, res) => {
   try {
+    const token = req.cookies.loginToken;
+    const datas = jwt.verify(token, process.env.SECRET_KEY);
+    const { userId } = datas;
     console.log("product page here -------------------- ");
     const { id } = req.params;
     const data = await product.findOne({ _id: id }).populate("category");
-    res.render("userViews/productPage", { data, userAuth: true });
+    const productInUserWishlist = await wishlist.exists({ userData: userId, "products.product_id": id });
+    console.log(productInUserWishlist,'productInUserWishlist')
+    res.render("userViews/productPage", { data, userAuth: true ,productInUserWishlist});
   } catch (error) {
     console.log(error.message);
   }

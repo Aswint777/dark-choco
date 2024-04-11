@@ -23,7 +23,7 @@ async function main(email, firstName, secondName, password,referralCode) {
     subject: "Hello ✔", // Subject line
     // text: otpCreater,/
     text: otpCreater, // plain text body
-    html: "<b>Hello world?</b>", // html body
+    html: "<b>Hello world?</b>", // html body 
     html: otpCreater, // html body
   };
   // send mail with defined transport object

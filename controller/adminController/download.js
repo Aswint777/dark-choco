@@ -15,42 +15,45 @@ const downloadExcel = async (req, res) => {
 
     // Add headers
     worksheet.addRow([
-      "First Name",
-      "Last Name",
+      "Customer",
       "Email",
       "Order Date",
       "Payment Mode",
       "Product",
-      "status",
-      "Address",
-      "City",
+      // "status",
+      // "Address",
+      // "City",
       "Sub Total",
       "Tax",
       "Total",
+      "Total Revenue"
     ]);
-
+    let totalRevenue = 0;
     orderList.forEach((allOrder) => {
       const { userDetails, products, address } = allOrder;
       if (userDetails) {
         console.log("User Details:", userDetails);
         products.forEach((product) => {
           worksheet.addRow([
-            userDetails.firstName,
-            userDetails.secondName,
+            userDetails.firstName+userDetails.secondName,
             userDetails.email,
             allOrder.date,
             allOrder.paymentMode,
             product.stock,
-            allOrder.status,
-            address.address,
-            address.city,
+            // allOrder.status,
+            // address.address,
+            // address.city,
             allOrder.subTotal,
             allOrder.tax,
             allOrder.total,
+            
           ]);
+        
         });
+        totalRevenue += parseFloat(allOrder.total);
       }
     });
+    worksheet.addRow(["", "", "", "", "", "", "", "", "", "", "", totalRevenue]);
 
     // Set HTTP response headers
     res.setHeader(
@@ -92,8 +95,7 @@ const downloadExcelByDate = async (req, res) => {
 
     // Add headers
     worksheet.addRow([
-      "First Name",
-      "Last Name",
+      "Customer",
       "Email",
       "Order Date",
       "Payment Mode",
@@ -113,13 +115,11 @@ const downloadExcelByDate = async (req, res) => {
         products.forEach((product) => {
           worksheet.addRow([
             userDetails.firstName,
-            userDetails.secondName,
             userDetails.email,
             allOrder.date,
             allOrder.paymentMode,
             product.stock,
             allOrder.status,
-            address.address,
             address.city,
             allOrder.subTotal,
             allOrder.tax,

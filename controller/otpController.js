@@ -45,13 +45,26 @@ const otpPagePost = async (req, res) => {
         const referredUser = await User.findOne({userReferralCode : otpVarify.referredId.trim()})
         const referUserWallet = await wallet.findOne({userData: referredUser._id})
         const referralOffer = await referral.findOne()
-
+        
+        const newTransaction = {
+          amount: referralOffer.offerAmount,
+          type: "credit",
+          description:'Money credited to yor account for Cancel order'
+        };
         if(!referUserWallet){
-          const createWallet = await wallet.create({userData:referredUser._id,walletAmount:referralOffer.offerAmount })
+          const createWallet = await wallet.create({userData:referredUser._id,walletAmount:referralOffer.offerAmount, transactions: newTransaction })
         }else{
           let offerAmount = parseInt(referralOffer.offerAmount)
           offerAmount += referUserWallet.walletAmount
-         const updateWallet =  await wallet.findOneAndUpdate({userData:referredUser._id },{$set:{walletAmount:offerAmount}})
+        //  const updateWallet =  await wallet.findOneAndUpdate({userData:referredUser._id },{$set:{walletAmount:offerAmount}})
+         const updateWallet = await wallet.findOneAndUpdate(
+          { userData: referredUser._id },
+          {
+            $inc: { walletAmount: referralOffer.offerAmount },
+            $push: { transactions: newTransaction },
+          },
+          { new: true }
+        );
         }
       }
       const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY);

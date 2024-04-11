@@ -29,7 +29,7 @@ async function main(email, firstName, secondName, password,referralCode) {
   // send mail with defined transport object
   const info = transporter.sendMail(Message, (error, info) => {
     if (error) {
-      console.log("Eror sending mail");
+      console.log("Eror sending mail");     
       console.log(error);
       // res.send('Err '+error)
       return;

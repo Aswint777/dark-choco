@@ -124,10 +124,10 @@ const adminLoginPost = async (req, res) => {
   console.log(email, password);
   try {
     const admin = await Admin.findOne({ email: email });
-    await new Admin({
-      email:'aswinspot007@gmail.com',
-      password:'Aswin@123'
-    }).save()
+    // await new Admin({
+    //   email:'aswinspot007@gmail.com',
+    //   password:'Aswin@123'
+    // }).save()
     if (admin) {
       const auth = await bcrypt.compare(password, admin.password);
       if (auth) {

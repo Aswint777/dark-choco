@@ -13,7 +13,7 @@ const adminDashboard = async (req, res) => {
         },
       },
     ]);
-    const sum = totalSum[0].totalSum;
+    const sum = totalSum[0]?.totalSum;
     const customer = await user.find().count();
     const totalCategory = await category.find().count();
 

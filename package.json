@@ -23,5 +23,8 @@
     "pdfkit": "^0.14.0",
     "razorpay": "^2.9.2",
     "validator": "^13.11.0"
+  },
+  "scripts": {
+    "start": "nodemon app.js"
   }
 }

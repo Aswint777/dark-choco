@@ -4,11 +4,11 @@
 
 <div class="homeBody">
     <%-include('../partial/header.ejs')%> 
-    <!-- <%if(!userAuth){%> -->
+    <%if(!userAuth){%>
         <%-include('../partial/navbar.ejs')%>
-   <!-- <%}else{%> -->
-        <!-- <%-include('../partial/userNavbar.ejs')%>  -->
-    <!-- <%}%> -->
+   <%}else{%>
+        <%-include('../partial/userNavbar.ejs')%> 
+    <%}%>
 
   <div
     class="container-fluid"

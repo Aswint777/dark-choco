@@ -11,7 +11,7 @@ const adminLoginAuth = require('../middleware/adminLoginMidilware')
 const router = express.Router()
 
 //home page 
-router.get('/',authenticateToken,home)
+router.get('/',home)
 
 //login page
 router.get('/userLogin',loginMiddleWare,userLogin)
@@ -21,7 +21,7 @@ router.post('/userLogin',userLoginPost)
 //signUp page
 router.get('/userSignIn',signUpMiddleWare,userSignIn)
 
-router.post('/userSignIn',newUser)
+router.post('/userSignIn',newUser)         
 
 //admin login page 
 router.get('/adminLogin',adminLoginAuth,adminLogin)

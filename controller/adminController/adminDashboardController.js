@@ -57,6 +57,47 @@ const adminDashboard = async (req, res) => {
   }
 };
 
+const filterGraph = async(req,res)=>{
+  try {
+    const {filter} = req.body
+
+    const now = new Date();
+    let  customize 
+    if (filter === 'lastDay') {  // Changed from 'lastDay' to 'lastWeek'
+      console.log('Filter for last day');
+        customize = new Date(now.getTime() - 24 * 60 * 60 * 1000); // Calculate 7 days ago
+    }else if (filter == 'lastWeek' ){
+      customize = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000); // Calculate 7 days ago
+    }else if (filter == 'lastMonth' ){
+       customize = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000); // Calculate 7 days ago
+    }else if (filter == 'lastYear' ){
+      customize = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000); // Calculate 7 days ago
+    }
+
+      const result = await order.aggregate([
+        {
+          $match: {
+            date: {
+              $gte: customize, // Match orders with a date greater than or equal to 7 days ago
+              $lt: now // Match orders before the current time
+            }
+          }
+        },
+        {
+          $group: {
+            _id: { $dateToString: { format: "%Y-%m-%d", date: "$date" } },
+            totalSum: { $sum: "$total" },
+          },
+        },
+        { $sort: { _id: 1 } }, // Sort by date in ascending order
+      ]);
+      res.json({result})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 module.exports = {
   adminDashboard,
+  filterGraph
 };

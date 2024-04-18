@@ -9,7 +9,7 @@ const adminLoginToken = require('../middleware/adminMiddleware')
 const { getAdminOrderManagement, adminOrderDetails, updateStatus, returnProductList, returnProductStatus, returnListFilter } = require('../controller/adminController/adminOrderManagementController')
 const { getAddCouponPage, addCoupon, couponList, editCoupon, editCouponPost, deleteCoupon } = require('../controller/adminController/couponController')
 const { downloadExcel, downloadPDF, downloadExcelByDate, downloadPDFByDate } = require('../controller/adminController/download')
-const { adminDashboard } = require('../controller/adminController/adminDashboardController')
+const { adminDashboard, filterGraph } = require('../controller/adminController/adminDashboardController')
 const { productOffer, createProductOffer, deleteProductOffer, editProductOffer, offer, createReferralOffer, updateReferralOffer } = require('../controller/adminController/offerController')
  
 
@@ -132,5 +132,5 @@ router.get('/offer',adminLoginToken,offer)
 // admin Dashboard
 
 router.get('/adminDashboard',adminLoginToken,adminDashboard)
-
+router.post('/adminDashboard',filterGraph)
 module.exports= router

@@ -91,6 +91,7 @@ const filterGraph = async(req,res)=>{
         },
         { $sort: { _id: 1 } }, // Sort by date in ascending order
       ]);
+      console.log(result )
       res.json({result})
   } catch (error) {
     console.log(error)

@@ -211,13 +211,15 @@
       },
     });
     const data = await res.json();
+    console.log(data.result,'b')
+
     if (data){
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawNewChart);
       // drawCharts(data.filter)
       function drawNewChart(){
-        drawColumnChart(data.filter);
-        drawPieChart(data.filter);
+        drawColumnChart(data.result);
+        drawPieChart(data.result);
       }
       
     }

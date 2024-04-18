@@ -101,6 +101,7 @@
         </div>
       </div>
       <div class="row chart-container">
+        <div class="col-md-8">
         <!--  -->
         <div class="d-flex justify-content-end">
 
@@ -117,7 +118,6 @@
           </div>
         </div>
         <!--  -->
-        <div class="col-md-8">
           <div id="barchart" style="height: 500px; width: 100%"></div>
         </div>
         <div class="col-md-4">
@@ -211,23 +211,15 @@
       },
     });
     const data = await res.json();
-    console.log(data.result,'b')
 
     if (data){
       google.charts.load('current', {'packages':['corechart']});
       google.charts.setOnLoadCallback(drawNewChart);
-      // drawCharts(data.filter)
+  
       function drawNewChart(){
         drawColumnChart(data.result);
-        drawPieChart(data.result);
       }
       
     }
-
-
-  // function drawCharts() {
-  //   drawColumnChart(<%- JSON.stringify(result) %>);
-  //   drawPieChart(<%- JSON.stringify(categoryCount) %>);
-  // }
   }
 </script>

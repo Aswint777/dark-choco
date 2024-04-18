@@ -118,17 +118,7 @@
         <i class="fa-solid fa-heart h3"></i>
     </button>
         <div class="buttons d-flex my-2">
-          <% if (productInUserWishlist){%>
-          <div class="block">
-            <button
-            class="shadow btn custom-btn"
-              style="border-radius: 5px; "
-              disabled
-            >
-             WishList
-            </button>
-          </div>
-          <%}else{%>
+
           <div class="block">
             <button
               onclick="addToWishList('<%= data._id %>')"
@@ -138,7 +128,6 @@
             Wishlist
             </button>
           </div>
-          <%}%> 
 
           <% if(data.quantity > 0 ){ %>
 

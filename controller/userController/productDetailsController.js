@@ -7,6 +7,7 @@ const wishlist = require('../../model/wishListModel')
 
 const productPage = async (req, res) => {
   try {
+    console.log('hloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo');
     const token = req.cookies.loginToken;
     const datas = jwt.verify(token, process.env.SECRET_KEY);
     const { userId } = datas;
@@ -15,7 +16,7 @@ const productPage = async (req, res) => {
     const data = await product.findOne({ _id: id }).populate("category");
     const productInUserWishlist = await wishlist.exists({ userData: userId, "products.product_id": id });
     console.log(productInUserWishlist,'productInUserWishlist')
-    res.render("userViews/productPage", { data, userAuth: true ,productInUserWishlist});
+    res.render("userViews/productPage", { data, userAuth: true ,productInUserWishlist });
   } catch (error) {
     console.log(error.message);
   }

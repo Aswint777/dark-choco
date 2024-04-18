@@ -212,7 +212,20 @@
     });
     const data = await res.json();
     if (data){
-      drawCharts(data.filter)
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawNewChart);
+      // drawCharts(data.filter)
+      function drawNewChart(){
+        drawColumnChart(data.filter);
+        drawPieChart(data.filter);
+      }
+      
     }
+
+
+  // function drawCharts() {
+  //   drawColumnChart(<%- JSON.stringify(result) %>);
+  //   drawPieChart(<%- JSON.stringify(categoryCount) %>);
+  // }
   }
 </script>

@@ -114,15 +114,9 @@
           <h6 style="color: red">limited stock</h6>
           <%}%>
         </div>
-        <% if (productInUserWishlist){%>
-            <button  onclick="deleteProduct('<%= data._id %>')" style="background: none;">
-                <i class="fa-solid fa-heart h3" style="color: red"></i>
-            </button>
-        <%}else{%>
             <button  style="background: none;">
         <i class="fa-solid fa-heart h3"></i>
     </button>
-        <%}%>
         <div class="buttons d-flex my-2">
           <% if (productInUserWishlist){%>
           <div class="block">

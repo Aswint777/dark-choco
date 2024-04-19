@@ -170,8 +170,12 @@ const get404Page = (req, res) => {
 };
 
 const contactPage = async(req,res)=>{
+  // const token = req.cookies.loginToken;
+  // const data = jwt.verify(token, process.env.SECRET_KEY);
+  // const { userId } = data;
+
   console.log('contact page ');
-  res.render('userViews/contact', { userAuth: req.userAuth || false });
+  res.render('userViews/contact',{ userAuth: true});
 }
 
 module.exports = {

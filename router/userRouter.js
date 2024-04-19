@@ -61,7 +61,7 @@ router.post('/deleteAddress',deleteAddress)
 
 //address page only
 
-router.get('/addresspage',userAuthToken,addressOnlyPage)
+router.get('/addressPage',userAuthToken,addressOnlyPage)
 
 // order success page 
 

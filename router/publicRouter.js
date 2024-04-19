@@ -1,7 +1,7 @@
 const express = require('express')
 const authenticateToken = require('../middleware/middleware')
-
-const {home,userLogin, userSignIn, newUser, userLoginPost, adminLogin, getOtp, adminLoginPost, userLogOut, adminLogOut, about, get404Page} = require('../controller/publicRouteController')
+const contactToken = require('../middleware/contactMiddleware')
+const {home,userLogin, userSignIn, newUser, userLoginPost, adminLogin, getOtp, adminLoginPost, userLogOut, adminLogOut, about, get404Page, contactPage} = require('../controller/publicRouteController')
 const { otpPagePost, resendOtp, forgotPassword, forgotPasswordPost, forgotVarifyOtp, forgotVarifyOtpPost, setNewPassword, setNewPasswordPost, resendForgotOtp } = require('../controller/otpController')
 const loginMiddleWare = require('../middleware/loginMiddleWare')
 const signUpMiddleWare = require('../middleware/signUpMiddleWare')
@@ -66,5 +66,9 @@ router.get('/about',aboutToken,about)
 // 404 page 
 
 router.get('/404Page',get404Page)
+
+// contact page 
+
+router.get('/contact',contactPage,contactPage)
 
 module.exports = router

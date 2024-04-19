@@ -169,6 +169,11 @@ const get404Page = (req, res) => {
   res.render("partial/404Page");
 };
 
+const contactPage = async(req,res)=>{
+  console.log('contact page ');
+  res.render('userViews/contact', { userAuth: req.userAuth || false });
+}
+
 module.exports = {
   home,
   userLogin,
@@ -182,4 +187,5 @@ module.exports = {
   adminLogOut,
   about,
   get404Page,
+  contactPage
 };

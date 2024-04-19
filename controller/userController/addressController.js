@@ -179,7 +179,7 @@ const addressOnlyPage = async (req, res) => {
     const { userId } = data;
     const addressList = await Address.find({ userData: userId });
 
-    res.render("userviews/addressPage", { addressList });
+    res.render("userViews/addressPage", { addressList });
   } catch (error) {
     console.log(error);
   }

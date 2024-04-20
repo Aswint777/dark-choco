@@ -15,7 +15,7 @@ const getAdminOrderManagement = async (req, res) => {
       "rejected",
     ];
 
-    const orderList = await order.find({ status: { $in: statusesToFind } });
+    const orderList = await order.find();
     console.log(orderList);
     console.log(orderList.status, "status");
     const totalSum = await order.aggregate([
@@ -40,6 +40,7 @@ const getAdminOrderManagement = async (req, res) => {
         },
       },
     ]);
+    console.log(sumOfCod,'ccccc');
     const sumOfOnlinePayment = await order.aggregate([
       {
         $match: { paymentMode: "razorPay" }, 
@@ -51,22 +52,26 @@ const getAdminOrderManagement = async (req, res) => {
         },
       },
     ]);
-    const sumOfWallet = await order.aggregate([
-      {
-        $match: { paymentMode: "myWallet" }, 
-        $group: {
-          _id: null, 
-          totalSum: { $sum: "$total" }, 
-        },
-      },
-    ]);
-    
-    console.log(sumOfWallet,'lllll');
+    console.log(sumOfOnlinePayment,'ooooooo');
+    // const sumOfWallet = await order.aggregate([
+    //   {
+    //     $match: { paymentMode: "myWallet" }, 
+    //     $group: {
+    //       _id: null, 
+    //       totalSum: { $sum: "$total" }, 
+    //     },
+    //   },
+    // ]);
+    // console.log(sumOfWallet,'wwww');
+    // console.log(codSum);
+    // console.log(online);x`
+    // console.log(walletPay);
+
     const codSum = sumOfCod[0]?.totalSum;
     const online = sumOfOnlinePayment[0]?.totalSum
-    const walletPay = sumOfWallet[0]?.totalSum
+    // const walletPay = sumOfWallet[0]?.totalSum
 
-    res.render("adminViews/adminOrderManagement", { orderList, sum, codSum,online,walletPay });
+    res.render("adminViews/adminOrderManagement", { orderList, sum, codSum,online });
   } catch (error) {
     console.log(error);
   }

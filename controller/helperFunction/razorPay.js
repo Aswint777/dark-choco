@@ -9,7 +9,7 @@ module.exports = {
         key_secret: process.env.KEY_SECRET,
       });
       const id = "" + options.receipt;
-      const total = options.amount * 1000; //here -------------------------------------
+      const total = options.amount * 100; //here -------------------------------------
       console.log(id, "mmmmmmmmmmmmmmm");
       console.log(total);
 

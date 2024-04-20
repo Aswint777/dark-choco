@@ -26,47 +26,45 @@ const getAdminOrderManagement = async (req, res) => {
         },
       },
     ]);
-    const sum = totalSum[0].totalSum;
+    const sum = totalSum[0]?.totalSum;
     console.log(sum, "totalSum");
 
     const sumOfCod = await order.aggregate([
       {
-        $match: { paymentMode: "cod" }, // Filter documents where paymentMode is "cod"
+        $match: { paymentMode: "cod" }, 
       },
       {
         $group: {
-          _id: null, // Group all documents into a single group
-          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+          _id: null,
+          totalSum: { $sum: "$total" }, 
         },
       },
     ]);
     const sumOfOnlinePayment = await order.aggregate([
       {
-        $match: { paymentMode: "razorPay" }, // Filter documents where paymentMode is "cod"
+        $match: { paymentMode: "razorPay" }, 
       },
       {
         $group: {
-          _id: null, // Group all documents into a single group
-          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+          _id: null, 
+          totalSum: { $sum: "$total" }, 
         },
       },
     ]);
     const sumOfWallet = await order.aggregate([
       {
-        $match: { paymentMode: "myWallet" }, // Filter documents where paymentMode is "cod"
-      },
-      {
+        $match: { paymentMode: "myWallet" }, 
         $group: {
-          _id: null, // Group all documents into a single group
-          totalSum: { $sum: "$total" }, // Calculate the sum of the "total" field
+          _id: null, 
+          totalSum: { $sum: "$total" }, 
         },
       },
     ]);
     
     console.log(sumOfWallet,'lllll');
     const codSum = sumOfCod[0]?.totalSum;
-    const online = sumOfOnlinePayment[0].totalSum
-    const walletPay = sumOfWallet[0].totalSum
+    const online = sumOfOnlinePayment[0]?.totalSum
+    const walletPay = sumOfWallet[0]?.totalSum
 
     res.render("adminViews/adminOrderManagement", { orderList, sum, codSum,online,walletPay });
   } catch (error) {

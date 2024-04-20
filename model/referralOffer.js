@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { ObjectId } = require("mongodb");
 
 const referralOfferSchema = new mongoose.Schema({
-
   status: {
     type: Boolean,
     default: true,

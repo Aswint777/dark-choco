@@ -51,9 +51,9 @@ const userSchema = new mongoose.Schema({
       ref: "coupon",
     },
   ],
-  userReferralCode :{
-    type : String
-  }
+  userReferralCode: {
+    type: String,
+  },
 });
 
 userSchema.pre("save", async function (next) {

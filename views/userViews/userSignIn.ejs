@@ -1,89 +1,72 @@
+<%-include('../partial/header.ejs')%> <%-include('../partial/navbar.ejs')%>
 
-<%-include('../partial/header.ejs')%>
-<%-include('../partial/navbar.ejs')%>
-
-
-<section class="container" style="  background-color: #eed4b8e8;" >
+<section class="container" style="background-color: #eed4b8e8">
   <!-- <div style=" margin-top: 10%;"> -->
-  <div class=" py-5 h-100" >
-    <div class="row d-flex justify-content-center align-items-center h-100" >
-      <div class="col col-xl-10" >
-        <div class="card" style="border-radius: 1rem; margin-top: 5%;">
+  <div class="py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-xl-10">
+        <div class="card" style="border-radius: 1rem; margin-top: 5%">
           <div class="row g-0">
             <div
-            class="col-md-6 col-lg-5 d-none d-md-block"
-            style="margin-top: 20%"
+              class="col-md-6 col-lg-5 d-none d-md-block"
+              style="margin-top: 20%"
             >
-            <img
-            src="/assets/353.png"
-            alt="login form"
-            class="img-fluid"
-            style="border-radius: 1rem 0 0 1rem"
-            />
-          </div>
-          <div class="col-md-6 col-lg-7 d-flex align-items-center">
-            <div class="card-body p-4 p-lg-5 text-black">
-              <form action="/userSignIn" method="post" >
-                <div class="d-flex align-items-center mb-3 pb-1">
-                  <!-- <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i> -->
-                  <span class="h1 fw-bold mb-0">Create Account Now !</span>
-                </div>
-                
-                <!-- <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px; color:#ff6219;">Login to continue</h5> -->
-                
-                <div class="form-outline mb-4">
-      
-                  <label class="form-label" for="form2Example17"
-                  >First Name</label
-                  >
+              <img
+                src="/assets/353.png"
+                alt="login form"
+                class="img-fluid"
+                style="border-radius: 1rem 0 0 1rem"
+              />
+            </div>
+            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+              <div class="card-body p-4 p-lg-5 text-black">
+                <form action="/userSignIn" method="post">
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <!-- <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i> -->
+                    <span class="h1 fw-bold mb-0">Create Account Now !</span>
+                  </div>
+
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example17"
+                      >First Name</label
+                    >
                     <input
                       type="text"
                       id="firstName"
                       name="firstName"
                       class="form-control form-control-lg"
-                    
-                      />
-                    </div>
-                    <p id="name" style="color: rgb(246, 4, 4);"></p>
+                      maxlength="15"
+                    />
+                  </div>
+                  <p id="name" style="color: rgb(246, 4, 4)"></p>
 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example17"
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example17"
                       >Second Name</label
-                      >
-                      <input
+                    >
+                    <input
                       type="text"
                       id="secondName"
                       name="secondName"
                       class="form-control form-control-lg"
-                      />
-                    </div>
-                    <p id="secondname" style="color: rgb(246, 4, 4);"></p>
+                      maxlength="15"
+                    />
+                  </div>
+                  <p id="secondname" style="color: rgb(246, 4, 4)"></p>
 
-                    <div class="form-outline mb-4">
-                      <label class="form-label" for="form2Example17"
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form2Example17"
                       >Email address</label
-                      >
-                      <input
+                    >
+                    <input
                       type="email"
                       id="email"
                       name="email"
                       class="form-control form-control-lg"
                     />
                   </div>
-                  <p id="emailEerror" style="color: rgb(246, 4, 4);"></p>
-                  <!-- <div class="form-outline mb-4">
-                    <label class="form-label" for="form2Example17"
-                    >Phone number</label
-                    >
-                    <input
-                    type="number"
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    class="form-control form-control-lg"
-                  />
-                </div> -->
-                
-                  
+                  <p id="emailEerror" style="color: rgb(246, 4, 4)"></p>
+
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example27"
                       >Password</label
@@ -93,171 +76,172 @@
                       id="password"
                       name="password"
                       class="form-control form-control-lg"
-                      />
-                    </div>
-                    <p id="passswordErrors" style="color: rgb(246, 4, 4);"></p>
+                      minlength="6"
+                    />
+                  </div>
+                  <p id="passswordErrors" style="color: rgb(246, 4, 4)"></p>
 
-                    <div class="form-outline mb-4">
-                      <p id="error-message" style="color: rgb(246, 4, 4);"></p>
-                      <label class="form-label" for="form2Example27"
+                  <div class="form-outline mb-4">
+                    <p id="error-message" style="color: rgb(246, 4, 4)"></p>
+                    <label class="form-label" for="form2Example27"
                       >Confirm Password</label
-                      >
-                      <input
+                    >
+                    <input
                       type="password"
                       id="ConfirmPassword"
                       name="ConfirmPassword"
                       class="form-control form-control-lg"
-                      />
-                    </div>
-                    <p id="confirmPasswordError" style="color: rgb(246, 4, 4);"></p>
-                    <div class="form-outline mb-4">
-                      <!-- <p id="error-message" style="color: rgb(246, 4, 4);"></p> -->
-                      <label class="form-label" for="form2Example27"
+                    />
+                  </div>
+                  <p
+                    id="confirmPasswordError"
+                    style="color: rgb(246, 4, 4)"
+                  ></p>
+                  <div class="form-outline mb-4">
+                    <!-- <p id="error-message" style="color: rgb(246, 4, 4);"></p> -->
+                    <label class="form-label" for="form2Example27"
                       >Referral Code</label
-                      >
-                      <input
+                    >
+                    <input
                       type="string"
                       id="referralCode"
                       name="ReferralCode"
                       class="form-control form-control-lg"
                       placeholder="referral Code(optional)"
-                      />
-                    </div>
-                    
-                    <div class="pt-1 mb-4">
-                      <p id="catchError" style="color: rgb(246, 4, 4);"></p>
-                      <p id="errors-message" style="color: rgb(246, 4, 4);"></p>
-                      <button class="btn btn-dark btn-lg btn-block" type="submit">
-                        Sign Up
-                      </button>
-                    </div>
-                    </form>
+                    />
                   </div>
-                </div>
+
+                  <div class="pt-1 mb-4">
+                    <p id="catchError" style="color: rgb(246, 4, 4)"></p>
+                    <p id="errors-message" style="color: rgb(246, 4, 4)"></p>
+                    <button class="btn btn-dark btn-lg btn-block" type="submit">
+                      Sign Up
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  <!-- </div> -->
-    
-    <script>
-      
-      const form = document.querySelector("form");
-      const emailError = document.querySelector(".email.error");
-      const passwordError = document.querySelector(".password.error");
-      const errorMessage =document.getElementById('error-message')
-      const errorsMessage =document.getElementById('errors-message')
-      const nameError = document.getElementById('name')
-      const  secondNameError = document.getElementById('secondname')
-      const  emailErrors = document.getElementById('emailEerror')
-      const  passwordErrors = document.getElementById('passswordErrors')
-      const  ConfirmPasswordError = document.getElementById('confirmPasswordError')
-      const catchError =document.getElementById('catchError')
+    </div>
+  </div>
+</section>
+<!-- </div> -->
 
+<script>
+  const form = document.querySelector("form");
+  const emailError = document.querySelector(".email.error");
+  const passwordError = document.querySelector(".password.error");
+  const errorMessage = document.getElementById("error-message");
+  const errorsMessage = document.getElementById("errors-message");
+  const nameError = document.getElementById("name");
+  const secondNameError = document.getElementById("secondname");
+  const emailErrors = document.getElementById("emailEerror");
+  const passwordErrors = document.getElementById("passswordErrors");
+  const ConfirmPasswordError = document.getElementById("confirmPasswordError");
+  const catchError = document.getElementById("catchError");
 
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        // alert('helo')
-        // //reset the errors
-        // emailError.textContent = ""
-        // passwordError.textContent = ""
-        
-        // get the value
-        const email = form.email.value;
-        const password = form.password.value;
+    const email = form.email.value;
+    const password = form.password.value;
     const firstName = form.firstName.value;
     const secondName = form.secondName.value;
-    const conformPassword = form.ConfirmPassword.value
-    const referralCode = form.referralCode.value
-    
+    const conformPassword = form.ConfirmPassword.value;
+    const referralCode = form.referralCode.value;
+
     // const phoneNumber = form.phoneNumber.value;
 
-
     console.log(email, password);
-    console.log('running')
-// alert(conformPassword)
+    console.log("running");
+    // alert(conformPassword)
     try {
-      
-      if(firstName===""){
-        console.log('first name required')
-        nameError.innerHTML = 'proper first name is required'
-        setTimeout(()=>{
-          nameError.innerHTML = ''
-        },5000)
-        return
+      if (firstName === "") {
+        console.log("first name required");
+        nameError.innerHTML = "proper first name is required";
+        setTimeout(() => {
+          nameError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(secondName===""){ 
-        secondNameError.innerHTML = 'proper second name is required'
-        setTimeout(()=>{
-          secondNameError.innerHTML = ''
-        },5000)
-        return
+      if (secondName === "") {
+        secondNameError.innerHTML = "proper second name is required";
+        setTimeout(() => {
+          secondNameError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(email==="" ){
-       emailErrors.innerHTML = 'proper email  is required'
-       setTimeout(()=>{
-         emailErrors.innerHTML = ''
-       },5000)
-       return
-     }
-     if(password==="" ){
-       passwordErrors.innerHTML = 'password is required'
-       setTimeout(()=>{
-         passwordErrors.innerHTML = ''
-       },5000)
-       return
-     }
-     if(conformPassword==="" ){
-       ConfirmPasswordError.innerHTML = 'confirm password  is required'
-       setTimeout(()=>{
-         ConfirmPasswordError.innerHTML = ''
-       },5000)
-       return
-     }
-     if(password !== conformPassword){
-        console.log('wait ')
-        errorMessage.innerHTML="password doesn't match "
-        setTimeout(()=>{
-         errorMessage.innerHTML = ''
-       },5000)
-        return 
+      if (email === "") {
+        emailErrors.innerHTML = "proper email  is required";
+        setTimeout(() => {
+          emailErrors.innerHTML = "";
+        }, 5000);
+        return;
+      }
+      if (password === "") {
+        passwordErrors.innerHTML = "password is required";
+        setTimeout(() => {
+          passwordErrors.innerHTML = "";
+        }, 5000);
+        return;
+      }
+      if (conformPassword === "") {
+        ConfirmPasswordError.innerHTML = "confirm password  is required";
+        setTimeout(() => {
+          ConfirmPasswordError.innerHTML = "";
+        }, 5000);
+        return;
+      }
+      if (password !== conformPassword) {
+        console.log("wait ");
+        errorMessage.innerHTML = "password doesn't match ";
+        setTimeout(() => {
+          errorMessage.innerHTML = "";
+        }, 5000);
+        return;
       }
 
-      if(firstName === ''||secondName === ''||email === ''||password === ''||conformPassword ===''){
-        console.log('wait ')    
-        errorsMessage.innerHTML="all field is not filled"
-        return 
+      if (
+        firstName === "" ||
+        secondName === "" ||
+        email === "" ||
+        password === "" ||
+        conformPassword === ""
+      ) {
+        console.log("wait ");
+        errorsMessage.innerHTML = "all field is not filled";
+        return;
       }
       const res = await fetch("/userSignIn/", {
         method: "POST",
-        body: JSON.stringify({firstName,secondName, email, password,referralCode }),
+        body: JSON.stringify({
+          firstName,
+          secondName,
+          email,
+          password,
+          referralCode,
+        }),
         headers: {
           "Content-Type": "application/json",
         },
-      })
+      });
       const data = await res.json();
 
-      if(data.error){
-      catchError.innerHTML = data?.error
-          setTimeout(()=>{
-            catchError.innerHTML = ''
-          },5000)
-      console.log(error,'err');
-    }
-   
-    //   if (!res.ok) {
-    //   throw new Error(`HTTP error! Status: ${res.status}`);
-    // }
-     
+      if (data.error) {
+        catchError.innerHTML = data?.error;
+        setTimeout(() => {
+          catchError.innerHTML = "";
+        }, 5000);
+        console.log(error, "err");
+      }
+
       if (data.success) {
-        location.href="/otp?email=" + email;
+        location.href = "/otp?email=" + email;
       }
     } catch (err) {
-      console.log(err,'err');
-
+      console.log(err, "err");
     }
   });
 </script>

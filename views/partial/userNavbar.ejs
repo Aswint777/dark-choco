@@ -1,44 +1,71 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
-      <div class="navbar-left">
-          <h6 class="text-uppercase fw-bold mb-4">
-              <img style="height: 30px; width: 30px;" src="/assets/c.png" alt="" />
-              <span style="color: rgb(220, 216, 216);">Dark Choco</span>
-          </h6>
+    <div class="navbar-left">
+      <h6 class="text-uppercase fw-bold mb-4">
+        <img style="height: 30px; width: 30px" src="/assets/c.png" alt="" />
+        <span style="color: rgb(220, 216, 216)">Dark Choco</span>
+      </h6>
+    </div>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-center">
+        <a class="nav-link" href="/">Home</a>
+        <a class="nav-link" href="/user/productListPage">Product</a>
+        <a class="nav-link" href="/contact">Contact</a>
+        <a class="nav-link" href="/about">About</a>
       </div>
 
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-      </button>
+      <div class="navbar-right ml-auto d-flex">
+        <div class="dropdown">
+          <a class="nav-link" href="/user/getWishList"
+            ><i class="fa-solid fa-heart"></i
+          ></a>
+          <a class="nav-link" href="/user/cart"
+            ><i class="fa-solid fa-cart-shopping" style="color: aliceblue"></i
+          ></a>
+          <a
+            class="bi bi-person-fill dropdown-toggle"
+            href="#"
+            role="button"
+            id="dropdownMenuButton2"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            style="margin-top: -5px"
+          >
+            <img src="" alt="" />
+          </a>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
-          <div class="navbar-center">
-              <a class="nav-link" href="/">Home</a>
-              <a class="nav-link" href="/user/productListPage">Product</a>
-              <a class="nav-link" href="/contact">Contact</a>
-              <a class="nav-link" href="/about">About</a>
-            </div>
-            
-            <div class="navbar-right ml-auto d-flex">
-                
-                <div class="dropdown">
-                <a class="nav-link" href="/user/getWishList"><i class="fa-solid fa-heart"></i></a>
-                <a class="nav-link" href="/user/cart"><i class="fa-solid fa-cart-shopping" style="color: aliceblue;"></i></a>
-                  <a  class="bi bi-person-fill dropdown-toggle " href="#" role="button" id="dropdownMenuButton2" 
-                      data-bs-toggle="dropdown" aria-expanded="false" style="margin-top: -5px;">
-                      <img src="" alt="" />
-                  </a>
-                
-                  <ul style="background-color: rgb(11, 12, 12);" class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
-                      <li><a  class="dropdown-item" href="#">Dashboard</a></li>
-                      <li><a class="dropdown-item" href="/user/userProfilePage">Profile</a></li>
-                      <li><a class="dropdown-item" href="/user/userOrderHistory">Order History</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="/logOut">Log Out</a></li>
-                  </ul>
-
-              </div>
-          </div>
+          <ul
+            style="background-color: rgb(11, 12, 12)"
+            class="dropdown-menu dropdown-menu-dark"
+            aria-labelledby="dropdownMenuButton2"
+          >
+            <li><a class="dropdown-item" href="#">Dashboard</a></li>
+            <li>
+              <a class="dropdown-item" href="/user/userProfilePage">Profile</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/user/userOrderHistory"
+                >Order History</a
+              >
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="/logOut">Log Out</a></li>
+          </ul>
+        </div>
       </div>
+    </div>
   </div>
 </nav>

@@ -1,194 +1,227 @@
-
 <%- include('../partial/header.ejs') %>
 
-
-<div class="container" style="background-color: #d1cccc7f;">
+<div class="container" style="background-color: #d1cccc7f">
   <div class="row">
-    <div class="col-md-2">
-      
-      <%- include('../partial/adminSidebar.ejs') %>
-    </div>
-    
-    <div class="col-md-10 "  > 
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
 
-<div class="">
-  <div class="row">
-    <div class="col mb-3">
-      <form action="">
-        <div class="text-black rounded-3" style="background-color: #d8d3cee8;">
-          <div class="card-body">
-            <br>
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              
-              <h5 class="mb-0">&nbsp; Order</h5>
-              <h5 style="color: red;"><%= details.status %> &nbsp;</h5>
-            </div>
-            <h3 style="display: none;"> cartData._id </h3>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Order Id </p>
-              <p class="mb-2" style="color: rgb(29, 164, 29);"><%= details._id %> &nbsp;</p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Order Date</p>
-              <p class="mb-2"><%= details.date.toISOString().slice(0, 10).split('-').reverse().join('-') %> &nbsp;</p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Payment Method</p>
-              <p class="mb-2"> <%= details.paymentMode %> &nbsp; </p>
-            </div>
-           <br><br> <br>
-            
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col mb-3">
-      <form action="">
-        <div class="text-black rounded-3" style="background-color: #d8d3cee8;">
-          <div class="card-body">
-            <br>
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <h5 class="mb-0"> &nbsp; Customer </h5>
-            </div>
-            <h3 style="display: none;"> cartData._id </h3>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Customer</p>
-              <p class="mb-2"><%= details.address.firstName %> <%= details.address.secondName %> &nbsp;</p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Email</p>
-              <p class="mb-2"><%= details.address.email %> &nbsp;</p>
-            </div>
-            <br>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2"> &nbsp; Phone</p>
-              <p class="mb-2"> <%= details.address.phoneNumber  %> &nbsp;</p>
-            </div>      
-            <br> <br> 
-          
-          </div>
-          <!-- Form content goes here -->
-        </div>
-      </form>
-    </div>
-    <div class="col mb-3">
-      <form action="">
-        <div class="text-black rounded-3" style="background-color: #d8d3cee8;">
-          <div class="card-body">
-            <br>
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <h5 class="mb-0">&nbsp; Address</h5>
-            </div>
-            <h3 style="display: none;"> cartData._id </h3>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2">&nbsp; <%=  details.address.firstName %> <%= details.address.secondName %></p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2">&nbsp; <%=  details.address.address %></p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2">&nbsp; <%=  details.address.country %>, <%=  details.address.state %>, <%=  details.address.city %></p>
-            </div>
-            <div class="d-flex justify-content-between">
-              <p class="mb-2">&nbsp; Pin Code : <%=  details.address.pinCode %></p>
-            </div>
-            <div class="d-flex justify-content-between mb-4">
-              <p class="mb-2"> &nbsp; Phone Number : <%=  details.address.phoneNumber %></p>
-            </div>
-          </div>
-
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-
-
-
-<div class="">
-  <div class="row">
-    <div class="col-8" style=" color: aliceblue;">
-    
-      <div class="card mb-3" style="background-color: #d8d3cee8;">
-        <div class="card-body">
-          <!--  -->
-          <% details.products.forEach(product => { %>
-
-            <br>
-          <div class="d-flex justify-content-between" >
-            <div class="d-flex flex-row align-items-center">
-              <div>
-                <img src="/products/<%= product.image1 %>" class="img-fluid rounded-3" alt="Shopping item" style="width: 65px;">
+    <div class="col-md-10">
+      <div class="">
+        <div class="row">
+          <div class="col mb-3">
+            <form action="">
+              <div
+                class="text-black rounded-3"
+                style="background-color: #d8d3cee8"
+              >
+                <div class="card-body">
+                  <br />
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+                    <h5 class="mb-0">&nbsp; Order</h5>
+                    <h5 style="color: red"><%= details.status %> &nbsp;</h5>
+                  </div>
+                  <h3 style="display: none">cartData._id</h3>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Order Id</p>
+                    <p class="mb-2" style="color: rgb(29, 164, 29)">
+                      <%= details._id %> &nbsp;
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Order Date</p>
+                    <p class="mb-2">
+                      <%= details.date.toISOString().slice(0,
+                      10).split('-').reverse().join('-') %> &nbsp;
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Payment Method</p>
+                    <p class="mb-2"><%= details.paymentMode %> &nbsp;</p>
+                  </div>
+                  <br /><br />
+                  <br />
+                </div>
               </div>
-              <div class="ms-3">
-                <h5> <%= product.stock %></h5> <!-- Assuming product has a 'name' property -->
-                <h5 style="display: none;"></h5> <!-- Assuming product has a 'name' property -->
-                <p class="small mb-0"></p> <!--  Assuming product has a 'details' property -->
-              </div>
-            </div>
-            <div class="d-flex flex-row align-items-center">
-              <div style="width: 80px;">
-                <!-- Assuming product has a 'price' property -->
-                <h5 style="color: rgb(22, 142, 22);" class="mb-0"> <%= product.quantity %> </h5>
-              </div>
-             
-              <div style="width: 80px;">
-              
-                <h5 style="color: rgb(33, 139, 33);" class="mb-0"> ₹<%= product.amount %></h5>
-              </div>
-            </div>
-            
+            </form>
           </div>
-          <br>
-          <% }) %>
-
+          <div class="col mb-3">
+            <form action="">
+              <div
+                class="text-black rounded-3"
+                style="background-color: #d8d3cee8"
+              >
+                <div class="card-body">
+                  <br />
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+                    <h5 class="mb-0">&nbsp; Customer</h5>
+                  </div>
+                  <h3 style="display: none">cartData._id</h3>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Customer</p>
+                    <p class="mb-2">
+                      <%= details.address.firstName %> <%=
+                      details.address.secondName %> &nbsp;
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Email</p>
+                    <p class="mb-2"><%= details.address.email %> &nbsp;</p>
+                  </div>
+                  <br />
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; Phone</p>
+                    <p class="mb-2">
+                      <%= details.address.phoneNumber %> &nbsp;
+                    </p>
+                  </div>
+                  <br />
+                  <br />
+                </div>
+                <!-- Form content goes here -->
+              </div>
+            </form>
+          </div>
+          <div class="col mb-3">
+            <form action="">
+              <div
+                class="text-black rounded-3"
+                style="background-color: #d8d3cee8"
+              >
+                <div class="card-body">
+                  <br />
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-4"
+                  >
+                    <h5 class="mb-0">&nbsp; Address</h5>
+                  </div>
+                  <h3 style="display: none">cartData._id</h3>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">
+                      &nbsp; <%= details.address.firstName %> <%=
+                      details.address.secondName %>
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">&nbsp; <%= details.address.address %></p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">
+                      &nbsp; <%= details.address.country %>, <%=
+                      details.address.state %>, <%= details.address.city %>
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                    <p class="mb-2">
+                      &nbsp; Pin Code : <%= details.address.pinCode %>
+                    </p>
+                  </div>
+                  <div class="d-flex justify-content-between mb-4">
+                    <p class="mb-2">
+                      &nbsp; Phone Number : <%= details.address.phoneNumber %>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-          <!-- Content of the first element -->
-    </div>
 
-    <div class="col-4">
-      <div class="card mb-3">
-        <div class="card-body" style="background-color: #d8d3cee8;">
-          <!--  -->
-          <div class="text-black rounded-3" >
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center mb-4">
-                <h5 class="mb-0">Total Payment</h5>
-              </div>
-              <h3 style="display: none;"> cartData._id </h3>
-              <div class="d-flex justify-content-between">
-                <p class="mb-2">Sub Total</p>
-                <p class="mb-2">₹ <%= details.subTotal %>.00</p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p class="mb-2">Shipping</p>
-                <p class="mb-2">free</p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p class="mb-2">Tax</p>
-                <p class="mb-2"> ₹<%= details.tax %> </p>
-              </div>
-              <div class="d-flex justify-content-between">
-                <p class="mb-2">Discount</p>
-                <p class="mb-2">0.00</p>
-              </div>
-              <hr>
-              <div class="d-flex justify-content-between mb-4">
-                <p class="mb-2">Total(Incl. taxes)</p>
-                <p class="text-success mb-2">₹<%= details.total %></p>
+      <div class="">
+        <div class="row">
+          <div class="col-8" style="color: aliceblue">
+            <div class="card mb-3" style="background-color: #d8d3cee8">
+              <div class="card-body">
+                <!--  -->
+                <% details.products.forEach(product => { %>
+
+                <br />
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex flex-row align-items-center">
+                    <div>
+                      <img
+                        src="/products/<%= product.image1 %>"
+                        class="img-fluid rounded-3"
+                        alt="Shopping item"
+                        style="width: 65px"
+                      />
+                    </div>
+                    <div class="ms-3">
+                      <h5><%= product.stock %></h5>
+                      <!-- Assuming product has a 'name' property -->
+                      <h5 style="display: none"></h5>
+                      <!-- Assuming product has a 'name' property -->
+                      <p class="small mb-0"></p>
+                      <!--  Assuming product has a 'details' property -->
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row align-items-center">
+                    <div style="width: 80px">
+                      <!-- Assuming product has a 'price' property -->
+                      <h5 style="color: rgb(22, 142, 22)" class="mb-0">
+                        <%= product.quantity %>
+                      </h5>
+                    </div>
+
+                    <div style="width: 80px">
+                      <h5 style="color: rgb(33, 139, 33)" class="mb-0">
+                        ₹<%= product.amount %>
+                      </h5>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <% }) %>
               </div>
             </div>
-            <!-- Form content goes here -->
+            <!-- Content of the first element -->
           </div>
-          <!-- Content of the second element -->
+
+          <div class="col-4">
+            <div class="card mb-3">
+              <div class="card-body" style="background-color: #d8d3cee8">
+                <!--  -->
+                <div class="text-black rounded-3">
+                  <div class="card-body">
+                    <div
+                      class="d-flex justify-content-between align-items-center mb-4"
+                    >
+                      <h5 class="mb-0">Total Payment</h5>
+                    </div>
+                    <h3 style="display: none">cartData._id</h3>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Sub Total</p>
+                      <p class="mb-2">₹ <%= details.subTotal %>.00</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Shipping</p>
+                      <p class="mb-2">free</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Tax</p>
+                      <p class="mb-2">₹<%= details.tax %></p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <p class="mb-2">Discount</p>
+                      <p class="mb-2">0.00</p>
+                    </div>
+                    <hr />
+                    <div class="d-flex justify-content-between mb-4">
+                      <p class="mb-2">Total(Incl. taxes)</p>
+                      <p class="text-success mb-2">₹<%= details.total %></p>
+                    </div>
+                  </div>
+                  <!-- Form content goes here -->
+                </div>
+                <!-- Content of the second element -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-</div>
-</div>
 </div>

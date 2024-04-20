@@ -8,17 +8,6 @@ const productSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  // rating: {
-  //   type: String,
-  //   required:true,
-  //   trim: true,
-  // },
-  // review: {
-  //   type: String,
-  //   required:true,
-  //   unique: true,
-  //   trim: true,
-  // },
   image1: {
     type: String,
     required: true,

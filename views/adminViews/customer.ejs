@@ -2,14 +2,14 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-2">
-      <%- include('../partial/adminSidebar.ejs') %>
-    </div>
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
     <div class="col-md-10 col-12">
-      <h2 style="text-align: center; color: black;">Customers</h2>
+      <h2 style="text-align: center; color: black">Customers</h2>
       <div class="col-12 mb-3 mb-lg-5">
         <div class="overflow-hidden card table-nowrap table-card">
-          <div class="card-header d-flex justify-content-between align-items-center">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
             <h5 class="mb-0">New customers</h5>
             <a href="#!" class="btn btn-light btn-sm">View All</a>
           </div>
@@ -26,34 +26,57 @@
               </thead>
               <tbody>
                 <% user.forEach((customer, index) => { %>
-                  <tr class="align-middle">
-                    <td><span class="d-inline-block align-middle"><%=(page - 1) * pageSize + index + 1%></span></td>
-                    <td>
-                      <div class="d-flex align-items-center">
-                        <div>
-                          <div class="h6 mb-0 lh-1"><%= customer.firstName %> <%= customer.secondName %></div>
+                <tr class="align-middle">
+                  <td>
+                    <span class="d-inline-block align-middle"
+                      ><%=(page - 1) * pageSize + index + 1%></span
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex align-items-center">
+                      <div>
+                        <div class="h6 mb-0 lh-1">
+                          <%= customer.firstName %> <%= customer.secondName %>
                         </div>
                       </div>
-                    </td>
-                    <td><%= customer.email %></td>
-                    <td><span><%= customer.date.toISOString().slice(0, 10) %></span></td>
-                    <td class="text-end">
-                      <div class="dropdown">
-                        <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
-                          <i class="" aria-hidden="true"></i>
-                        </a>
-                        <% if(customer.status === true){ %>
-                          <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= customer._id %>">
-                            Block
-                          </button>
-                        <% } else { %>
-                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%= customer._id %>">
-                            Unblock
-                          </button>
-                        <% } %>
-                      </div>
-                    </td>
-                  </tr>
+                    </div>
+                  </td>
+                  <td><%= customer.email %></td>
+                  <td>
+                    <span><%= customer.date.toISOString().slice(0, 10) %></span>
+                  </td>
+                  <td class="text-end">
+                    <div class="dropdown">
+                      <a
+                        data-bs-toggle="dropdown"
+                        href="#"
+                        class="btn p-1"
+                        aria-expanded="false"
+                      >
+                        <i class="" aria-hidden="true"></i>
+                      </a>
+                      <% if(customer.status === true){ %>
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop<%= customer._id %>"
+                      >
+                        Block
+                      </button>
+                      <% } else { %>
+                      <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop<%= customer._id %>"
+                      >
+                        Unblock
+                      </button>
+                      <% } %>
+                    </div>
+                  </td>
+                </tr>
                 <% }); %>
               </tbody>
             </table>
@@ -66,9 +89,9 @@
                   </a>
                 </li>
                 <% for (let i = 1; i <= totalOrder; i++) { %>
-                  <li class="page-item">
-                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
-                  </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                </li>
                 <% } %>
                 <li class="page-item">
                   <a class="page-link" href="#" aria-label="Next">
@@ -79,27 +102,58 @@
               </ul>
             </nav>
             <% user.forEach((customer, index) => { %>
-              <div class="modal fade" id="staticBackdrop<%= customer._id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title"></h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      <h5>Block the user</h5>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <% if(customer.status === true){ %>
-                        <button type="button" class="btn btn-primary" onclick="manageUser('<%= customer._id %>')">Block</button>
-                      <% } else { %>
-                        <button type="button" class="btn btn-danger" onclick="manageUser('<%= customer._id %>')">Unblock</button>
-                      <% } %>
-                    </div>
+            <div
+              class="modal fade"
+              id="staticBackdrop<%= customer._id %>"
+              data-bs-backdrop="static"
+              data-bs-keyboard="false"
+              tabindex="-1"
+              aria-labelledby="staticBackdropLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <h5>Block the user</h5>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <% if(customer.status === true){ %>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      onclick="manageUser('<%= customer._id %>')"
+                    >
+                      Block
+                    </button>
+                    <% } else { %>
+                    <button
+                      type="button"
+                      class="btn btn-danger"
+                      onclick="manageUser('<%= customer._id %>')"
+                    >
+                      Unblock
+                    </button>
+                    <% } %>
                   </div>
                 </div>
               </div>
+            </div>
             <% }); %>
           </div>
         </div>
@@ -107,8 +161,6 @@
     </div>
   </div>
 </div>
-
-
 
 <script>
   async function manageUser(id) {

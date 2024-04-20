@@ -1,114 +1,128 @@
 <%- include('../partial/header.ejs') %>
-<div class="container-fluid " >
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-lg-2 bg-light">
-        <%- include('../partial/adminSidebar.ejs') %>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2 bg-light">
+      <%- include('../partial/adminSidebar.ejs') %>
+    </div>
+    <div class="col-lg-10 d-flex justify-content-between mt-5 py-5">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="text-center p-3 p-md-5 bg-white">
+            <div class="mb-4"></div>
+            <div class="row">
+              <h3 class="font-weight-light h5">Product Offer</h3>
+              <button
+                onclick="location.href='/admin/ProductOffer'"
+                class="btn btn-primary"
+                style="background-color: black"
+              >
+                open
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center p-3 p-md-5 bg-white">
+            <div class="mb-4"></div>
+            <div class="row">
+              <h3 class="font-weight-light h5">Category Offer</h3>
+              <button
+                onclick="location.href='/admin/categoryOffer'"
+                style="cursor: pointer; background-color: black"
+                class="btn btn-primary"
+              >
+                open
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="text-center p-3 p-md-5 bg-white">
+            <div class="mb-4"></div>
+            <div class="row">
+              <h3 class="font-weight-light h5">Referral Offer</h3>
+              <button
+                class="btn btn-primary"
+                style="background-color: black"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+              >
+                open
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Main content -->
-      <div class="col-lg-10 d-flex justify-content-between mt-5 py-5" >
-        <div class="row">
-          <!-- First image and button -->
-          <div class="col-md-6">
-            <div class="text-center p-3 p-md-5 bg-white">
-              <div class="mb-4">            
-                <!-- <img src="images/person_1.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
-              </div>
-              <div class="row">
-                <h3 class="font-weight-light h5">Product Offer</h3>
-                <button onclick="location.href='/admin/ProductOffer'" class="btn btn-primary" style="background-color: black;">open</button>
-              </div>
-            </div>
-          </div>
-          <!-- Second image and button -->
-          <div class="col-md-6 " >
-            <div class="text-center p-3 p-md-5 bg-white">
-              <div class="mb-4">            
-                <!-- <img src="images/person_2.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
-              </div>
-              <div class="row">
-                <h3 class="font-weight-light h5">Category Offer</h3>
-                <button onclick="location.href='/admin/categoryOffer'" style="cursor: pointer; background-color: black;" class="btn btn-primary">open</button>
-              </div>
-            </div>
-          </div>
-          <!-- Third image and button -->
-          <div class="col-md-6 ">
-            <div class="text-center p-3 p-md-5 bg-white">
-              <div class="mb-4">            
-                <!-- <img src="images/person_3.jpg" alt="Image" class="w-50 mx-auto img-fluid rounded-circle"> -->
-              </div>
-              <div class="row">
-                <h3 class="font-weight-light h5">Referral Offer</h3>
-                <button class="btn btn-primary" style="background-color: black;" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                >open</button>
-              </div>
-            </div>
-          </div>
-          
-        </div>
-        <div class="row">
-          
-          <!-- Add more rows with images and buttons here if needed -->
-        </div>
+      <div class="row"></div>
+    </div>
+  </div>
+</div>
+
+<!-- modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <label for="exampleInputEmail1" class="form-label">Offer </label>
+        <input
+          type="number"
+          placeholder=""
+          class="form-control"
+          id="referralAmount"
+          aria-describedby="emailHelp"
+          name="referralAmount"
+          value="<%= referralOffer?.offerAmount %>"
+        />
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          onclick="updateReferralOffer()"
+        >
+          Update Offer
+        </button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <!-- <h5 class="modal-title" id="exampleModalLabel">Modal title</h5> -->
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <label for="exampleInputEmail1" class="form-label" 
-            >Offer </label
-          >
-          <input
-            type="number"
-            placeholder=""
-            class="form-control"
-            id="referralAmount"
-            aria-describedby="emailHelp"
-            name="referralAmount"
-            value="<%= referralOffer?.offerAmount %>"
-          />
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-danger" 
-          onclick="updateReferralOffer()">Update Offer</button>
-        </div>
-      </div>
-    </div>
+<%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar">
+  <i
+    class="fas fa-exclamation-circle"
+    style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
+  ></i>
+  <div
+    class="icon-Success"
+    style="background-color: rgb(0, 255, 26); border-radius: 5px"
+  >
+    <p id="massage"></p>
   </div>
+</div>
 
-
-  <%- include('../componentViews/snackbar.ejs') %>
-  <div id="snackbar">
-    <i
-      class="fas fa-exclamation-circle"
-      style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
-    ></i>
-    <div
-      class="icon-Success"
-      style="background-color: rgb(0, 255, 26); border-radius: 5px"
-    >
-      <p id="massage"></p>
-    </div>
-  </div>
-
-  <script>
-     async function updateReferralOffer() {
+<script>
+  async function updateReferralOffer() {
     const referralAmount = document.getElementById("referralAmount").value;
-    
-    console.log(
-      referralAmount,
-      
-    );
+
+    console.log(referralAmount);
 
     const res = await fetch("/admin/updateReferralOffer/", {
       method: "POST",
@@ -123,13 +137,12 @@
         document.getElementById("exampleModal")
       );
       myModal.hide();
-      const massage = document.getElementById('massage')
-      massage.innerHTML = 'Referral offer Updated'
+      const massage = document.getElementById("massage");
+      massage.innerHTML = "Referral offer Updated";
       myFunction();
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     }
   }
-
-  </script>
+</script>

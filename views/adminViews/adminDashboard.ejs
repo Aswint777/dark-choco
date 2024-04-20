@@ -102,22 +102,43 @@
       </div>
       <div class="row chart-container">
         <div class="col-md-8">
-        <!--  -->
-        <div class="d-flex justify-content-end">
-
-          <div class="dropdown " >
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              customize
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" onclick="filterGraph('lastDay')">Last Day</a></li>
-              <li><a class="dropdown-item" onclick="filterGraph('lastWeek')">Last Week</a></li>
-              <li><a class="dropdown-item" onclick="filterGraph('lastMonth')">Last Month</a></li>
-              <li><a class="dropdown-item" onclick="filterGraph('lastYear')">Last Year</a></li>
-            </ul>
+          <!--  -->
+          <div class="d-flex justify-content-end">
+            <div class="dropdown">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton1"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                customize
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li>
+                  <a class="dropdown-item" onclick="filterGraph('lastDay')"
+                    >Last Day</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" onclick="filterGraph('lastWeek')"
+                    >Last Week</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" onclick="filterGraph('lastMonth')"
+                    >Last Month</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" onclick="filterGraph('lastYear')"
+                    >Last Year</a
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
-        <!--  -->
+          <!--  -->
           <div id="barchart" style="height: 500px; width: 100%"></div>
         </div>
         <div class="col-md-4">
@@ -158,11 +179,9 @@
             <% }) %>
           </tbody>
         </table>
-
-      
       </div>
       <!-- // -->
-      <br>
+      <br />
       <h3>Best Selling Categories</h3>
       <div class="table-responsive">
         <table class="table mb-0">
@@ -200,9 +219,8 @@
   </div>
 </div>
 
-
 <script>
-  async function filterGraph(filter){
+  async function filterGraph(filter) {
     const res = await fetch("/admin/adminDashboard/", {
       method: "POST",
       body: JSON.stringify({ filter }),
@@ -212,14 +230,13 @@
     });
     const data = await res.json();
 
-    if (data){
-      google.charts.load('current', {'packages':['corechart']});
+    if (data) {
+      google.charts.load("current", { packages: ["corechart"] });
       google.charts.setOnLoadCallback(drawNewChart);
-  
-      function drawNewChart(){
+
+      function drawNewChart() {
         drawColumnChart(data.result);
       }
-      
     }
   }
 </script>

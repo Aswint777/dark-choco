@@ -1,6 +1,4 @@
 const mongoose = require("mongoose");
-// const bcrypt = require("bcrypt");
-// const { isEmail } = require("validator");
 
 const forgotSchema = new mongoose.Schema({
   otp: {
@@ -15,7 +13,6 @@ const forgotSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    // validate: [isEmail, "please enter a valid email"],
   },
   date: {
     type: Date,
@@ -28,11 +25,7 @@ const forgotSchema = new mongoose.Schema({
   },
 });
 
-// forgotSchema.pre("save", async function (next) {
-//     const salt = await bcrypt.genSalt();
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-//   });
+
 
 const restPassword = mongoose.model("forgot", forgotSchema);
 module.exports = restPassword;

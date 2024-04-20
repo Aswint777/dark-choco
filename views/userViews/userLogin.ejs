@@ -1,8 +1,10 @@
-<%-include('../partial/header.ejs')%>
-<%-include('../partial/navbar.ejs')%>
+<%-include('../partial/header.ejs')%> <%-include('../partial/navbar.ejs')%>
 
-<section class="container" style="background-color: #eed4b8e8; padding-top: 50px">
-  <div class=" py-5 h-100">
+<section
+  class="container"
+  style="background-color: #eed4b8e8; padding-top: 50px"
+>
+  <div class="py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
       <div class="col col-xl-10">
         <div class="card" style="border-radius: 1rem">
@@ -44,7 +46,7 @@
                       class="form-control form-control-lg"
                     />
                   </div>
-                  <p id="emailError" style="color: rgb(246, 4, 4);"></p>
+                  <p id="emailError" style="color: rgb(246, 4, 4)"></p>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form2Example27"
@@ -57,12 +59,13 @@
                       class="form-control form-control-lg"
                     />
                     <img src="/assets/icons" alt="" />
-                    <p id="passwordError" style="color: rgb(246, 4, 4);"></p>
-                    <p id="errors" style="color: rgb(246, 4, 4);"></p>
-                    <p id="catchError" style="color: rgb(246, 4, 4);"></p>
-
+                    <p id="passwordError" style="color: rgb(246, 4, 4)"></p>
+                    <p id="errors" style="color: rgb(246, 4, 4)"></p>
+                    <p id="catchError" style="color: rgb(246, 4, 4)"></p>
                   </div>
-                  <a class="medium text-muted" href="forgotPasswords">Forgot password?</a>
+                  <a class="medium text-muted" href="forgotPasswords"
+                    >Forgot password?</a
+                  >
 
                   <div class="pt-1 mb-4">
                     <button class="btn btn-dark btn-lg btn-block" type="submit">
@@ -72,9 +75,14 @@
 
                   <p class="mb-5 pb-lg-2" style="color: #01010f">
                     Don't have an account?
-                    <button type="button" class="btn btn-outline-danger" style="background-color: rgb(5, 4, 4);">
-                      <a href="/userSignin" style="color: aliceblue;">Create new</a>
-                      
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      style="background-color: rgb(5, 4, 4)"
+                    >
+                      <a href="/userSignin" style="color: aliceblue"
+                        >Create new</a
+                      >
                     </button>
                     <!-- <a href="#!" style="color: #393f81;">Register here</a></p> -->
                   </p>
@@ -90,10 +98,10 @@
 
 <script>
   const form = document.querySelector("form");
-  const emailError = document.getElementById('emailError')
-  const passwordError = document.getElementById('passwordError')
-  const errors = document.getElementById('errors')
-  const catchError = document.getElementById('catchError')
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const errors = document.getElementById("errors");
+  const catchError = document.getElementById("catchError");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -101,23 +109,22 @@
     // get the value
     const email = form.email.value;
     const password = form.password.value;
-    
-    try {
 
-      if (email === ''){
-        emailError.innerHTML = 'proper email is required'
-        setTimeout(()=>{
-          emailError.innerHTML = ''
-       },5000)
-        return 
+    try {
+      if (email === "") {
+        emailError.innerHTML = "proper email is required";
+        setTimeout(() => {
+          emailError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if (password === ''){
-        console.log('hloooooozzz')
-        passwordError.innerHTML = 'proper password  is required'
-        setTimeout(()=>{
-          passwordError.innerHTML = ''
-       },5000)
-        return 
+      if (password === "") {
+        console.log("hloooooozzz");
+        passwordError.innerHTML = "proper password  is required";
+        setTimeout(() => {
+          passwordError.innerHTML = "";
+        }, 5000);
+        return;
       }
 
       console.log(email, password);
@@ -128,18 +135,17 @@
           "Content-Type": "application/json",
         },
       });
-      const data = await res.json(); 
-      if(data.error){
-        console.log( data?.error,'erroooooooooooooooooooooooooooooo');
-        catchError.innerHTML = data?.error
-        setTimeout(()=>{
-          catchError.innerHTML = ''
-        },5000)
+      const data = await res.json();
+      if (data.error) {
+        console.log(data?.error, "erroooooooooooooooooooooooooooooo");
+        catchError.innerHTML = data?.error;
+        setTimeout(() => {
+          catchError.innerHTML = "";
+        }, 5000);
       }
-      if(data.success){
-        location.href = '/'
-    }
-    
+      if (data.success) {
+        location.href = "/";
+      }
     } catch (err) {
       console.log(err, "err");
     }

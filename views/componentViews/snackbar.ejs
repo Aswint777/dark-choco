@@ -1,95 +1,116 @@
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-#snackbar {
-  visibility: hidden;
-  min-width: 450px;
-  height: 20%;
-  margin-left: -125px;
-  background-color: #eee9e9;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
-  border-radius: 5px;
-  
-}
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      #snackbar {
+        visibility: hidden;
+        min-width: 450px;
+        height: 20%;
+        margin-left: -125px;
+        background-color: #eee9e9;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        border-radius: 5px;
+      }
 
-#snackbar.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
-#returnRequest {
-  visibility: hidden;
-  min-width: 450px;
-  height: 20%;
-  margin-left: -125px;
-  background-color: #eee9e9;
-  color: #fff;
-  text-align: center;
-  border-radius: 2px;
-  padding: 16px;
-  position: fixed;
-  z-index: 1;
-  left: 50%;
-  bottom: 30px;
-  font-size: 17px;
-  border-radius: 5px;
-  
-}
+      #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
+      #returnRequest {
+        visibility: hidden;
+        min-width: 450px;
+        height: 20%;
+        margin-left: -125px;
+        background-color: #eee9e9;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        border-radius: 5px;
+      }
 
-#returnRequest.show {
-  visibility: visible;
-  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-  animation: fadein 0.5s, fadeout 0.5s 2.5s;
-}
+      #returnRequest.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+      }
 
-@-webkit-keyframes fadein {
-  from {bottom: 0; opacity: 0;} 
-  to {bottom: 30px; opacity: 1;}
-}
+      @-webkit-keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
 
-@keyframes fadein {
-  from {bottom: 0; opacity: 0;}
-  to {bottom: 30px; opacity: 1;}
-}
+      @keyframes fadein {
+        from {
+          bottom: 0;
+          opacity: 0;
+        }
+        to {
+          bottom: 30px;
+          opacity: 1;
+        }
+      }
 
-@-webkit-keyframes fadeout {
-  from {bottom: 30px; opacity: 1;} 
-  to {bottom: 0; opacity: 0;}
-}
+      @-webkit-keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
 
-@keyframes fadeout {
-  from {bottom: 30px; opacity: 1;}
-  to {bottom: 0; opacity: 0;}
-}
-</style>
-</head>
-<body>
+      @keyframes fadeout {
+        from {
+          bottom: 30px;
+          opacity: 1;
+        }
+        to {
+          bottom: 0;
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function () {
+          x.className = x.className.replace("show", "");
+        }, 3000);
+      }
 
-
-<script>
-function myFunction() {
-  var x = document.getElementById("snackbar");
-  x.className = "show";
-  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
-}
-
-
-function returnRequest() {
-    var y = document.getElementById("returnRequest"); // Updated ID
-    y.className = "show";
-    setTimeout(function(){ y.className = y.className.replace("show", ""); }, 3000);
-}
-
-</script>
-
-</body>
+      function returnRequest() {
+        var y = document.getElementById("returnRequest"); // Updated ID
+        y.className = "show";
+        setTimeout(function () {
+          y.className = y.className.replace("show", "");
+        }, 3000);
+      }
+    </script>
+  </body>
 </html>

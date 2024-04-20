@@ -20,7 +20,7 @@
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">product Name:</label>
                                     <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="categoryName2" name="productName" value="<%= pro.stock %>" required>
+                                        <input type="text" maxlength="15" class="form-control" id="categoryName2" name="productName" value="<%= pro.stock %>" required>
                                     </div>
                                 </div>
 
@@ -35,21 +35,21 @@
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">Quantity</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="quantity" value="<%= pro.quantity %>" required>
+                                        <input type="number" min="1" class="form-control" id="categoryName2" name="quantity" value="<%= pro.quantity %>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">amount </label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="amount" value="<%= pro.amount %>" required>
+                                        <input type="number" min="1" class="form-control" id="categoryName2" name="amount" value="<%= pro.amount %>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <label for="categoryName2" class="col-sm-4 col-form-label">Markup</label>
                                     <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="Markup" value="<%= pro.markup %>" required>
+                                        <input type="number" min="1" class="form-control" id="categoryName2" name="Markup" value="<%= pro.markup %>" required>
                                     </div>
                                 </div>
 
@@ -93,7 +93,7 @@
                             
                                         />
                                         <img src="/products/<%= pro.image1 %>" alt="Image 1" class="img-fluid" style="max-height: 200px;" id="previewImage1">
-                                        <button class="btn btn-danger" id="deleteImage1" onclick="deleteImages('updatePreviewImage','previewImage1')" type="button " style="" >delete</button>                                      </div>
+                                        <button class="btn btn-danger" id="deleteImage1" onclick="deleteImages('updatePreviewImage','previewImage1')" type="button "  >delete</button>                                      </div>
                                       <div class="form-group text-center">
                                         <label for="image2">Image 2:</label>
                                         <input

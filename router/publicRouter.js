@@ -1,74 +1,98 @@
-const express = require('express')
-const authenticateToken = require('../middleware/middleware')
-const contactToken = require('../middleware/contactMiddleware')
-const {home,userLogin, userSignIn, newUser, userLoginPost, adminLogin, getOtp, adminLoginPost, userLogOut, adminLogOut, about, get404Page, contactPage} = require('../controller/publicRouteController')
-const { otpPagePost, resendOtp, forgotPassword, forgotPasswordPost, forgotVarifyOtp, forgotVarifyOtpPost, setNewPassword, setNewPasswordPost, resendForgotOtp } = require('../controller/otpController')
-const loginMiddleWare = require('../middleware/loginMiddleWare')
-const signUpMiddleWare = require('../middleware/signUpMiddleWare')
-const aboutToken = require('../middleware/aboutMiddleWare')
-const adminLoginAuth = require('../middleware/adminLoginMidilware')
+const express = require("express");
+const authenticateToken = require("../middleware/middleware");
+const contactToken = require("../middleware/contactMiddleware");
+const {
+  home,
+  userLogin,
+  userSignIn,
+  newUser,
+  userLoginPost,
+  adminLogin,
+  getOtp,
+  adminLoginPost,
+  userLogOut,
+  adminLogOut,
+  about,
+  get404Page,
+  contactPage,
+} = require("../controller/publicRouteController");
+const {
+  otpPagePost,
+  resendOtp,
+  forgotPassword,
+  forgotPasswordPost,
+  forgotVarifyOtp,
+  forgotVarifyOtpPost,
+  setNewPassword,
+  setNewPasswordPost,
+  resendForgotOtp,
+} = require("../controller/otpController");
+const loginMiddleWare = require("../middleware/loginMiddleWare");
+const signUpMiddleWare = require("../middleware/signUpMiddleWare");
+const aboutToken = require("../middleware/aboutMiddleWare");
+const adminLoginAuth = require("../middleware/adminLoginMidilware");
 
-const router = express.Router()
+const router = express.Router();
 
-//home page 
-router.get('/',authenticateToken,home)
+//home page
+router.get("/", authenticateToken, home);
 
 //login page
-router.get('/userLogin',loginMiddleWare,userLogin)
+router.get("/userLogin", loginMiddleWare, userLogin);
 
-router.post('/userLogin',userLoginPost)
+router.post("/userLogin", userLoginPost);
 
 //signUp page
-router.get('/userSignIn',signUpMiddleWare,userSignIn)
+router.get("/userSignIn", signUpMiddleWare, userSignIn);
 
-router.post('/userSignIn',newUser)         
+router.post("/userSignIn", newUser);
 
-//admin login page 
-router.get('/adminLogin',adminLoginAuth,adminLogin)
+//admin login page
+router.get("/adminLogin", adminLoginAuth, adminLogin);
 
-router.post('/adminLogin',adminLoginPost)
+router.post("/adminLogin", adminLoginPost);
 
-// otp page 
-router.get('/otp',getOtp)
+// otp page
+router.get("/otp", getOtp);
 
-router.post('/otp',otpPagePost)
+router.post("/otp", otpPagePost);
 
-router.post('/resendOtp',resendOtp)
+router.post("/resendOtp", resendOtp);
 
 // logOut
-router.get('/logOut',userLogOut)
+router.get("/logOut", userLogOut);
 
-router.get('/adminLogOut',adminLogOut)
+router.get("/adminLogOut", adminLogOut);
 
-// forgot password 
-router.get ('/forgotPasswords',forgotPassword)
+// forgot password
+router.get("/forgotPasswords", forgotPassword);
 
-router.post ('/forgotPassword',forgotPasswordPost)
+router.post("/forgotPassword", forgotPasswordPost);
 
-// forgot password varifying page 
+// forgot password varifying page
 
-router. get ('/forgotPasswordOtp/:email',forgotVarifyOtp)
+router.get("/forgotPasswordOtp/:email", forgotVarifyOtp);
 
-router.post ('/forgotPasswordOtp',forgotVarifyOtpPost)
+router.post("/forgotPasswordOtp", forgotVarifyOtpPost);
 
-router.post ('/resendForgotOtp',resendForgotOtp)
+router.post("/resendForgotOtp", resendForgotOtp);
 
-// set new password 
+// set new password
 
-router.get ('/setNewPassword/:email',setNewPassword)
+router.get("/setNewPassword/:email", setNewPassword);
 
-router.post('/setNewPassword',setNewPasswordPost)
+router.post("/setNewPassword", setNewPasswordPost);
 
-//about page 
+//about page
 
-router.get('/about',aboutToken,about)
+router.get("/about", aboutToken, about);
 
-// 404 page 
+// 404 page
 
-router.get('/404Page',get404Page)
+router.get("/404Page", get404Page);
 
-// contact page 
+// contact page
 
-router.get('/contact',contactPage,contactPage)
+router.get("/contact", contactPage, contactPage);
 
-module.exports = router
+module.exports = router;

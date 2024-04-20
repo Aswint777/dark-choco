@@ -7,7 +7,7 @@
 
     <div class="col-md-10">
       <div class="container rounded bg-white mt-5 mb-5">
-<!--        
+        <!--        
         <div  class="p-3 border bg-light" >
             <p>Referral Code : drughesjlk Refer someone to get the reward</p>
         </div> -->
@@ -25,7 +25,9 @@
                 <span style="font-weight: bold"
                   ><%=profile.firstName %> <%=profile.secondName %></span
                 ><span class="text-black-50"><%=profile.email %></span>
-                <p  class="p-3 border bg-light">Referral : <%=profile.userReferralCode %></p>
+                <p class="p-3 border bg-light">
+                  Referral : <%=profile.userReferralCode %>
+                </p>
               </div>
             </div>
             <div class="col-md-5 border-right">
@@ -67,10 +69,6 @@
             </div>
             <div class="col-md-4">
               <div class="p-3 py-5">
-                <!-- <div class="d-flex justify-content-between align-items-center experience"><span>Edit
-                            Experience</span><span style="border: solid 1px #BA68C8; cursor: pointer;"
-                            class="px-3 p-1 add-experience"><i class="fa fa-plus"
-                            style="color: #fff;"></i>&nbsp;Experience</span></div><br> -->
                 <div class="mb-3">
                   <label style="font-size: 11px">Phone Number</label>
                   <input
@@ -159,9 +157,7 @@
     console.log("kkkkkkk");
     const form = document.querySelector("form");
     const successMassage = document.getElementById("successMassage");
-    // const passswordErrors = document.getElementById('passswordErrors')
-    // const oldPasswordError = document.getElementById('oldPasswordError')
-    // const newPasswordError = document.getElementById('newPasswordError')
+
     const confirmNewPasswordError = document.getElementById(
       "confirmNewPasswordError"
     );
@@ -228,18 +224,6 @@
           }, 5000);
           console.log(error, "err");
         }
-
-        // if(data.error){
-        //   console.log( data?.error,'erroooooooooooooooooooooooooooooo');
-        //   catchError.innerHTML = data?.error
-        //   setTimeout(()=>{
-        //     catchError.innerHTML = ''
-        //   },5000)
-        // }
-
-        // if (!res.ok) {
-        //   throw new Error(`HTTP error! Status: ${res.status}`);
-        // }
       } catch (err) {
         console.log(err, "err");
       }

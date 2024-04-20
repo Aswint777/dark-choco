@@ -1,7 +1,6 @@
 <%- include('../partial/header.ejs') %>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-
 <div class="container">
   <div class="row">
     <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
@@ -19,7 +18,6 @@
             >
               Create
             </button>
-            <!-- <a href="#!" class="btn btn-light btn-sm">Create</a> -->
           </div>
           <div class="table-responsive">
             <table class="table mb-0">
@@ -77,8 +75,10 @@
                     >
                       <i class="bi bi-pencil-square"></i>
                     </button>
-                    <button style="background: none"
-                    onclick="deleteCoupon('<%= list._id %>')">
+                    <button
+                      style="background: none"
+                      onclick="deleteCoupon('<%= list._id %>')"
+                    >
                       <a href="#!" style="color: #0a0909"
                         ><i class="fas fa-trash-alt"></i
                       ></a>
@@ -89,30 +89,6 @@
                 <% }) %>
               </tbody>
             </table>
-
-            <!-- <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                </li>
-            
-
-                  <li class="page-item">
-                    <a class="page-link" href=""></a>
-                  </li>
-            
-                  
-                <li class="page-item">
-                  <a class="page-link" href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </li>
-              </ul>
-            </nav> -->
           </div>
         </div>
       </div>
@@ -121,37 +97,35 @@
 </div>
 
 <script>
-  async function deleteCoupon(_id){
+  async function deleteCoupon(_id) {
     console.log(_id);
     const willDelete = await swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this Coupon!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  });
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Coupon!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    });
 
-  if (willDelete) {
-    console.log('willDelete');
-    const res = await fetch("/admin/deleteCoupon/", {
+    if (willDelete) {
+      console.log("willDelete");
+      const res = await fetch("/admin/deleteCoupon/", {
         method: "POST",
         body: JSON.stringify({ _id }),
         headers: {
           "Content-Type": "application/json",
         },
-    });
-    const data = await res.json();
-    if (data.success == true) {
-      swal("Poof! The Coupon has been deleted!", {
-        icon: "success",
-      }).then(() => {
-        window.location.reload();
-
       });
+      const data = await res.json();
+      if (data.success == true) {
+        swal("Poof! The Coupon has been deleted!", {
+          icon: "success",
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    } else {
+      swal("The Coupon is safe!");
     }
-  } else {
-    swal("The Coupon is safe!");
-  }
-
   }
 </script>

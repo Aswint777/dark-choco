@@ -1,109 +1,150 @@
-const express = require('express')
-const authenticateToken= require('../middleware/middleware')
-const userAuthToken = require('../middleware/usersideMidilware')
-const { productListPage, productFilter } = require('../controller/userController/productListController')
-const { userProfile, userProfilePost } = require('../controller/userController/userProfileController')
-const checkUserAuthenticationBeforeAction = require('../middleware/authCheckingforProductList')
-const checkUserBeforeProductDetail = require('../middleware/authCheckingforProductDetail')
-const { GetCart, cartUpdateQuantity, deleteCartProduct, proceedToCheckout } = require('../controller/userController/cartController')
-const { productPage, addToCart } = require('../controller/userController/productDetailsController')
-const { getCheckOutPage, placeOrder, razorPayHandler } = require('../controller/userController/checkOutController')
-const { addAddressPost, editAddress, deleteAddress, addressOnlyPage } = require('../controller/userController/addressController')
-const { getSuccessPage } = require('../controller/userController/orderSuccessController')
-const { userOrderHistoryPage, userOrderDetails, cancelOrder, returnProduct, downloadInvoice } = require('../controller/userController/userOrderController')
-const { getWishList, addToWishList, deleteWishListProduct } = require('../controller/userController/wishListController')
-const { walletHistory } = require('../controller/userController/walletController')
-const { couponPage, applyCoupon, cancelCoupon } = require('../controller/userController/userCouponController')
-const userTokenMiddleware = require('../middleware/usersideMidilware')
+const express = require("express");
+const authenticateToken = require("../middleware/middleware");
+const userAuthToken = require("../middleware/usersideMidilware");
+const {
+  productListPage,
+  productFilter,
+} = require("../controller/userController/productListController");
+const {
+  userProfile,
+  userProfilePost,
+} = require("../controller/userController/userProfileController");
+const checkUserAuthenticationBeforeAction = require("../middleware/authCheckingforProductList");
+const checkUserBeforeProductDetail = require("../middleware/authCheckingforProductDetail");
+const {
+  GetCart,
+  cartUpdateQuantity,
+  deleteCartProduct,
+  proceedToCheckout,
+} = require("../controller/userController/cartController");
+const {
+  productPage,
+  addToCart,
+} = require("../controller/userController/productDetailsController");
+const {
+  getCheckOutPage,
+  placeOrder,
+  razorPayHandler,
+} = require("../controller/userController/checkOutController");
+const {
+  addAddressPost,
+  editAddress,
+  deleteAddress,
+  addressOnlyPage,
+} = require("../controller/userController/addressController");
+const {
+  getSuccessPage,
+} = require("../controller/userController/orderSuccessController");
+const {
+  userOrderHistoryPage,
+  userOrderDetails,
+  cancelOrder,
+  returnProduct,
+  downloadInvoice,
+} = require("../controller/userController/userOrderController");
+const {
+  getWishList,
+  addToWishList,
+  deleteWishListProduct,
+} = require("../controller/userController/wishListController");
+const {
+  walletHistory,
+} = require("../controller/userController/walletController");
+const {
+  couponPage,
+  applyCoupon,
+  cancelCoupon,
+} = require("../controller/userController/userCouponController");
+const userTokenMiddleware = require("../middleware/usersideMidilware");
 
-
-const router = express.Router()
+const router = express.Router();
 
 // product list page
-router.get('/productListPage',checkUserAuthenticationBeforeAction,productListPage)
+router.get(
+  "/productListPage",
+  checkUserAuthenticationBeforeAction,
+  productListPage
+);
 
 //product details page
-router.get('/productPage/:id',checkUserBeforeProductDetail,productPage)
+router.get("/productPage/:id", checkUserBeforeProductDetail, productPage);
 
-router.post('/addToCart',userTokenMiddleware,addToCart)
+router.post("/addToCart", userTokenMiddleware, addToCart);
 
+// User profile Page
+router.get("/userProfilePage", authenticateToken, userProfile);
 
-// User profile Page 
-router.get('/userProfilePage',authenticateToken,userProfile)
+router.post("/userProfilePage", authenticateToken, userProfilePost);
 
-router.post('/userProfilePage',authenticateToken,userProfilePost)
-
-router.post('/productFilter/category/:id',productFilter)
+router.post("/productFilter/category/:id", productFilter);
 
 //cart
- 
-router.get('/cart',userAuthToken,GetCart)
 
-router.post('/updateQuantity',cartUpdateQuantity)
+router.get("/cart", userAuthToken, GetCart);
 
-router.post('/deleteCartProduct',deleteCartProduct)
+router.post("/updateQuantity", cartUpdateQuantity);
 
-router.post('/proceedToCheckout',proceedToCheckout)
+router.post("/deleteCartProduct", deleteCartProduct);
+
+router.post("/proceedToCheckout", proceedToCheckout);
 
 // check Out page
 
-router.get('/checkOutPage',userAuthToken,getCheckOutPage)
+router.get("/checkOutPage", userAuthToken, getCheckOutPage);
 
-router.post ('/placeOrder',placeOrder)
+router.post("/placeOrder", placeOrder);
 
-// address modaal 
+// address modaal
 
-router.post('/addAddressPost',addAddressPost)
+router.post("/addAddressPost", addAddressPost);
 
-router.post('/editAddress',editAddress)
+router.post("/editAddress", editAddress);
 
-router.post('/deleteAddress',deleteAddress)
+router.post("/deleteAddress", deleteAddress);
 
 //address page only
 
-router.get('/addressPage',userAuthToken,addressOnlyPage)
+router.get("/addressPage", userAuthToken, addressOnlyPage);
 
-// order success page 
+// order success page
 
-router.get('/getSuccessPage',userAuthToken,getSuccessPage)
+router.get("/getSuccessPage", userAuthToken, getSuccessPage);
 
 //user order History page
-  
-router.get('/userOrderHistory',userAuthToken,userOrderHistoryPage)
 
-// user order Details Page 
+router.get("/userOrderHistory", userAuthToken, userOrderHistoryPage);
 
-router.get( '/userOrderDetails',userAuthToken,userOrderDetails)
+// user order Details Page
 
-router.post('/cancelOrder',cancelOrder)
+router.get("/userOrderDetails", userAuthToken, userOrderDetails);
 
-router.post('/verify-payment',razorPayHandler)
+router.post("/cancelOrder", cancelOrder);
 
-router.post('/returnProduct',returnProduct)
+router.post("/verify-payment", razorPayHandler);
 
-// download invoice 
+router.post("/returnProduct", returnProduct);
 
-router.post ('/downloadInvoice',downloadInvoice)
+// download invoice
 
-// wishList 
-router.get('/getWishList',userAuthToken,getWishList)
+router.post("/downloadInvoice", downloadInvoice);
 
-router.post('/addToWishList',addToWishList)
+// wishList
+router.get("/getWishList", userAuthToken, getWishList);
 
-router.post('/deleteWishListProduct',deleteWishListProduct)
+router.post("/addToWishList", addToWishList);
 
+router.post("/deleteWishListProduct", deleteWishListProduct);
 
-//wallet History page 
+//wallet History page
 
-router.get('/walletHistory',userAuthToken,walletHistory)
-    
-// coupon 
+router.get("/walletHistory", userAuthToken, walletHistory);
 
-router.get('/couponPage',userAuthToken,couponPage)
+// coupon
 
-router.post('/applyCoupon',applyCoupon)
+router.get("/couponPage", userAuthToken, couponPage);
 
-router.post('/cancelCoupon',cancelCoupon)
+router.post("/applyCoupon", applyCoupon);
 
+router.post("/cancelCoupon", cancelCoupon);
 
-module.exports= router
+module.exports = router;

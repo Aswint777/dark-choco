@@ -13,7 +13,6 @@ const otpSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     lowercase: true,
-    // validate: [isEmail, "please enter a valid email"],
   },
   firstName: {
     type: String,

@@ -13,8 +13,6 @@ const restPassword = require("../model/forgotPasswordModel");
 const wallet = require('../model/walletModel')
 const referral = require('../model/referralOffer')
 
-// const bcrypt = require("bcrypt");
-// const { isEmail } = require("validator");
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {

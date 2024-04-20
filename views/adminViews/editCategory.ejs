@@ -1,66 +1,73 @@
 <%-include('../partial/header.ejs')%>
 <div class="container">
-<div class="row">
-      
-    <div class="col-md-2">
-  
-      <%- include('../partial/adminSidebar.ejs') %>
-    </div>
+  <div class="row">
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
 
-
-
-  <div class="col-md-10">
-    <h2 class="mb-4">Edit Category</h2>
-    <div class="row">
+    <div class="col-md-10">
+      <h2 class="mb-4">Edit Category</h2>
+      <div class="row">
         <div class="col-md-2">
-            <!-- Include your admin sidebar content here -->
+          <!-- Include your admin sidebar content here -->
         </div>
-      
+
         <div class="col-md-10">
-            <form action="/admin/editCategory/<%= cat._id %>" method="post">
-                <div class="mb-3">
-                    <label for="categoryName" class="form-label" >CategoryName</label>
-                    <input type="text" class="form-control" id="categoryName" name="categoryName" value="<%= cat.category %>"  required>
-                </div>
+          <form action="/admin/editCategory/<%= cat._id %>" method="post">
+            <div class="mb-3">
+              <label for="categoryName" class="form-label">CategoryName</label>
+              <input
+                type="text"
+                maxlength="15"
+                class="form-control"
+                id="categoryName"
+                name="categoryName"
+                value="<%= cat.category %>"
+                required
+              />
+            </div>
 
-                <div class="mb-3">
-                    <label for="categoryDescription" class="form-label">CategoryDescription</label>
-                    <input class="form-control" id="categoryDescription" name="categoryDescription" rows="4"  value="<%= cat.categoryDescription %>" required></>
-                </div>
+            <div class="mb-3">
+              <label for="categoryDescription" class="form-label"
+                >CategoryDescription</label
+              >
+              <input
+                class="form-control"
+                id="categoryDescription"
+                name="categoryDescription"
+                rows="4"
+                value="<%= cat.categoryDescription %>"
+                required
+              />
+            </div>
 
-                <!-- Add more input fields or form elements as needed -->
+            <!-- Add more input fields or form elements as needed -->
 
-                <button type="submit" class="btn btn-primary" >Edit Category</button>
-            </form>
+            <button type="submit" class="btn btn-primary">Edit Category</button>
+          </form>
         </div>
-      
-
+      </div>
     </div>
-</div>
 
-
-<script>
-     document.addEventListener("DOMContentLoaded", () => {
-        const categoryError = document.getElementById('categoryError')
-        const categoryDescriptionError = document.getElementById('categoryDescriptionError')
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const categoryError = document.getElementById("categoryError");
+        const categoryDescriptionError = document.getElementById(
+          "categoryDescriptionError"
+        );
         const categoryName = form.categoryName.value;
-        const categoryDescription = form.categoryDescription.value
-      if(categoryName== ""){
-        categoryError.innerHTML = 'category name required'
-          setTimeout(()=>{
-            categoryError.innerHTML = ''
-          },5000)
-       }
-       if(categoryDescription== ""){
-        categoryDescriptionError.innerHTML = 'category name required'
-          setTimeout(()=>{
-            categoryDescriptionError.innerHTML = ''
-          },5000)
-       }
-
-
-
-     })
-
-</script>
-
+        const categoryDescription = form.categoryDescription.value;
+        if (categoryName == "") {
+          categoryError.innerHTML = "category name required";
+          setTimeout(() => {
+            categoryError.innerHTML = "";
+          }, 5000);
+        }
+        if (categoryDescription == "") {
+          categoryDescriptionError.innerHTML = "category name required";
+          setTimeout(() => {
+            categoryDescriptionError.innerHTML = "";
+          }, 5000);
+        }
+      });
+    </script>
+  </div>
+</div>

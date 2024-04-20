@@ -21,7 +21,7 @@
   <div class="row">
     <div class="col-md-5">
       <div class="main-img">
-        <div id="img-container" style="padding-top:10%;">
+        <div id="img-container" style="padding-top: 10%">
           <img
             class="img-fluid"
             src="/products/<%= data.image1 %>"
@@ -60,9 +60,6 @@
 
     <div class="col-md-7">
       <div class="main-description px-2">
-        <!-- <div class="category text-bold">
-                Category: <%= data.category.category %>
-              </div> -->
         <div class="product-title text-bold my-3"><%= data.stock %></div>
 
         <% if(data.offerPrice){ %>
@@ -114,18 +111,17 @@
           <h6 style="color: red">limited stock</h6>
           <%}%>
         </div>
-            <button  style="background: none;">
-        <i class="fa-solid fa-heart h3"></i>
-    </button>
+        <button style="background: none">
+          <i class="fa-solid fa-heart h3"></i>
+        </button>
         <div class="buttons d-flex my-2">
-
           <div class="block">
             <button
               onclick="addToWishList('<%= data._id %>')"
               class="shadow btn custom-btn"
               style="border-radius: 5px"
             >
-            Wishlist
+              Wishlist
             </button>
           </div>
 
@@ -152,51 +148,6 @@
             </button>
           </div>
           <%}%>
-          <!--  -->
-          <div class="d-flex flex-row align-items-center">
-            <div
-              class="d-flex align-items-center justify-content-between"
-            >
-              <div disabled>
-                <button
-                  id="decriment"
-                  class="btn btn-link px-2"
-                  onclick="decrementQuantity()"
-                >
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-             
-              <input
-                id="quantityInput"
-                min="1"
-                max=""
-                name="quantity"
-                value=""
-                type="number"
-                style="width: 50px"
-                class="form-control form-control-sm"
-                onchange="sendData()"
-                disabled
-              />
-
-              <div disabled>
-                <button
-                  class="btn btn-link px-2"
-                  onclick="incrementQuantity()"
-                >
-                  <i class="fas fa-plus"></i>
-                </button>
-              </div>
-              
-            </div>
-          </div>
-
-          <!--  -->
-
-          <!-- <div class="block quantity">
-                      <input type="number" class="form-control" id="cart_quantity" value="1" min="0" max="5" placeholder="Enter email" name="cart_quantity">
-                  </div> -->
         </div>
       </div>
 
@@ -239,17 +190,8 @@
       <!--  -->
       <div class="product-details my-4">
         <p class="details-title text-color mb-1">Product Details</p>
-        <p class="description"><%= data.productDescription %></p> 
+        <p class="description"><%= data.productDescription %></p>
       </div>
-
-      <!-- <div class="row questions bg-light p-3">
-              <div class="col-md-1 icon">
-                  <i class="fa-brands fa-rocketchat questions-icon"></i>
-              </div>
-              <div class="col-md-11 text">
-                  Have a question about our products at E-Store? Feel free to contact our representatives via live chat or email.
-              </div>
-          </div> -->
 
       <div class="delivery my-4">
         <p class="font-weight-bold mb-0">
@@ -333,18 +275,18 @@
   }
 
   async function deleteProduct(id) {
-   console.log(id);
-      const res = await fetch("/user/deleteWishListProduct/", {
-        method: "POST",
-        body: JSON.stringify({ id }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      if (data.success == true) {
-        alert(got)
-          window.location.reload();
+    console.log(id);
+    const res = await fetch("/user/deleteWishListProduct/", {
+      method: "POST",
+      body: JSON.stringify({ id }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await res.json();
+    if (data.success == true) {
+      alert(got);
+      window.location.reload();
     }
   }
 </script>

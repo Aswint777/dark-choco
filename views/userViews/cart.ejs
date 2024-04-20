@@ -368,9 +368,7 @@
     class="fas fa-exclamation-circle"
     style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
   ></i>
-  <!-- <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;"> -->
   product added to cart
-  <!-- </div> -->
 </div>
 
 <script>
@@ -381,24 +379,13 @@
 
   function decrementQuantity(id) {
     document.getElementById("quantityInput_" + id).stepDown();
-    // const quantityDicriment = document.getElementById("quantityInput_" + id).value;
 
-    // console.log(quantityDicriment,'jack')
-    // if (parseInt(quantityDecriment) == 1){
-    //   document.getElementById('decriment').style.display = 'none';
-
-    // }
     sendData(id);
   }
 
   function incrementQuantity(id) {
     document.getElementById("quantityInput_" + id).stepUp();
-    // const quantityIncriment = document.getElementById("quantityInput_" + id).value
-    // console.log(quantityIncriment,'hai')
-    // if(parseInt(quantityIncriment) > 2 ){
-    //   document.getElementById('decriment').style.display = 'block';
 
-    // }
     sendData(id);
   }
 
@@ -406,15 +393,6 @@
     const quantityValue = document.getElementById("quantityInput_" + id).value;
     console.log(parseInt(quantityValue), "kl");
     console.log(id);
-
-    // if(parseInt(quantityValue) == 0){
-    //   quantityError.innerHTML = 'error in the quantity of 1'
-
-    //       setTimeout(()=>{
-    //         quantityError.innerHTML = ''
-    //       },5000)
-    //       return
-    // }
 
     fetch("/user/updateQuantity", {
       method: "POST",
@@ -456,8 +434,6 @@
   }
 
   async function deleteProduct(id) {
-    // const deleteProduct = document.getElementById("product_id").value
-    // console.log(deleteProduct)
     console.log(id, "oioiioioioioi");
     const res = await fetch("/user/deleteCartProduct/", {
       method: "POST",

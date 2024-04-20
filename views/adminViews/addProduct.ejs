@@ -1,350 +1,435 @@
 <%- include('../partial/header.ejs') %>
 <div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <%- include('../partial/adminSidebar.ejs') %>
-        </div>
+  <div class="row">
+    <div class="col-md-2"><%- include('../partial/adminSidebar.ejs') %></div>
 
+    <div class="col-md-10">
+      <h2 class="mb-4">Add product</h2>
+      <div class="row">
         <div class="col-md-10">
-            <h2 class="mb-4">Add product</h2>
-            <div class="row">
-                
-                <div class="col-md-10">
-                    <form id="/addProduct" enctype="multipart/form-data">
-
-                        <div class="mb-3 row">
-                            <div class="col-md-6">
-                                <div class="row mb-3">
-                                    <label for="categoryName2" class="col-sm-4 col-form-label">product Name:</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" class="form-control" id="productName" name="productName" >
-                                    </div>
-                                    <p id="productNameError" style="color: rgb(246, 4, 4);"></p>
-                                </div>
-
-
-                                <div class="row mb-3">
-                                    <label for="categoryDescription1" class="col-sm-4 col-form-label">Short Description:</label>
-                                    <div class="col-sm-8">
-                                        <textarea class="form-control" id="categoryDescription1" name="productDescription" rows="4" ></textarea>
-                                    </div>
-                                    <p id="productDescriptionError" style="color: rgb(246, 4, 4);"></p>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="categoryName2" class="col-sm-4 col-form-label">Quantity</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="Quantity" >
-                                    </div>
-                                    <p id="quantityError" style="color: rgb(246, 4, 4);"></p>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="categoryName2" class="col-sm-4 col-form-label">amount </label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="amount">
-                                    </div>
-                                    <p id="amountError" style="color: rgb(246, 4, 4);"></p>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="categoryName2" class="col-sm-4 col-form-label">Markup</label>
-                                    <div class="col-sm-8">
-                                        <input type="number" class="form-control" id="categoryName2" name="Markup" >
-                                    </div>
-                                    <p id="markupError" style="color: rgb(246, 4, 4);"></p>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="cars" class="col-sm-4 col-form-label">Category</label>
-                                    <div class="col-sm-8">
-                                        
-                                        <select name="category" id="category" style="width: 270px; height: 35px;">
-                                            <% category.forEach((cat, index) => { %>
-                                      <option value="<%= cat._id %>" style="color: black;"><%= cat.category %></option>
-                                      <% }); %>
-                                     
-                                    </select>  
-                                </div>                   
-                            </div>
-
-                            </div>
-
-                            
-                        
-                             <div class="col-md-6" >
-
-                                <div class="border p-3 mb-3 bg-light "> <!-- Added bg-light and text-center classes -->
-                                    <h3>Media</h3>
-                                    <div class="form-group text-center" style=" background-color: rgb(212, 200, 193);  margin-top: 10px;">
-                                        <br>
-                                        <label for="image1">image 1</label>
-                                        
-                                        <input
-                                          type="file"
-                                          name="image1"     
-                                          class="form-control-file"
-                                          id="image1"
-                                          accept="image/*"
-                                          style="display:none;"
-                                        
-                                        />
-                                        
-                                        <img src="" alt="" class="img-fluid" style="max-height: 200px;" id="previewImage1">
-                                        <button class="btn btn-danger" id="deleteImage1" onclick="deleteImages('previewImage1','deleteImage1')" type="button " style="display: none;" >delete</button>
-                                    </div>
-                                    
-                                      <div class="form-group text-center" style="background-color:rgb(212, 200, 193); margin-top: 10px;">
-                                        <br>
-                                        <label for="image2">Image 2</label>
-                                        <input
-                                          type="file"
-                                          name="image2"
-                                          class="form-control-file"
-                                          id="image2"
-                                          accept="image/*"
-                                          style="display: none;"
-                                          
-                                        />
-                                        <img src="" alt="" class="img-fluid" style="max-height: 200px;"id="previewImage2">
-                                        <button class="btn btn-danger" id="deleteImage2" onclick="deleteImages('previewImage2','deleteImage2')" type="button" style="display: none;">delete</button>
-
-                                      </div>
-                                      <div class="form-group text-center" style="background-color: rgb(212, 200, 193); margin-top: 10px;">
-                                        <br>
-                                        <label for="image3">Image 3</label>
-                                        <input
-                                          type="file"
-                                          name="image3"
-                                          class="form-control-file"
-                                          id="image3"
-                                          accept="image/*"
-                                          style="display: none;"
-                                        
-                                        />
-                                        <img src="" alt="" class="img-fluid" style="max-height: 200px;"id="previewImage3">
-                                        <button class="btn btn-danger" id="deleteImage3" onclick="deleteImages('previewImage3','deleteImage3')" type="button" style="display: none;" >delete</button>
-
-                                      </div>
-                                </div>
-                                
-                        </div>                          
-                            
-                    </div>
-
-                   
-
-                        <div class="mb-3 row">
-                            <div class="col-sm-10">
-                                <button type="submit" class="btn btn-primary">Add Product</button>
-                            </div>
-                        </div>
-                    </form>
+          <form id="/addProduct" enctype="multipart/form-data">
+            <div class="mb-3 row">
+              <div class="col-md-6">
+                <div class="row mb-3">
+                  <label for="categoryName2" class="col-sm-4 col-form-label"
+                    >product Name:</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="text"
+                      class="form-control"
+                      maxlength="15 "
+                      id="productName"
+                      name="productName"
+                    />
+                  </div>
+                  <p id="productNameError" style="color: rgb(246, 4, 4)"></p>
                 </div>
+
+                <div class="row mb-3">
+                  <label
+                    for="categoryDescription1"
+                    class="col-sm-4 col-form-label"
+                    >Short Description:</label
+                  >
+                  <div class="col-sm-8">
+                    <textarea
+                      class="form-control"
+                      id="categoryDescription1"
+                      name="productDescription"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                  <p
+                    id="productDescriptionError"
+                    style="color: rgb(246, 4, 4)"
+                  ></p>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="categoryName2" class="col-sm-4 col-form-label"
+                    >Quantity</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="number"
+                      min="1"
+                      class="form-control"
+                      id="categoryName2"
+                      name="Quantity"
+                    />
+                  </div>
+                  <p id="quantityError" style="color: rgb(246, 4, 4)"></p>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="categoryName2" class="col-sm-4 col-form-label"
+                    >amount
+                  </label>
+                  <div class="col-sm-8">
+                    <input
+                      type="number"
+                      min="1"
+                      class="form-control"
+                      id="categoryName2"
+                      name="amount"
+                    />
+                  </div>
+                  <p id="amountError" style="color: rgb(246, 4, 4)"></p>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="categoryName2" class="col-sm-4 col-form-label"
+                    >Markup</label
+                  >
+                  <div class="col-sm-8">
+                    <input
+                      type="number"
+                      min="1"
+                      class="form-control"
+                      id="categoryName2"
+                      name="Markup"
+                    />
+                  </div>
+                  <p id="markupError" style="color: rgb(246, 4, 4)"></p>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="cars" class="col-sm-4 col-form-label"
+                    >Category</label
+                  >
+                  <div class="col-sm-8">
+                    <select
+                      name="category"
+                      id="category"
+                      style="width: 270px; height: 35px"
+                    >
+                      <% category.forEach((cat, index) => { %>
+                      <option value="<%= cat._id %>" style="color: black">
+                        <%= cat.category %>
+                      </option>
+                      <% }); %>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="border p-3 mb-3 bg-light">
+                  <!-- Added bg-light and text-center classes -->
+                  <h3>Media</h3>
+                  <div
+                    class="form-group text-center"
+                    style="
+                      background-color: rgb(212, 200, 193);
+                      margin-top: 10px;
+                    "
+                  >
+                    <br />
+                    <label for="image1">image 1</label>
+
+                    <input
+                      type="file"
+                      name="image1"
+                      class="form-control-file"
+                      id="image1"
+                      accept="image/*"
+                      style="display: none"
+                    />
+
+                    <img
+                      src=""
+                      alt=""
+                      class="img-fluid"
+                      style="max-height: 200px"
+                      id="previewImage1"
+                    />
+                    <button
+                      class="btn btn-danger"
+                      id="deleteImage1"
+                      onclick="deleteImages('previewImage1','deleteImage1')"
+                      type="button "
+                      style="display: none"
+                    >
+                      delete
+                    </button>
+                  </div>
+
+                  <div
+                    class="form-group text-center"
+                    style="
+                      background-color: rgb(212, 200, 193);
+                      margin-top: 10px;
+                    "
+                  >
+                    <br />
+                    <label for="image2">Image 2</label>
+                    <input
+                      type="file"
+                      name="image2"
+                      class="form-control-file"
+                      id="image2"
+                      accept="image/*"
+                      style="display: none"
+                    />
+                    <img
+                      src=""
+                      alt=""
+                      class="img-fluid"
+                      style="max-height: 200px"
+                      id="previewImage2"
+                    />
+                    <button
+                      class="btn btn-danger"
+                      id="deleteImage2"
+                      onclick="deleteImages('previewImage2','deleteImage2')"
+                      type="button"
+                      style="display: none"
+                    >
+                      delete
+                    </button>
+                  </div>
+                  <div
+                    class="form-group text-center"
+                    style="
+                      background-color: rgb(212, 200, 193);
+                      margin-top: 10px;
+                    "
+                  >
+                    <br />
+                    <label for="image3">Image 3</label>
+                    <input
+                      type="file"
+                      name="image3"
+                      class="form-control-file"
+                      id="image3"
+                      accept="image/*"
+                      style="display: none"
+                    />
+                    <img
+                      src=""
+                      alt=""
+                      class="img-fluid"
+                      style="max-height: 200px"
+                      id="previewImage3"
+                    />
+                    <button
+                      class="btn btn-danger"
+                      id="deleteImage3"
+                      onclick="deleteImages('previewImage3','deleteImage3')"
+                      type="button"
+                      style="display: none"
+                    >
+                      delete
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            <div class="mb-3 row">
+              <div class="col-sm-10">
+                <button type="submit" class="btn btn-primary">
+                  Add Product
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
-        
-
-
 
 <script>
+  console.log("here,.............");
 
+  const form = document.querySelector("form");
+  console.log("it is entered in to the form");
+  const productNameError = document.getElementById("productNameError");
+  const productDescriptionError = document.getElementById(
+    "productDescriptionError"
+  );
+  const quantityError = document.getElementById("quantityError");
+  const amountError = document.getElementById("amountError");
+  const markupError = document.getElementById("markupError");
 
-console.log('here,.............')
-
-    const form = document.querySelector("form");
-    console.log('it is entered in to the form')
-    const  productNameError = document.getElementById('productNameError')
-    const  productDescriptionError = document.getElementById('productDescriptionError')
-    const  quantityError = document.getElementById('quantityError')
-    const  amountError = document.getElementById('amountError')
-    const  markupError = document.getElementById('markupError')
-
-    
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
     //   e.preventDefault();
-      console.log('submit clicked')
+    console.log("submit clicked");
 
-      const formData = new FormData(form);
-    const productName = formData.get('productName');
-    const productDescription = formData.get('productDescription');
-    const Quantity = formData.get('Quantity');
-    const amount = formData.get('amount');
-    const Markup = formData.get('Markup');
-    const category = formData.get('category');
-    const image1 = formData.get('image1');
-    const image2 = formData.get('image2');
-    const image3 = formData.get('image3');
-  const data={
-    productName,
-    productDescription,
-    Quantity,
-    amount,
-    Markup,
-    category,
-    image1,
-    image2,
-    image3
+    const formData = new FormData(form);
+    const productName = formData.get("productName");
+    const productDescription = formData.get("productDescription");
+    const Quantity = formData.get("Quantity");
+    const amount = formData.get("amount");
+    const Markup = formData.get("Markup");
+    const category = formData.get("category");
+    const image1 = formData.get("image1");
+    const image2 = formData.get("image2");
+    const image3 = formData.get("image3");
+    const data = {
+      productName,
+      productDescription,
+      Quantity,
+      amount,
+      Markup,
+      category,
+      image1,
+      image2,
+      image3,
+    };
+    console.log(productName);
+    console.log(image1);
+    console.log(category);
 
-  }
-  console.log(productName);
-  console.log(image1);
-  console.log(category)
-
-  try {
-    if(productName === ""){
-        console.log('first name required')
-        productNameError.innerHTML = 'proper first name is required'
-        setTimeout(()=>{
-          productNameError.innerHTML = ''
-        },5000)
-        return
+    try {
+      if (productName === "") {
+        console.log("first name required");
+        productNameError.innerHTML = "proper first name is required";
+        setTimeout(() => {
+          productNameError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(productDescription === ""){
-        console.log('first name required')
-        productDescriptionError.innerHTML = 'Product description required'
-        setTimeout(()=>{
-            productDescriptionError.innerHTML = ''
-        },5000)
-        return
+      if (productDescription === "") {
+        console.log("first name required");
+        productDescriptionError.innerHTML = "Product description required";
+        setTimeout(() => {
+          productDescriptionError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(Quantity === ""||parseInt(Quantity)<1){
-        console.log('first name required')
-        quantityError.innerHTML = 'proper Product quantity is required'
-        setTimeout(()=>{
-          quantityError.innerHTML = ''
-        },5000)
-        return
+      if (Quantity === "" || parseInt(Quantity) < 1) {
+        console.log("first name required");
+        quantityError.innerHTML = "proper Product quantity is required";
+        setTimeout(() => {
+          quantityError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(amount === "" || parseInt(amount)<1){
-        console.log('first name required')
-        amountError.innerHTML = ' proper price required'
-        setTimeout(()=>{
-          amountError.innerHTML = ''
-        },5000)
-        return
+      if (amount === "" || parseInt(amount) < 1) {
+        console.log("first name required");
+        amountError.innerHTML = " proper price required";
+        setTimeout(() => {
+          amountError.innerHTML = "";
+        }, 5000);
+        return;
       }
-      if(Markup === ""|| parseInt(Markup)<1){
-        markupError.innerHTML = 'proper Markup price is required'
-        setTimeout(()=>{
-          markupError.innerHTML = ''
-        },5000)
-        return
+      if (Markup === "" || parseInt(Markup) < 1) {
+        markupError.innerHTML = "proper Markup price is required";
+        setTimeout(() => {
+          markupError.innerHTML = "";
+        }, 5000);
+        return;
       }
 
-   console.log('fetch is working',data);
-    const res = await fetch("/admin/addProducts", {
-    method: "POST",
-    //   body: JSON.stringify({productName,categoryDescription,Quantity,amount,Markup,category,image1,image2,image3 }),
-    body: formData,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    }).then((res)=>res.json()).then(res=>{
-
-        const datas =  res
-        if(datas.success){
-
-            window.location.href ='/admin/adminProductList'
-        }
-    })
-
-} catch (err) {
-    console.log('Errorrrrrrrrrrrrrrrrrr:', err);
-}
-});
-
-
-function updatePreviewImage(inputId, imageId,deletebuttonId) {
-        console.log("hellooo");
-        const fileInput = document.getElementById(inputId);
-        const previewImage = document.getElementById(imageId);
-
-        fileInput.addEventListener('change', function() {
-            const file = fileInput.files[0];
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;  
-                    document.getElementById(deletebuttonId).style.display = 'block';
-                };
-
-                reader.readAsDataURL(file);
-            } else {
-                previewImage.src = '';
-            }
+      console.log("fetch is working", data);
+      const res = await fetch("/admin/addProducts", {
+        method: "POST",
+        //   body: JSON.stringify({productName,categoryDescription,Quantity,amount,Markup,category,image1,image2,image3 }),
+        body: formData,
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+      })
+        .then((res) => res.json())
+        .then((res) => {
+          const datas = res;
+          if (datas.success) {
+            window.location.href = "/admin/adminProductList";
+          }
         });
+    } catch (err) {
+      console.log("Errorrrrrrrrrrrrrrrrrr:", err);
     }
+  });
 
+  function updatePreviewImage(inputId, imageId, deletebuttonId) {
+    console.log("hellooo");
+    const fileInput = document.getElementById(inputId);
+    const previewImage = document.getElementById(imageId);
 
-//     function initCropper(inputId, previewId, deleteButtonId) {
-//     const fileInput = document.getElementById(inputId);
-//     const previewImage = document.getElementById(previewId);
-//     const deleteButton = document.getElementById(deleteButtonId);
-//     let cropper;
+    fileInput.addEventListener("change", function () {
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
 
-//     fileInput.addEventListener('change', function () {
-//       const file = fileInput.files[0];
-//       if (file) {
-//         const reader = new FileReader();
+        reader.onload = function (e) {
+          previewImage.src = e.target.result;
+          document.getElementById(deletebuttonId).style.display = "block";
+        };
 
-//         reader.onload = function (e) {
-//           previewImage.src = e.target.result;
-//           deleteButton.style.display = 'block';
+        reader.readAsDataURL(file);
+      } else {
+        previewImage.src = "";
+      }
+    });
+  }
 
-//           // Destroy existing Cropper instance
-//           if (cropper) {
-//             cropper.destroy();
-//           }
+  //     function initCropper(inputId, previewId, deleteButtonId) {
+  //     const fileInput = document.getElementById(inputId);
+  //     const previewImage = document.getElementById(previewId);
+  //     const deleteButton = document.getElementById(deleteButtonId);
+  //     let cropper;
 
-//           // Create new Cropper instance
-//           cropper = new Cropper(previewImage, {
-//             aspectRatio: 16 / 9,
-//             crop(event) {
-//               console.log(event.detail.x);
-//               console.log(event.detail.y);
-//               console.log(event.detail.width);
-//               console.log(event.detail.height);
-//               console.log(event.detail.rotate);
-//               console.log(event.detail.scaleX);
-//               console.log(event.detail.scaleY);
-//             },
-//           });
-//         };
+  //     fileInput.addEventListener('change', function () {
+  //       const file = fileInput.files[0];
+  //       if (file) {
+  //         const reader = new FileReader();
 
-//         reader.readAsDataURL(file);
-//       } else {
-//         previewImage.src = '';
-//         deleteButton.style.display = 'none';
+  //         reader.onload = function (e) {
+  //           previewImage.src = e.target.result;
+  //           deleteButton.style.display = 'block';
 
-//         // Destroy Cropper instance when no image is selected
-//         if (cropper) {
-//           cropper.destroy();
-//           cropper = null;
-//         }
-//       }
-//     });
-//   }
+  //           // Destroy existing Cropper instance
+  //           if (cropper) {
+  //             cropper.destroy();
+  //           }
 
-//   // Initialize Cropper for each image input
-//   initCropper('image1', 'previewImage1', 'deleteImage1');
-//   initCropper('image2', 'previewImage2', 'deleteImage2');
-//   initCropper('image3', 'previewImage3', 'deleteImage3');
-/////////////////
-    function deleteImages(image,deleteId){
-        // alert('deleting image',deleteId)
-        const previewImage = document.getElementById(image);
-        previewImage.src = '';
-        document.getElementById(deleteId).style.display = 'none';
-    }
+  //           // Create new Cropper instance
+  //           cropper = new Cropper(previewImage, {
+  //             aspectRatio: 16 / 9,
+  //             crop(event) {
+  //               console.log(event.detail.x);
+  //               console.log(event.detail.y);
+  //               console.log(event.detail.width);
+  //               console.log(event.detail.height);
+  //               console.log(event.detail.rotate);
+  //               console.log(event.detail.scaleX);
+  //               console.log(event.detail.scaleY);
+  //             },
+  //           });
+  //         };
 
-    updatePreviewImage('image1', 'previewImage1','deleteImage1');
-    updatePreviewImage('image2', 'previewImage2','deleteImage2');
-    updatePreviewImage('image3', 'previewImage3','deleteImage3');
+  //         reader.readAsDataURL(file);
+  //       } else {
+  //         previewImage.src = '';
+  //         deleteButton.style.display = 'none';
 
+  //         // Destroy Cropper instance when no image is selected
+  //         if (cropper) {
+  //           cropper.destroy();
+  //           cropper = null;
+  //         }
+  //       }
+  //     });
+  //   }
 
+  //   // Initialize Cropper for each image input
+  //   initCropper('image1', 'previewImage1', 'deleteImage1');
+  //   initCropper('image2', 'previewImage2', 'deleteImage2');
+  //   initCropper('image3', 'previewImage3', 'deleteImage3');
+  /////////////////
+  function deleteImages(image, deleteId) {
+    // alert('deleting image',deleteId)
+    const previewImage = document.getElementById(image);
+    previewImage.src = "";
+    document.getElementById(deleteId).style.display = "none";
+  }
+
+  updatePreviewImage("image1", "previewImage1", "deleteImage1");
+  updatePreviewImage("image2", "previewImage2", "deleteImage2");
+  updatePreviewImage("image3", "previewImage3", "deleteImage3");
 </script>

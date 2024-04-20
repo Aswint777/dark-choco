@@ -7,57 +7,54 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <%if(!list || !list.products||list.products?.length<=0){%>
-  <div  style=" margin-top: 5%;">
-    <!-- <h1>your cart is empty</h1> -->
-    <div class="container-fluid  mt-100" >
-      <div class="row" >
-      
-       <div class="col-md-12" >
-       
-           <div class="card">
-         <!-- <div class="card-header">
-         <h5>Cart</h5>
-         </div> -->
-         <div class="card-body cart">
-             <div class="col-sm-12 empty-cart-cls text-center">
-               <img src="/assets/279.png" width="25%" height="50%" class="img-fluid mb-4 mr-3">
-               <h3><strong>Your wishlist is Empty</strong></h3>
-               <h4>Add something to make me happy </h4>
-               <a href="/" class="btn btn-primary cart-btn-transform m-3" data-abc="true">continue shopping</a>
-               
-             
-             </div>
-         </div>
-     </div>
-         
-       
-       </div>
-      
+<div style="margin-top: 5%">
+  <!-- <h1>your cart is empty</h1> -->
+  <div class="container-fluid mt-100">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body cart">
+            <div class="col-sm-12 empty-cart-cls text-center">
+              <img
+                src="/assets/279.png"
+                width="25%"
+                height="50%"
+                class="img-fluid mb-4 mr-3"
+              />
+              <h3><strong>Your wishlist is Empty</strong></h3>
+              <h4>Add something to make me happy</h4>
+              <a
+                href="/"
+                class="btn btn-primary cart-btn-transform m-3"
+                data-abc="true"
+                >continue shopping</a
+              >
+            </div>
+          </div>
+        </div>
       </div>
-     
-     </div>
-  </div>
-  <%}else{%>
-
-<%- include('../componentViews/snackbar.ejs') %>
-<div id="snackbar" >
-    <i class="fas fa-exclamation-circle" style="width:50%; height: 50%; color: rgb(0, 255, 26);" ></i>
-    <div  class="icon-Success" style="background-color: rgb(0, 255, 26); border-radius: 5px;">
-       product added to cart
     </div>
+  </div>
+</div>
+<%}else{%> <%- include('../componentViews/snackbar.ejs') %>
+<div id="snackbar">
+  <i
+    class="fas fa-exclamation-circle"
+    style="width: 50%; height: 50%; color: rgb(0, 255, 26)"
+  ></i>
+  <div
+    class="icon-Success"
+    style="background-color: rgb(0, 255, 26); border-radius: 5px"
+  >
+    product added to cart
+  </div>
 </div>
 
- 
-
-<div class="container" style="background-color: white;">
+<div class="container" style="background-color: white">
   <div class="row">
     <div class="col-md-3"><%- include('../partial/userSidebar.ejs') %></div>
 
     <div class="col-md-9">
-      <!-- <div class="container mt-5"> -->
-      <!-- <div class="row"> -->
-      <!-- <div class="col-md-12"> -->
-
       <h2 class="main-heading border-b">My wishlist</h2>
       <!-- <div class="table-responsive"> -->
       <% list.products.forEach(product => { %>
@@ -103,27 +100,24 @@
                   </button>
                 </div>
                 <% }else if(product.product_id.quantity == 0){ %>
-                  <div class="block">
-                    <button
-                      class=""
-                      style="background-color: #b91414; border-radius: 5px"
-                    >
-                      Out of Stock
-                    </button>
-                  </div>
-                  <%}else{ %>
-                    <div class="block">
-                      <button
-                        class=""
-                        style="background-color: #df240c; border-radius: 5px"
-                      >
-                        Limited Stock
-                      </button>
-                    </div>
-                    <%}%>
-
-
-
+                <div class="block">
+                  <button
+                    class=""
+                    style="background-color: #b91414; border-radius: 5px"
+                  >
+                    Out of Stock
+                  </button>
+                </div>
+                <%}else{ %>
+                <div class="block">
+                  <button
+                    class=""
+                    style="background-color: #df240c; border-radius: 5px"
+                  >
+                    Limited Stock
+                  </button>
+                </div>
+                <%}%>
               </div>
               <div class="d-flex align-items-center justify-content-between">
                 <div style="margin-right: 30%">
@@ -133,153 +127,93 @@
                     <button
                       class="shadow btn custom-btn"
                       style="border-color: rgb(48, 189, 64)"
-					  onclick="addToCart('<%=product.product_id._id %>')"
+                      onclick="addToCart('<%=product.product_id._id %>')"
                     >
                       Add to cart
                     </button>
                   </div>
                   <%}else{ %>
-                    <div class="block">
-                      <button
-                        class="shadow btn custom-btn"
-                        style="border-color: rgb(48, 189, 64)"
-              onclick="addToCart('<%=product.product_id._id %>')"
-                       disabled>
-                        Add to cart
-                      </button>
-                    </div>
-                    <%}%>
-
-
+                  <div class="block">
+                    <button
+                      class="shadow btn custom-btn"
+                      style="border-color: rgb(48, 189, 64)"
+                      onclick="addToCart('<%=product.product_id._id %>')"
+                      disabled
+                    >
+                      Add to cart
+                    </button>
+                  </div>
+                  <%}%>
                 </div>
               </div>
               <button
                 style="background: none"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-				onclick="deleteProduct('<%= product._id %>')"
+                onclick="deleteProduct('<%= product._id %>')"
               >
                 <a href="#!" style="color: #cecece"
                   ><i class="fas fa-trash-alt"></i
                 ></a>
               </button>
             </div>
-            <!-- </div> -->
-            <!-- modal -->
-
-            <!-- <div
-              class="modal fade"
-              id="exampleModal"
-              tabindex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-        
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <h5>
-                      If you delete the product it will no longer show in the
-                      cart
-                    </h5>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button
-                      type="button"
-                      class="btn btn-danger"
-                    >
-                      continue
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-            <!--  -->
           </div>
           <p id="catchError" style="color: rgb(246, 4, 4)"></p>
         </div>
         <p id="quantityError" style="color: rgb(246, 4, 4)"></p>
       </div>
       <% }) %>
-
-      <!-- </div> -->
     </div>
   </div>
 </div>
-<!-- </div> -->
 <%}%>
 
-<!-- class="shadow btn custom-btn" -->
-
-
-
 <script>
-	 async function  addToCart(_id){
-        try{
-        const res = await fetch("/user/addToCart/", {
+  async function addToCart(_id) {
+    try {
+      const res = await fetch("/user/addToCart/", {
         method: "POST",
-        body: JSON.stringify({ _id:_id }),
+        body: JSON.stringify({ _id: _id }),
         headers: {
           "Content-Type": "application/json",
         },
       });
       const data = await res.json();
-      if(data._id){
-        myFunction()
-
+      if (data._id) {
+        myFunction();
       }
-        }catch(error){
-            console.log(error,'ooooooooooooi')
-        }
-
+    } catch (error) {
+      console.log(error, "ooooooooooooi");
     }
-
-	async function deleteProduct(id) {
-  const willDelete = await swal({
-    title: "Are you sure?",
-    text: "Once deleted, you will not be able to recover this product!",
-    icon: "warning",
-    buttons: true,
-    dangerMode: true,
-  });
-
-  if (willDelete) {
-    const res = await fetch("/user/deleteWishListProduct/", {
-      method: "POST",
-      body: JSON.stringify({ id }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await res.json();
-    if (data.success == true) {
-      swal("Poof! The product has been deleted!", {
-        icon: "success",
-      }).then(() => {
-        window.location.reload();
-
-      });
-    }
-  } else {
-    swal("The product is safe!");
   }
-}
 
+  async function deleteProduct(id) {
+    const willDelete = await swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this product!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    });
 
-
+    if (willDelete) {
+      const res = await fetch("/user/deleteWishListProduct/", {
+        method: "POST",
+        body: JSON.stringify({ id }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if (data.success == true) {
+        swal("Poof! The product has been deleted!", {
+          icon: "success",
+        }).then(() => {
+          window.location.reload();
+        });
+      }
+    } else {
+      swal("The product is safe!");
+    }
+  }
 </script>

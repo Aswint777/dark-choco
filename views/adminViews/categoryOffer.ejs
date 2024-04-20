@@ -214,7 +214,7 @@
           </select>
           <p id="emailError" style="color: rgb(246, 4, 4)"></p>
         </div>
-        <div><input id="id" type="text" style="display: none;"></div>
+        <div><input id="id" type="text" style="display: none" /></div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">offer</label>
           <input
@@ -317,8 +317,8 @@
         document.getElementById("staticBackdrop")
       );
       myModal.hide();
-      const massage = document.getElementById('massage')
-      massage.innerHTML = data?.massage
+      const massage = document.getElementById("massage");
+      massage.innerHTML = data?.massage;
       myFunction();
       setTimeout(() => {
         window.location.reload();
@@ -363,13 +363,13 @@
     startDate,
     expiryDate
   ) {
-    console.log(_id,categoryName, offerRate, startDate, expiryDate);
+    console.log(_id, categoryName, offerRate, startDate, expiryDate);
     const id = document.getElementById("id");
     const categoryNameEdit = document.getElementById("categoryNameEdit");
     const offerRateEdit = document.getElementById("offerRateEdit");
     const startDateEdit = document.getElementById("startDateEdit");
     const expiryDateEdit = document.getElementById("expiryDateEdit");
-    id.value = _id
+    id.value = _id;
     categoryNameEdit.value = categoryName;
     offerRateEdit.value = offerRate;
     startDateEdit.value = startDate;
@@ -378,7 +378,7 @@
     console.log(startDateEdit.value);
   }
 
-  async function editCategoryOffer(){
+  async function editCategoryOffer() {
     const id = document.getElementById("id").value;
     const categoryId = document.getElementById("categoryNameEdit").value;
     const offerRate = document.getElementById("offerRateEdit").value;
@@ -395,27 +395,33 @@
 
     const res = await fetch("/admin/editCategoryOffer/", {
       method: "POST",
-      body: JSON.stringify({ id,categoryId, offerRate, startDate, expiryDate }),
+      body: JSON.stringify({
+        id,
+        categoryId,
+        offerRate,
+        startDate,
+        expiryDate,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     const data = await res.json();
-    if(data.success){
+    if (data.success) {
       var myModal = bootstrap.Modal.getInstance(
         document.getElementById("editCategoryOfferModal")
       );
       myModal.hide();
-      const massage = document.getElementById('massage')
-      massage.innerHTML = data?.massage
+      const massage = document.getElementById("massage");
+      massage.innerHTML = data?.massage;
       myFunction();
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     }
-    if(data.error){
-      const massage = document.getElementById('massage')
-      massage.innerHTML = data?.error.message 
+    if (data.error) {
+      const massage = document.getElementById("massage");
+      massage.innerHTML = data?.error.message;
     }
   }
 </script>

@@ -183,12 +183,12 @@ const returnProductStatus = async (req, res) => {
     console.log(statusUpdate, "status update");
     let myWallet;
     if (statusUpdate.status == "returned") {
-      myWallet = await wallet.findOne({ userData: statusUpdate.userId });
+      myWallet = await wallet.findOne({ userData: new mongoose.Types.ObjectId(statusUpdate.userData),});
       console.log(myWallet, "mywallet");
       console.log(statusUpdate.total);
       if (myWallet) {
         myWallet = await wallet.findOneAndUpdate(
-          { userData: statusUpdate.userId },
+          { userData: new mongoose.Types.ObjectId(statusUpdate.userData), },
           { $inc: { walletAmount: statusUpdate.total } },
           { new: true }
         );
@@ -196,6 +196,7 @@ const returnProductStatus = async (req, res) => {
         const newTransaction = {
           amount: statusUpdate.total,
           type: "credit",
+          description:'Money credited to yor account by Return order',
           orderData: new mongoose.Types.ObjectId(statusUpdate._id),
         };
 
